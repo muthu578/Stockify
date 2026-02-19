@@ -26,6 +26,23 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const signup = async (userData) => {
+        try {
+            setLoading(true);
+            setError(null);
+            // userData should be { name, username, password, role }
+            const { data } = await api.post('/auth/register', userData);
+            setUser(data);
+            localStorage.setItem('userInfo', JSON.stringify(data));
+            return data;
+        } catch (err) {
+            setError(err.response?.data?.message || 'Signup failed');
+            throw err;
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const logout = () => {
         setUser(null);
         localStorage.removeItem('userInfo');
@@ -34,7 +51,7 @@ export const AuthProvider = ({ children }) => {
     const isAdmin = () => user && user.role === 'Admin';
 
     return (
-        <AuthContext.Provider value={{ user, loading, error, login, logout, isAdmin }}>
+        <AuthContext.Provider value={{ user, loading, error, login, signup, logout, isAdmin }}>
             {children}
         </AuthContext.Provider>
     );

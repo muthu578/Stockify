@@ -4,7 +4,8 @@ const { loginUser, registerUser, getUserProfile } = require('../controllers/auth
 const { protect, admin } = require('../middleware/authMiddleware');
 
 router.post('/login', loginUser);
-router.post('/register', protect, admin, registerUser);
+// Public registration for initial setup
+router.post('/register', registerUser);
 router.get('/me', protect, getUserProfile);
 
 module.exports = router;
