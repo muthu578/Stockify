@@ -44,8 +44,8 @@ const Register = () => {
         <Layout>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-900">Daily Register</h1>
-                    <p className="text-slate-500">Manage daily cash flow and register closing</p>
+                    <h1 className="text-3xl font-bold text-secondary-900">Daily Register</h1>
+                    <p className="text-secondary-500">Manage daily cash flow and register closing</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <button
@@ -64,28 +64,28 @@ const Register = () => {
                     <div className="bg-emerald-50 text-emerald-600 w-12 h-12 rounded-2xl flex items-center justify-center mb-4">
                         <Banknote size={24} />
                     </div>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Cash Collection</p>
-                    <h3 className="text-2xl font-black text-slate-900">₹{totalCash.toLocaleString()}</h3>
+                    <p className="text-xs font-bold text-secondary-400 uppercase tracking-wider">Cash Collection</p>
+                    <h3 className="text-2xl font-black text-secondary-900">₹{totalCash.toLocaleString()}</h3>
                 </div>
                 <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                    <div className="bg-blue-50 text-blue-600 w-12 h-12 rounded-2xl flex items-center justify-center mb-4">
+                    <div className="bg-primary-50 text-primary-600 w-12 h-12 rounded-2xl flex items-center justify-center mb-4">
                         <CreditCard size={24} />
                     </div>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Card Payments</p>
-                    <h3 className="text-2xl font-black text-slate-900">₹{totalCard.toLocaleString()}</h3>
+                    <p className="text-xs font-bold text-secondary-400 uppercase tracking-wider">Card Payments</p>
+                    <h3 className="text-2xl font-black text-secondary-900">₹{totalCard.toLocaleString()}</h3>
                 </div>
                 <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
                     <div className="bg-purple-50 text-purple-600 w-12 h-12 rounded-2xl flex items-center justify-center mb-4">
                         <Smartphone size={24} />
                     </div>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">UPI / Digital</p>
-                    <h3 className="text-2xl font-black text-slate-900">₹{totalUPI.toLocaleString()}</h3>
+                    <p className="text-xs font-bold text-secondary-400 uppercase tracking-wider">UPI / Digital</p>
+                    <h3 className="text-2xl font-black text-secondary-900">₹{totalUPI.toLocaleString()}</h3>
                 </div>
-                <div className="bg-slate-900 p-6 rounded-3xl shadow-xl">
+                <div className="bg-secondary-950 p-6 rounded-3xl shadow-xl">
                     <div className="bg-primary-500/20 text-primary-400 w-12 h-12 rounded-2xl flex items-center justify-center mb-4">
                         <IndianRupee size={24} />
                     </div>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider text-slate-400">Total In Drawer</p>
+                    <p className="text-xs font-bold text-secondary-400 uppercase tracking-wider text-secondary-400">Total In Drawer</p>
                     <h3 className="text-2xl font-black text-white">₹{totalRevenue.toLocaleString()}</h3>
                 </div>
             </div>
@@ -102,15 +102,15 @@ const Register = () => {
                                 <div key={i} className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100">
                                     <div className="flex items-center space-x-4">
                                         <div className="bg-white p-2 rounded-xl shadow-sm">
-                                            <Calendar className="text-slate-400" size={20} />
+                                            <Calendar className="text-secondary-400" size={20} />
                                         </div>
                                         <div>
-                                            <p className="font-bold text-slate-900">Feb {19 - i}, 2026</p>
-                                            <p className="text-xs text-slate-500 font-bold uppercase">Closed by Admin</p>
+                                            <p className="font-bold text-secondary-900">Feb {19 - i}, 2026</p>
+                                            <p className="text-xs text-secondary-500 font-bold uppercase">Closed by Admin</p>
                                         </div>
                                     </div>
                                     <div className="text-right">
-                                        <p className="font-black text-slate-900">₹{(45000 - i * 5000).toLocaleString()}</p>
+                                        <p className="font-black text-secondary-900">₹{(45000 - i * 5000).toLocaleString()}</p>
                                         <span className="text-[10px] font-black text-emerald-500 bg-emerald-50 px-2 py-1 rounded-lg uppercase">Balanced</span>
                                     </div>
                                 </div>
@@ -123,15 +123,15 @@ const Register = () => {
                     <div className="w-20 h-20 bg-primary-50 text-primary-600 rounded-3xl flex items-center justify-center mb-6">
                         <Lock size={40} />
                     </div>
-                    <h3 className="text-2xl font-black text-slate-900 mb-2">Register Security</h3>
-                    <p className="text-slate-500 max-w-sm font-medium mb-8">
+                    <h3 className="text-2xl font-black text-secondary-900 mb-2">Register Security</h3>
+                    <p className="text-secondary-500 max-w-sm font-medium mb-8">
                         Closing the register will generate a daily summary report and lock new transactions until the next shift starts.
                     </p>
                     <div className="flex flex-col gap-3 w-full max-w-xs">
                         <button className="w-full py-4 bg-primary-600 text-white font-black rounded-2xl hover:bg-primary-500 transition-all shadow-lg shadow-primary-600/20">
                             Print X-Report
                         </button>
-                        <button className="w-full py-4 bg-slate-100 text-slate-600 font-black rounded-2xl hover:bg-slate-200 transition-all">
+                        <button className="w-full py-4 bg-slate-100 text-secondary-400 font-black rounded-2xl hover:bg-slate-200 transition-all">
                             View Discrepancies
                         </button>
                     </div>

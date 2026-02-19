@@ -96,8 +96,8 @@ const Finance = () => {
         <Layout>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-900">Finance & Accounts</h1>
-                    <p className="text-slate-500">Manage bank accounts, cash flow, and business expenses</p>
+                    <h1 className="text-3xl font-bold text-secondary-900">Finance & Accounts</h1>
+                    <p className="text-secondary-500">Manage bank accounts, cash flow, and business expenses</p>
                 </div>
                 <button
                     onClick={() => setShowModal(true)}
@@ -114,8 +114,8 @@ const Finance = () => {
                         <Landmark size={24} />
                     </div>
                     <div>
-                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Balance</p>
-                        <h3 className="text-2xl font-black text-slate-900">₹{totalBankBalance.toLocaleString()}</h3>
+                        <p className="text-xs font-bold text-secondary-400 uppercase tracking-wider">Total Balance</p>
+                        <h3 className="text-2xl font-black text-secondary-900">₹{totalBankBalance.toLocaleString()}</h3>
                     </div>
                 </div>
                 <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4">
@@ -123,16 +123,16 @@ const Finance = () => {
                         <TrendingDown size={24} />
                     </div>
                     <div>
-                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Expenses</p>
-                        <h3 className="text-2xl font-black text-slate-900">₹{expenses.reduce((acc, e) => acc + e.amount, 0).toLocaleString()}</h3>
+                        <p className="text-xs font-bold text-secondary-400 uppercase tracking-wider">Total Expenses</p>
+                        <h3 className="text-2xl font-black text-secondary-900">₹{expenses.reduce((acc, e) => acc + e.amount, 0).toLocaleString()}</h3>
                     </div>
                 </div>
-                <div className="bg-slate-900 p-6 rounded-3xl flex items-center space-x-4 shadow-xl">
+                <div className="bg-secondary-950 p-6 rounded-3xl flex items-center space-x-4 shadow-xl">
                     <div className="p-4 bg-primary-500/20 text-primary-400 rounded-2xl">
                         <Wallet size={24} />
                     </div>
                     <div>
-                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Active Ledgers</p>
+                        <p className="text-xs font-bold text-secondary-400 uppercase tracking-wider">Active Ledgers</p>
                         <h3 className="text-2xl font-black text-white">{accounts.length} Accounts</h3>
                     </div>
                 </div>
@@ -142,13 +142,13 @@ const Finance = () => {
                 <div className="flex border-b border-slate-100">
                     <button
                         onClick={() => setActiveTab('accounts')}
-                        className={`px-8 py-4 font-bold text-sm transition-all ${activeTab === 'accounts' ? 'bg-primary-50 text-primary-600 border-b-2 border-primary-600' : 'text-slate-400 hover:bg-slate-50'}`}
+                        className={`px-8 py-4 font-bold text-sm transition-all ${activeTab === 'accounts' ? 'bg-primary-50 text-primary-600 border-b-2 border-primary-600' : 'text-secondary-400 hover:bg-slate-50'}`}
                     >
                         Bank & Cash Accounts
                     </button>
                     <button
                         onClick={() => setActiveTab('expenses')}
-                        className={`px-8 py-4 font-bold text-sm transition-all ${activeTab === 'expenses' ? 'bg-primary-50 text-primary-600 border-b-2 border-primary-600' : 'text-slate-400 hover:bg-slate-50'}`}
+                        className={`px-8 py-4 font-bold text-sm transition-all ${activeTab === 'expenses' ? 'bg-primary-50 text-primary-600 border-b-2 border-primary-600' : 'text-secondary-400 hover:bg-slate-50'}`}
                     >
                         Expense Records
                     </button>
@@ -160,19 +160,19 @@ const Finance = () => {
                             {accounts.map(acc => (
                                 <div key={acc._id} className="p-6 bg-slate-50 rounded-3xl border border-slate-100 relative group overflow-hidden">
                                     <div className="flex justify-between items-start mb-6">
-                                        <div className={`p-3 rounded-xl bg-white shadow-sm ${acc.type === 'Bank' ? 'text-blue-500' : 'text-amber-500'}`}>
+                                        <div className={`p-3 rounded-xl bg-white shadow-sm ${acc.type === 'Bank' ? 'text-primary-500' : 'text-amber-500'}`}>
                                             {acc.type === 'Bank' ? <Landmark size={20} /> : <Wallet size={20} />}
                                         </div>
                                         <span className="text-xs font-black text-slate-300 uppercase tracking-widest">{acc.type}</span>
                                     </div>
-                                    <h4 className="text-lg font-black text-slate-900 mb-1">{acc.accountName}</h4>
-                                    <p className="text-sm text-slate-400 font-bold mb-4">{acc.bankName || 'Cash Account'}</p>
+                                    <h4 className="text-lg font-black text-secondary-900 mb-1">{acc.accountName}</h4>
+                                    <p className="text-sm text-secondary-400 font-bold mb-4">{acc.bankName || 'Cash Account'}</p>
                                     <div className="pt-4 border-t border-slate-200/50">
-                                        <p className="text-xs font-bold text-slate-400 uppercase mb-1">Current Balance</p>
+                                        <p className="text-xs font-bold text-secondary-400 uppercase mb-1">Current Balance</p>
                                         <h2 className="text-2xl font-black text-primary-600">₹{acc.balance.toLocaleString()}</h2>
                                     </div>
                                     <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button className="text-slate-300 hover:text-slate-900 transition-colors"><ArrowUpRight size={18} /></button>
+                                        <button className="text-slate-300 hover:text-secondary-900 transition-colors"><ArrowUpRight size={18} /></button>
                                     </div>
                                 </div>
                             ))}
@@ -180,7 +180,7 @@ const Finance = () => {
                     ) : (
                         <div className="overflow-x-auto">
                             <table className="w-full">
-                                <thead className="bg-slate-50 text-slate-400 text-xs font-bold uppercase tracking-widest">
+                                <thead className="bg-slate-50 text-secondary-400 text-xs font-bold uppercase tracking-widest">
                                     <tr>
                                         <th className="px-6 py-4 text-left">Expense Title</th>
                                         <th className="px-6 py-4 text-left">Category</th>
@@ -193,11 +193,11 @@ const Finance = () => {
                                     {expenses.map(exp => (
                                         <tr key={exp._id} className="hover:bg-slate-50/50 transition-colors group">
                                             <td className="px-6 py-4">
-                                                <p className="font-bold text-slate-800">{exp.expenseTitle}</p>
-                                                <p className="text-xs text-slate-400">{exp.description}</p>
+                                                <p className="font-bold text-secondary-800">{exp.expenseTitle}</p>
+                                                <p className="text-xs text-secondary-400">{exp.description}</p>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <span className="px-3 py-1 bg-slate-100 text-slate-500 rounded-full text-xs font-bold">{exp.category}</span>
+                                                <span className="px-3 py-1 bg-secondary-800 text-secondary-500 rounded-full text-xs font-bold">{exp.category}</span>
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center space-x-2 text-sm font-medium text-slate-600">
@@ -205,7 +205,7 @@ const Finance = () => {
                                                     <span>{exp.paymentAccount?.accountName}</span>
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-4 text-slate-400 text-sm font-medium">
+                                            <td className="px-6 py-4 text-secondary-400 text-sm font-medium">
                                                 {new Date(exp.paymentDate).toLocaleDateString()}
                                             </td>
                                             <td className="px-6 py-4 text-right font-black text-rose-500">
@@ -223,31 +223,31 @@ const Finance = () => {
             {/* Modals */}
             {showModal && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
+                    <div className="absolute inset-0 bg-secondary-950/60 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
                     <div className="relative bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl p-8 animate-in fade-in zoom-in duration-200">
-                        <h3 className="text-2xl font-black text-slate-900 mb-6">{activeTab === 'accounts' ? 'Add Financial Account' : 'Record Business Expense'}</h3>
+                        <h3 className="text-2xl font-black text-secondary-900 mb-6">{activeTab === 'accounts' ? 'Add Financial Account' : 'Record Business Expense'}</h3>
 
                         {activeTab === 'accounts' ? (
                             <form onSubmit={handleAccountSubmit} className="space-y-4">
                                 <div>
-                                    <label className="block text-xs font-black text-slate-400 uppercase mb-2">Account Name</label>
+                                    <label className="block text-xs font-black text-secondary-400 uppercase mb-2">Account Name</label>
                                     <input type="text" required value={formData.accountName} onChange={e => setFormData({ ...formData, accountName: e.target.value })} className="w-full bg-slate-50 border-none rounded-2xl px-5 py-3 outline-none focus:ring-2 focus:ring-primary-500/20 font-bold" placeholder="e.g. Corporate Current Acc" />
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-xs font-black text-slate-400 uppercase mb-2">Type</label>
+                                        <label className="block text-xs font-black text-secondary-400 uppercase mb-2">Type</label>
                                         <select value={formData.type} onChange={e => setFormData({ ...formData, type: e.target.value })} className="w-full bg-slate-50 border-none rounded-2xl px-5 py-3 outline-none font-bold">
                                             <option value="Bank">Bank</option>
                                             <option value="Cash">Cash</option>
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-black text-slate-400 uppercase mb-2">Initial Balance</label>
+                                        <label className="block text-xs font-black text-secondary-400 uppercase mb-2">Initial Balance</label>
                                         <input type="number" required value={formData.balance} onChange={e => setFormData({ ...formData, balance: e.target.value })} className="w-full bg-slate-50 border-none rounded-2xl px-5 py-3 outline-none font-bold" />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-black text-slate-400 uppercase mb-2">Bank Name (Optional)</label>
+                                    <label className="block text-xs font-black text-secondary-400 uppercase mb-2">Bank Name (Optional)</label>
                                     <input type="text" value={formData.bankName} onChange={e => setFormData({ ...formData, bankName: e.target.value })} className="w-full bg-slate-50 border-none rounded-2xl px-5 py-3 outline-none font-bold" placeholder="e.g. Wells Fargo" />
                                 </div>
                                 <button type="submit" className="w-full py-4 bg-primary-600 text-white font-black rounded-2xl hover:bg-primary-500 shadow-xl shadow-primary-600/20 transition-all mt-4">Save Account</button>
@@ -255,12 +255,12 @@ const Finance = () => {
                         ) : (
                             <form onSubmit={handleExpenseSubmit} className="space-y-4">
                                 <div>
-                                    <label className="block text-xs font-black text-slate-400 uppercase mb-2">Expense Title</label>
+                                    <label className="block text-xs font-black text-secondary-400 uppercase mb-2">Expense Title</label>
                                     <input type="text" required value={formData.expenseTitle} onChange={e => setFormData({ ...formData, expenseTitle: e.target.value })} className="w-full bg-slate-50 border-none rounded-2xl px-5 py-3 outline-none focus:ring-2 focus:ring-primary-500/20 font-bold" placeholder="e.g. Office Rent" />
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-xs font-black text-slate-400 uppercase mb-2">Category</label>
+                                        <label className="block text-xs font-black text-secondary-400 uppercase mb-2">Category</label>
                                         <select value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })} className="w-full bg-slate-50 border-none rounded-2xl px-5 py-3 outline-none font-bold">
                                             <option value="">-- Select --</option>
                                             <option value="Rent">Rent</option>
@@ -271,19 +271,19 @@ const Finance = () => {
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-black text-slate-400 uppercase mb-2">Amount</label>
+                                        <label className="block text-xs font-black text-secondary-400 uppercase mb-2">Amount</label>
                                         <input type="number" required value={formData.amount} onChange={e => setFormData({ ...formData, amount: e.target.value })} className="w-full bg-slate-50 border-none rounded-2xl px-5 py-3 outline-none font-bold" />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-black text-slate-400 uppercase mb-2">Payment Account</label>
+                                    <label className="block text-xs font-black text-secondary-400 uppercase mb-2">Payment Account</label>
                                     <select required value={formData.paymentAccount} onChange={e => setFormData({ ...formData, paymentAccount: e.target.value })} className="w-full bg-slate-50 border-none rounded-2xl px-5 py-3 outline-none font-bold">
                                         <option value="">-- Choose Account --</option>
                                         {accounts.map(acc => <option key={acc._id} value={acc._id}>{acc.accountName} (₹{acc.balance})</option>)}
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-black text-slate-400 uppercase mb-2">Description</label>
+                                    <label className="block text-xs font-black text-secondary-400 uppercase mb-2">Description</label>
                                     <textarea value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-slate-50 border-none rounded-2xl px-5 py-3 outline-none font-bold h-24" placeholder="Optional notes..."></textarea>
                                 </div>
                                 <button type="submit" className="w-full py-4 bg-primary-600 text-white font-black rounded-2xl hover:bg-primary-500 shadow-xl shadow-primary-600/20 transition-all mt-4">Record Expense</button>

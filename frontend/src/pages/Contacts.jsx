@@ -102,8 +102,8 @@ const Contacts = ({ type }) => {
         <Layout>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-900">{type}s</h1>
-                    <p className="text-slate-500">Manage your {type.toLowerCase()} directory and ledgers</p>
+                    <h1 className="text-3xl font-bold text-secondary-900">{type}s</h1>
+                    <p className="text-secondary-500">Manage your {type.toLowerCase()} directory and ledgers</p>
                 </div>
                 <button
                     onClick={() => handleOpenModal()}
@@ -116,7 +116,7 @@ const Contacts = ({ type }) => {
 
             <div className="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm mb-8">
                 <div className="relative">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-secondary-400" size={20} />
                     <input
                         type="text"
                         placeholder={`Search ${type.toLowerCase()}s by name or phone...`}
@@ -137,30 +137,30 @@ const Contacts = ({ type }) => {
                                 {contact.name.charAt(0)}
                             </div>
                             <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button onClick={() => handleOpenModal(contact)} className="p-2 hover:bg-slate-100 text-slate-400 hover:text-blue-600 rounded-xl">
+                                <button onClick={() => handleOpenModal(contact)} className="p-2 hover:bg-slate-100 text-secondary-400 hover:text-primary-600 rounded-xl">
                                     <Edit2 size={16} />
                                 </button>
-                                <button onClick={() => handleDelete(contact._id)} className="p-2 hover:bg-slate-100 text-slate-400 hover:text-red-600 rounded-xl">
+                                <button onClick={() => handleDelete(contact._id)} className="p-2 hover:bg-slate-100 text-secondary-400 hover:text-red-600 rounded-xl">
                                     <Trash2 size={16} />
                                 </button>
                             </div>
                         </div>
 
-                        <h3 className="text-lg font-bold text-slate-900 mb-1">{contact.name}</h3>
+                        <h3 className="text-lg font-bold text-secondary-900 mb-1">{contact.name}</h3>
 
                         <div className="space-y-2 mt-4">
-                            <div className="flex items-center text-slate-500 text-sm">
+                            <div className="flex items-center text-secondary-500 text-sm">
                                 <Phone size={14} className="mr-2" />
                                 {contact.phone}
                             </div>
                             {contact.email && (
-                                <div className="flex items-center text-slate-500 text-sm">
+                                <div className="flex items-center text-secondary-500 text-sm">
                                     <Mail size={14} className="mr-2" />
                                     {contact.email}
                                 </div>
                             )}
                             {contact.address && (
-                                <div className="flex items-center text-slate-500 text-sm">
+                                <div className="flex items-center text-secondary-500 text-sm">
                                     <MapPin size={14} className="mr-2" />
                                     {contact.address}
                                 </div>
@@ -168,7 +168,7 @@ const Contacts = ({ type }) => {
                         </div>
 
                         <div className="mt-6 pt-4 border-t border-slate-50 flex justify-between items-center">
-                            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Balance</span>
+                            <span className="text-xs font-bold text-secondary-400 uppercase tracking-wider">Balance</span>
                             <span className={`font-black ${contact.balance > 0 ? 'text-red-500' : 'text-emerald-500'}`}>
                                 ₹{contact.balance.toFixed(2)}
                             </span>
@@ -179,9 +179,9 @@ const Contacts = ({ type }) => {
 
             {showModal && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
+                    <div className="absolute inset-0 bg-secondary-950/60 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
                     <div className="relative bg-white w-full max-w-lg rounded-3xl shadow-2xl p-8 animate-in fade-in zoom-in duration-200">
-                        <h3 className="text-2xl font-black text-slate-900 mb-6">{editingContact ? `Edit ${type}` : `Add New ${type}`}</h3>
+                        <h3 className="text-2xl font-black text-secondary-900 mb-6">{editingContact ? `Edit ${type}` : `Add New ${type}`}</h3>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
                                 <label className="block text-sm font-bold text-slate-700 mb-1.5">Full Name</label>

@@ -29,7 +29,7 @@ export const NotificationProvider = ({ children }) => {
                             flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl animate-slide-in
                             ${n.type === 'success' ? 'bg-emerald-600 text-white' :
                                 n.type === 'error' ? 'bg-rose-600 text-white' :
-                                    'bg-slate-900 text-white'}
+                                    'bg-secondary-950 text-white'}
                         `}
                     >
                         {n.type === 'success' && <CheckCircle size={20} />}

@@ -115,7 +115,7 @@ const Reports = () => {
             {
                 label: 'Revenue',
                 data: reportData?.sales.map(s => s.totalSales) || [],
-                backgroundColor: '#0ea5e9',
+                backgroundColor: '#2ecc71',
                 borderRadius: 8,
             }
         ]
@@ -127,7 +127,7 @@ const Reports = () => {
             {
                 data: topItems.map(item => item.totalQuantity),
                 backgroundColor: [
-                    '#0ea5e9',
+                    '#2ecc71',
                     '#ec4899',
                     '#f59e0b',
                     '#10b981',
@@ -138,14 +138,14 @@ const Reports = () => {
         ]
     };
 
-    if (loading) return <Layout><div className="flex items-center justify-center h-[60vh]"><p className="text-slate-500 animate-pulse">Generating reports...</p></div></Layout>;
+    if (loading) return <Layout><div className="flex items-center justify-center h-[60vh]"><p className="text-secondary-500 animate-pulse">Generating reports...</p></div></Layout>;
 
     return (
         <Layout>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-900">Financial Reports</h1>
-                    <p className="text-slate-500">Analyze your business performance over time</p>
+                    <h1 className="text-3xl font-bold text-secondary-900">Financial Reports</h1>
+                    <p className="text-secondary-500">Analyze your business performance over time</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <button className="flex items-center space-x-2 px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 transition-all font-medium">
@@ -154,7 +154,7 @@ const Reports = () => {
                     </button>
                     <button
                         onClick={handleExportCSV}
-                        className="flex items-center space-x-2 px-4 py-2 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition-all font-medium"
+                        className="flex items-center space-x-2 px-4 py-2 bg-secondary-950 text-white rounded-xl hover:bg-secondary-800 transition-all font-medium"
                     >
                         <Download size={18} />
                         <span>Export CSV</span>
@@ -173,8 +173,8 @@ const Reports = () => {
                             14%
                         </div>
                     </div>
-                    <p className="text-slate-500 text-sm font-medium">Total Revenue</p>
-                    <h3 className="text-2xl font-black text-slate-900">₹{reportData?.totalRevenue.toLocaleString()}</h3>
+                    <p className="text-secondary-500 text-sm font-medium">Total Revenue</p>
+                    <h3 className="text-2xl font-black text-secondary-900">₹{reportData?.totalRevenue.toLocaleString()}</h3>
                 </div>
 
                 <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
@@ -187,13 +187,13 @@ const Reports = () => {
                             2%
                         </div>
                     </div>
-                    <p className="text-slate-500 text-sm font-medium">Total Orders</p>
-                    <h3 className="text-2xl font-black text-slate-900">{reportData?.totalOrders}</h3>
+                    <p className="text-secondary-500 text-sm font-medium">Total Orders</p>
+                    <h3 className="text-2xl font-black text-secondary-900">{reportData?.totalOrders}</h3>
                 </div>
 
-                <div className="bg-[#0f172a] p-6 rounded-3xl text-white shadow-lg overflow-hidden relative">
+                <div className="bg-secondary-950 p-6 rounded-3xl text-white shadow-lg overflow-hidden relative">
                     <div className="relative z-10">
-                        <p className="text-slate-400 text-sm font-medium">Estimated Profit</p>
+                        <p className="text-secondary-200 text-sm font-medium">Estimated Profit</p>
                         <h3 className="text-3xl font-black mt-1">₹{(reportData?.totalRevenue * 0.2).toLocaleString()}</h3>
                         <p className="text-xs text-primary-400 mt-2 flex items-center">
                             Based on 20% average margin <ChevronRight size={12} className="ml-1" />
@@ -205,7 +205,7 @@ const Reports = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
-                    <h3 className="text-lg font-bold text-slate-900 mb-8">Revenue Growth</h3>
+                    <h3 className="text-lg font-bold text-secondary-900 mb-8">Revenue Growth</h3>
                     <div className="h-[300px]">
                         <Bar
                             data={barData}
@@ -222,7 +222,7 @@ const Reports = () => {
                 </div>
 
                 <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
-                    <h3 className="text-lg font-bold text-slate-900 mb-8">Top Selling Products</h3>
+                    <h3 className="text-lg font-bold text-secondary-900 mb-8">Top Selling Products</h3>
                     <div className="flex flex-col md:flex-row items-center gap-8">
                         <div className="w-[200px] h-[200px]">
                             <Doughnut
@@ -241,7 +241,7 @@ const Reports = () => {
                                         <div className="w-3 h-3 rounded-full" style={{ backgroundColor: doughnutData.datasets[0].backgroundColor[idx] }}></div>
                                         <span className="text-sm font-semibold text-slate-700">{item._id}</span>
                                     </div>
-                                    <span className="text-sm font-bold text-slate-900">{item.totalQuantity} sold</span>
+                                    <span className="text-sm font-bold text-secondary-900">{item.totalQuantity} sold</span>
                                 </div>
                             ))}
                         </div>
@@ -250,30 +250,30 @@ const Reports = () => {
             </div>
             <div className="mt-8 bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
                 <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                    <h3 className="text-lg font-bold text-slate-900">Transaction History</h3>
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{bills.length} Orders Found</span>
+                    <h3 className="text-lg font-bold text-secondary-900">Transaction History</h3>
+                    <span className="text-xs font-bold text-secondary-400 uppercase tracking-wider">{bills.length} Orders Found</span>
                 </div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead>
                             <tr className="bg-slate-50/20">
-                                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Bill ID</th>
-                                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Date</th>
-                                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Customer</th>
-                                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Cashier</th>
-                                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Amount</th>
-                                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Method</th>
-                                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase text-right">Actions</th>
+                                <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Bill ID</th>
+                                <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Date</th>
+                                <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Customer</th>
+                                <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Cashier</th>
+                                <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Amount</th>
+                                <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Method</th>
+                                <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
                             {bills.slice(0, 10).map(bill => (
                                 <tr key={bill._id} className="hover:bg-slate-50/50 transition-colors group">
-                                    <td className="px-6 py-4 font-bold text-slate-900">#{bill.billId.split('-')[1]}</td>
-                                    <td className="px-6 py-4 text-slate-500 text-sm">{new Date(bill.createdAt).toLocaleDateString()}</td>
+                                    <td className="px-6 py-4 font-bold text-secondary-900">#{bill.billId.split('-')[1]}</td>
+                                    <td className="px-6 py-4 text-secondary-500 text-sm">{new Date(bill.createdAt).toLocaleDateString()}</td>
                                     <td className="px-6 py-4 text-slate-600 font-medium">{bill.customer?.name || 'Walk-in'}</td>
                                     <td className="px-6 py-4 text-slate-600 font-medium">{bill.cashier?.name}</td>
-                                    <td className="px-6 py-4 font-black text-slate-900">₹{bill.finalAmount.toFixed(2)}</td>
+                                    <td className="px-6 py-4 font-black text-secondary-900">₹{bill.finalAmount.toFixed(2)}</td>
                                     <td className="px-6 py-4">
                                         <span className="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-[10px] font-bold uppercase">{bill.paymentMethod}</span>
                                     </td>

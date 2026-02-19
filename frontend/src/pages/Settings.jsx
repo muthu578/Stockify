@@ -69,8 +69,8 @@ const Settings = () => {
     return (
         <Layout>
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-slate-900">Settings</h1>
-                <p className="text-slate-500">System configuration and user management</p>
+                <h1 className="text-3xl font-bold text-secondary-900">Settings</h1>
+                <p className="text-secondary-500">System configuration and user management</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -95,10 +95,10 @@ const Settings = () => {
                             <table className="w-full text-left">
                                 <thead className="bg-slate-50">
                                     <tr>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Name</th>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Username</th>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Role</th>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase text-right">Action</th>
+                                        <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Name</th>
+                                        <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Username</th>
+                                        <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Role</th>
+                                        <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase text-right">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-100">
@@ -107,9 +107,9 @@ const Settings = () => {
                                     ) : users.map(user => (
                                         <tr key={user._id} className="hover:bg-slate-50/50">
                                             <td className="px-6 py-4 font-semibold">{user.name}</td>
-                                            <td className="px-6 py-4 text-slate-500">{user.username}</td>
+                                            <td className="px-6 py-4 text-secondary-500">{user.username}</td>
                                             <td className="px-6 py-4">
-                                                <span className={`px-3 py-1 rounded-full text-xs font-bold ${user.role === 'Admin' ? 'bg-purple-100 text-purple-600' : 'bg-blue-100 text-blue-600'
+                                                <span className={`px-3 py-1 rounded-full text-xs font-bold ${user.role === 'Admin' ? 'bg-purple-100 text-purple-600' : 'bg-primary-100 text-primary-600'
                                                     }`}>
                                                     {user.role}
                                                 </span>
@@ -134,7 +134,7 @@ const Settings = () => {
                 <div className="space-y-6">
                     <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
                         <h3 className="text-lg font-bold mb-6 flex items-center">
-                            <SettingsIcon className="mr-2 text-slate-400" size={20} />
+                            <SettingsIcon className="mr-2 text-secondary-400" size={20} />
                             Billing Rules
                         </h3>
 
@@ -155,18 +155,18 @@ const Settings = () => {
                                     className="w-full px-4 py-2.5 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-primary-500/20 outline-none font-bold"
                                 />
                             </div>
-                            <button className="w-full py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-all">
+                            <button className="w-full py-3 bg-secondary-950 text-white font-bold rounded-xl hover:bg-secondary-800 transition-all">
                                 Save Changes
                             </button>
                         </div>
                     </div>
 
-                    <div className="bg-blue-600 p-6 rounded-3xl text-white">
+                    <div className="bg-primary-600 p-6 rounded-3xl text-white">
                         <h3 className="font-bold flex items-center mb-2">
                             <Shield size={18} className="mr-2" />
                             Store Security
                         </h3>
-                        <p className="text-blue-100 text-xs leading-relaxed">
+                        <p className="text-primary-100 text-xs leading-relaxed">
                             Auto-logout enabled after 30 minutes of inactivity. All transaction logs are immutable and stored for audit.
                         </p>
                     </div>
@@ -176,9 +176,9 @@ const Settings = () => {
             {/* Add User Modal */}
             {showModal && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
+                    <div className="absolute inset-0 bg-secondary-950/60 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
                     <div className="relative bg-white w-full max-w-md rounded-3xl shadow-2xl p-8 animate-in fade-in zoom-in duration-200">
-                        <h3 className="text-2xl font-black text-slate-900 mb-6">Create Account</h3>
+                        <h3 className="text-2xl font-black text-secondary-900 mb-6">Create Account</h3>
                         <form onSubmit={handleCreateUser} className="space-y-4">
                             <div>
                                 <label className="block text-sm font-bold text-slate-700 mb-1.5">Full Name</label>

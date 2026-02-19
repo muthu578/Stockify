@@ -1,25 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   html {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
+    @apply text-slate-600 bg-slate-50;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: theme('colors.secondary.900');
   }
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .dark-glass {
-  background: rgba(0, 0, 0, 0.95);
+  background: #062B62;
+  /* secondary-950 */
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .card-hover {

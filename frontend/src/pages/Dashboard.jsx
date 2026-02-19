@@ -122,8 +122,8 @@ const Dashboard = () => {
         datasets: [{
             label: 'Revenue',
             data: stats.revenue,
-            borderColor: '#3b82f6',
-            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+            borderColor: '#2ecc71',
+            backgroundColor: 'rgba(46, 204, 113, 0.1)',
             fill: true,
             tension: 0.4,
             pointRadius: 4,
@@ -134,7 +134,7 @@ const Dashboard = () => {
         labels: ['Inventory', 'Sales', 'Purchases'],
         datasets: [{
             data: [stats.stockCount, stats.orderCount, stats.purchaseCount],
-            backgroundColor: ['#3b82f6', '#10b981', '#f59e0b'],
+            backgroundColor: ['#2ecc71', '#f39c12', '#2c3e50'],
             borderWidth: 0,
         }]
     };
@@ -155,16 +155,16 @@ const Dashboard = () => {
                     </div>
                 )}
             </div>
-            <p className="text-slate-500 font-bold text-sm uppercase tracking-wider mb-1">{title}</p>
-            <h3 className="text-3xl font-black text-slate-900">{value}</h3>
+            <p className="text-secondary-500 font-bold text-sm uppercase tracking-wider mb-1">{title}</p>
+            <h3 className="text-3xl font-black text-secondary-900">{value}</h3>
         </div>
     );
 
     return (
         <Layout>
             <div className="mb-10">
-                <h1 className="text-4xl font-black text-slate-900 mb-2">Enterprise Dashboard</h1>
-                <p className="text-slate-500 font-medium">Real-time overview of your supermarket ERP performance</p>
+                <h1 className="text-4xl font-black text-secondary-900 mb-2">Enterprise Dashboard</h1>
+                <p className="text-secondary-500 font-medium">Real-time overview of your supermarket ERP performance</p>
             </div>
 
             {loading ? (
@@ -176,16 +176,16 @@ const Dashboard = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
                         <Card index={0} title="Total Revenue" value={`₹${stats.totalSales.toLocaleString()}`} icon={IndianRupee} color="bg-primary-500" trend="up" trendValue="12" />
                         <Card index={1} title="Total Expenses" value={`₹${stats.totalExpenses.toLocaleString()}`} icon={TrendingDown} color="bg-rose-500" trend="up" trendValue="4" />
-                        <Card index={2} title="Net Profit" value={`₹${(stats.totalSales - stats.totalExpenses).toLocaleString()}`} icon={TrendingUp} color="bg-emerald-500" />
-                        <Card index={3} title="Low Stock" value={stats.lowStock} icon={AlertCircle} color="bg-amber-500" trend="down" trendValue="5" />
+                        <Card index={2} title="Net Profit" value={`₹${(stats.totalSales - stats.totalExpenses).toLocaleString()}`} icon={TrendingUp} color="bg-primary-600" />
+                        <Card index={3} title="Low Stock" value={stats.lowStock} icon={AlertCircle} color="bg-accent-500" trend="down" trendValue="5" />
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
                         <div className="lg:col-span-2 bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
                             <div className="flex justify-between items-center mb-8">
                                 <div>
-                                    <h3 className="text-xl font-black text-slate-900">Revenue Growth</h3>
-                                    <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">Weekly Analytics</p>
+                                    <h3 className="text-xl font-black text-secondary-900">Revenue Growth</h3>
+                                    <p className="text-sm text-secondary-400 font-bold uppercase tracking-widest">Weekly Analytics</p>
                                 </div>
                                 <select className="bg-slate-50 border-none rounded-xl px-4 py-2 font-bold text-sm outline-none">
                                     <option>Last 7 Days</option>
@@ -197,7 +197,7 @@ const Dashboard = () => {
                             </div>
                         </div>
 
-                        <div className="bg-slate-900 p-8 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
+                        <div className="bg-secondary-950 p-8 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
                             <div className="relative z-10">
                                 <h3 className="text-xl font-bold text-white mb-6">Operations Mix</h3>
                                 <div className="h-[250px] mb-8">
@@ -205,11 +205,11 @@ const Dashboard = () => {
                                 </div>
                                 <div className="space-y-4">
                                     <div className="flex justify-between items-center text-sm font-bold">
-                                        <span className="text-slate-400 flex items-center"><div className="w-2 h-2 rounded-full bg-primary-500 mr-2" /> Inventory</span>
+                                        <span className="text-secondary-400 flex items-center"><div className="w-2 h-2 rounded-full bg-primary-500 mr-2" /> Inventory</span>
                                         <span className="text-white">{stats.stockCount} Units</span>
                                     </div>
                                     <div className="flex justify-between items-center text-sm font-bold">
-                                        <span className="text-slate-400 flex items-center"><div className="w-2 h-2 rounded-full bg-emerald-500 mr-2" /> Total Sales</span>
+                                        <span className="text-secondary-400 flex items-center"><div className="w-2 h-2 rounded-full bg-accent-500 mr-2" /> Total Sales</span>
                                         <span className="text-white">{stats.orderCount} Orders</span>
                                     </div>
                                 </div>
@@ -220,19 +220,19 @@ const Dashboard = () => {
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-                            <h3 className="text-xl font-black text-slate-900 mb-6">Partner Insights</h3>
+                            <h3 className="text-xl font-black text-secondary-900 mb-6">Partner Insights</h3>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="p-6 bg-slate-50 rounded-3xl flex items-center space-x-4">
                                     <div className="p-3 bg-white rounded-2xl shadow-sm text-primary-500"><Users size={24} /></div>
                                     <div>
-                                        <p className="text-xs font-bold text-slate-400 uppercase">Customers</p>
+                                        <p className="text-xs font-bold text-secondary-400 uppercase">Customers</p>
                                         <p className="text-xl font-black">{stats.customerCount}</p>
                                     </div>
                                 </div>
                                 <div className="p-6 bg-slate-50 rounded-3xl flex items-center space-x-4">
                                     <div className="p-3 bg-white rounded-2xl shadow-sm text-emerald-500"><Truck size={24} /></div>
                                     <div>
-                                        <p className="text-xs font-bold text-slate-400 uppercase">Suppliers</p>
+                                        <p className="text-xs font-bold text-secondary-400 uppercase">Suppliers</p>
                                         <p className="text-xl font-black">{stats.supplierCount}</p>
                                     </div>
                                 </div>
@@ -240,20 +240,20 @@ const Dashboard = () => {
                         </div>
 
                         <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-                            <h3 className="text-xl font-black text-slate-900 mb-6">Recent POS Transactions</h3>
+                            <h3 className="text-xl font-black text-secondary-900 mb-6">Recent POS Transactions</h3>
                             <div className="space-y-2">
                                 {stats.recentSales.map(sale => (
                                     <div key={sale._id} className="flex items-center justify-between p-4 bg-slate-50/50 hover:bg-slate-50 rounded-2xl transition-colors">
                                         <div className="flex items-center space-x-3">
-                                            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center font-black shadow-sm text-slate-400 text-xs">
+                                            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center font-black shadow-sm text-secondary-400 text-xs">
                                                 {sale.paymentMethod === 'Cash' ? '💵' : '💳'}
                                             </div>
                                             <div>
-                                                <p className="font-bold text-slate-900">{sale.billId}</p>
-                                                <p className="text-xs text-slate-400">{new Date(sale.createdAt).toLocaleTimeString()}</p>
+                                                <p className="font-bold text-secondary-900">{sale.billId}</p>
+                                                <p className="text-xs text-secondary-400">{new Date(sale.createdAt).toLocaleTimeString()}</p>
                                             </div>
                                         </div>
-                                        <span className="font-black text-slate-900">₹{sale.finalAmount.toFixed(2)}</span>
+                                        <span className="font-black text-secondary-900">₹{sale.finalAmount.toFixed(2)}</span>
                                     </div>
                                 ))}
                             </div>

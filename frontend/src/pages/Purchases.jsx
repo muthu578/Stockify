@@ -100,8 +100,8 @@ const Purchases = () => {
         <Layout>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-900">Purchases</h1>
-                    <p className="text-slate-500">Inventory intake and supplier management</p>
+                    <h1 className="text-3xl font-bold text-secondary-900">Purchases</h1>
+                    <p className="text-secondary-500">Inventory intake and supplier management</p>
                 </div>
                 <button
                     onClick={() => setShowModal(true)}
@@ -118,11 +118,11 @@ const Purchases = () => {
                         <table className="w-full text-left">
                             <thead className="bg-slate-50">
                                 <tr>
-                                    <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Purchase ID</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Supplier</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Date</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Total</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Status</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase tracking-wider">Purchase ID</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase tracking-wider">Supplier</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase tracking-wider">Date</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase tracking-wider">Total</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase tracking-wider">Status</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100">
@@ -130,9 +130,9 @@ const Purchases = () => {
                                     <tr><td colSpan="5" className="p-10 text-center animate-pulse">Loading purchases...</td></tr>
                                 ) : purchases.map(pur => (
                                     <tr key={pur._id} className="hover:bg-slate-50/50">
-                                        <td className="px-6 py-4 font-bold text-slate-900">{pur.purchaseId}</td>
+                                        <td className="px-6 py-4 font-bold text-secondary-900">{pur.purchaseId}</td>
                                         <td className="px-6 py-4 font-semibold text-slate-700">{pur.supplier?.name}</td>
-                                        <td className="px-6 py-4 text-slate-500 text-sm">
+                                        <td className="px-6 py-4 text-secondary-500 text-sm">
                                             {new Date(pur.createdAt).toLocaleDateString()}
                                         </td>
                                         <td className="px-6 py-4 font-black">₹{pur.totalAmount.toFixed(2)}</td>
@@ -152,17 +152,17 @@ const Purchases = () => {
             {/* Receive Stock Modal */}
             {showModal && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
+                    <div className="absolute inset-0 bg-secondary-950/60 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
                     <div className="relative bg-white w-full max-w-5xl h-[90vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-200">
                         <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-                            <h3 className="text-2xl font-black text-slate-900">New Purchase Record</h3>
+                            <h3 className="text-2xl font-black text-secondary-900">New Purchase Record</h3>
                             <button onClick={() => setShowModal(false)} className="p-2 hover:bg-slate-200 rounded-full"><Plus className="rotate-45" /></button>
                         </div>
 
                         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
                             {/* Product Selector */}
                             <div className="w-full lg:w-1/3 p-6 border-r border-slate-100 overflow-y-auto bg-white">
-                                <h4 className="font-bold text-slate-900 mb-4 flex items-center">
+                                <h4 className="font-bold text-secondary-900 mb-4 flex items-center">
                                     <Search size={16} className="mr-2" />
                                     Select Products
                                 </h4>
@@ -175,7 +175,7 @@ const Purchases = () => {
                                         >
                                             <div>
                                                 <p className="font-bold text-slate-700 group-hover:text-primary-700">{item.name}</p>
-                                                <p className="text-xs text-slate-400">Stock: {item.stock} {item.unit}</p>
+                                                <p className="text-xs text-secondary-400">Stock: {item.stock} {item.unit}</p>
                                             </div>
                                             <Plus size={16} className="text-slate-300 group-hover:text-primary-500" />
                                         </button>
@@ -187,7 +187,7 @@ const Purchases = () => {
                             <div className="flex-1 p-6 flex flex-col bg-slate-50/30">
                                 <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
-                                        <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Select Supplier</label>
+                                        <label className="block text-xs font-bold text-secondary-400 uppercase tracking-widest mb-2">Select Supplier</label>
                                         <select
                                             className="w-full bg-slate-50 border-none rounded-xl px-4 py-2 font-bold outline-none"
                                             value={selectedSupplier}
@@ -198,7 +198,7 @@ const Purchases = () => {
                                         </select>
                                     </div>
                                     <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
-                                        <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Purchase Date</label>
+                                        <label className="block text-xs font-bold text-secondary-400 uppercase tracking-widest mb-2">Purchase Date</label>
                                         <p className="font-bold text-slate-700 flex items-center py-2 h-10">
                                             <Calendar size={16} className="mr-2 text-primary-500" />
                                             {new Date().toLocaleDateString()}
@@ -211,10 +211,10 @@ const Purchases = () => {
                                         <table className="w-full">
                                             <thead className="bg-slate-50/50 sticky top-0">
                                                 <tr>
-                                                    <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase">Item</th>
-                                                    <th className="px-6 py-4 text-center text-xs font-bold text-slate-400 uppercase">Buy Price</th>
-                                                    <th className="px-6 py-4 text-center text-xs font-bold text-slate-400 uppercase">Qty</th>
-                                                    <th className="px-6 py-4 text-right text-xs font-bold text-slate-400 uppercase">Total</th>
+                                                    <th className="px-6 py-4 text-left text-xs font-bold text-secondary-400 uppercase">Item</th>
+                                                    <th className="px-6 py-4 text-center text-xs font-bold text-secondary-400 uppercase">Buy Price</th>
+                                                    <th className="px-6 py-4 text-center text-xs font-bold text-secondary-400 uppercase">Qty</th>
+                                                    <th className="px-6 py-4 text-right text-xs font-bold text-secondary-400 uppercase">Total</th>
                                                     <th className="w-10"></th>
                                                 </tr>
                                             </thead>
@@ -250,11 +250,11 @@ const Purchases = () => {
                                     <div className="p-8 bg-slate-50/50 border-t border-slate-100">
                                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
                                             <div>
-                                                <p className="text-xs font-bold text-slate-400 uppercase mb-2">Total Amount</p>
-                                                <p className="text-3xl font-black text-slate-900">₹{totalAmount.toFixed(2)}</p>
+                                                <p className="text-xs font-bold text-secondary-400 uppercase mb-2">Total Amount</p>
+                                                <p className="text-3xl font-black text-secondary-900">₹{totalAmount.toFixed(2)}</p>
                                             </div>
                                             <div>
-                                                <p className="text-xs font-bold text-slate-400 uppercase mb-2">Paid Amount</p>
+                                                <p className="text-xs font-bold text-secondary-400 uppercase mb-2">Paid Amount</p>
                                                 <input
                                                     type="number"
                                                     className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2 font-black text-xl outline-none focus:ring-2 focus:ring-primary-500/20"
