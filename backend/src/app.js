@@ -11,6 +11,13 @@ const purchaseRoutes = require('./routes/purchaseRoutes');
 const financeRoutes = require('./routes/financeRoutes');
 const hrRoutes = require('./routes/hrRoutes');
 const masterRoutes = require('./routes/masterRoutes');
+const purchaseOrderRoutes = require('./routes/purchaseOrderRoutes');
+const grnRoutes = require('./routes/grnRoutes');
+const stockTransferRoutes = require('./routes/stockTransferRoutes');
+const machineRoutes = require('./routes/machineRoutes');
+const productionRoutes = require('./routes/productionRoutes');
+const proformaInvoiceRoutes = require('./routes/proformaInvoiceRoutes');
+const deliveryChallanRoutes = require('./routes/deliveryChallanRoutes');
 
 dotenv.config();
 
@@ -29,6 +36,13 @@ app.use('/api/purchases', purchaseRoutes);
 app.use('/api/finance', financeRoutes);
 app.use('/api/hr', hrRoutes);
 app.use('/api/masters', masterRoutes);
+app.use('/api/purchase-orders', purchaseOrderRoutes);
+app.use('/api/grn', grnRoutes);
+app.use('/api/stock-transfers', stockTransferRoutes);
+app.use('/api/machines', machineRoutes);
+app.use('/api/productions', productionRoutes);
+app.use('/api/proforma-invoices', proformaInvoiceRoutes);
+app.use('/api/delivery-challans', deliveryChallanRoutes);
 
 app.get('/', (req, res) => {
     res.send('API is running...');

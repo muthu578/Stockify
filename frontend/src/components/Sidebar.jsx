@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
     LayoutDashboard,
@@ -25,6 +25,27 @@ const Sidebar = () => {
     const { user, logout } = useAuth();
     const location = useLocation();
     const [expandedMenus, setExpandedMenus] = useState({});
+
+    // Auto-expand the parent menu when a child route is active
+    useEffect(() => {
+        const pathToMenu = {
+            '/masters': 'Master Management',
+            '/purchases': 'Purchase Mgmt',
+            '/inventory': 'Inventory Mgmt',
+            '/production': 'Production Mgmt',
+            '/sales': 'Sales Management',
+            '/billing': 'Sales Management',
+            '/sales-analytics': 'Sales Management',
+            '/reporting': 'Reporting',
+        };
+
+        for (const [prefix, menuName] of Object.entries(pathToMenu)) {
+            if (location.pathname.startsWith(prefix)) {
+                setExpandedMenus(prev => ({ ...prev, [menuName]: true }));
+                break;
+            }
+        }
+    }, [location.pathname]);
 
     const toggleMenu = (name) => {
         setExpandedMenus(prev => ({
@@ -122,7 +143,7 @@ const Sidebar = () => {
                 </div>
             </div>
 
-            <nav className="flex-1 mt-4 px-3 space-y-1 overflow-y-auto no-scrollbar pb-20">
+            <nav className="flex-1 mt-4 px-3 space-y-1 overflow-y-auto no-scrollbar min-h-0 pb-4">
                 {menuItems.map((item, index) => {
                     if (!hasPermission(item.roles)) return null;
 
@@ -156,7 +177,7 @@ const Sidebar = () => {
                                                         block px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200
                                                         ${isActive
                                                             ? 'bg-white text-primary-700 shadow-md font-bold'
-                                                            : 'text-primary-200 hover:bg-white/10 hover:text-white'}
+                                                            : 'text-[#d4dadfe6] hover:bg-white/10 hover:text-white'}
                                                     `}
                                                 >
                                                     {subItem.name}
@@ -187,10 +208,10 @@ const Sidebar = () => {
                 })}
             </nav>
 
-            <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/20 to-transparent backdrop-blur-sm">
-                <div className="bg-black/20 rounded-2xl p-4 border border-white/5 backdrop-blur-md">
+            <div className="shrink-0 p-3 border-t border-white/10">
+                <div className="bg-white/5 rounded-2xl p-3 border border-white/5">
                     <div className="flex items-center space-x-3 mb-3">
-                        <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-xs font-black text-primary-700 shadow-md">
+                        <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-xs font-black text-primary-700 shadow-md shrink-0">
                             {user?.name?.charAt(0)}
                         </div>
                         <div className="min-w-0 overflow-hidden">

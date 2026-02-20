@@ -20,9 +20,14 @@ const Settings = () => {
 
     return (
         <Layout>
-            <div className="mb-8">
-                <h1 className="text-3xl font-bold text-secondary-900">Settings</h1>
-                <p className="text-secondary-500">System configuration and preferences</p>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <div className="shrink-0">
+                    <h1 className="text-3xl font-bold text-secondary-900 flex items-center gap-3">
+                        <SettingsIcon className="text-primary-500" />
+                        Settings
+                    </h1>
+                    <p className="text-secondary-500">System configuration and preferences</p>
+                </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

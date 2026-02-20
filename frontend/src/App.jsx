@@ -18,6 +18,17 @@ import Register from './pages/Register';
 import PlaceholderPage from './pages/PlaceholderPage';
 import MasterManagement from './pages/MasterManagement';
 import UserManagement from './pages/UserManagement';
+import POGeneration from './pages/POGeneration';
+import GRNEntry from './pages/GRNEntry';
+import InventoryReport from './pages/InventoryReport';
+import StockTransfer from './pages/StockTransfer';
+import MachineMaster from './pages/MachineMaster';
+import ProductionDetails from './pages/ProductionDetails';
+import ProformaInvoice from './pages/ProformaInvoice';
+import DeliveryChallan from './pages/DeliveryChallan';
+import DailyStocks from './pages/DailyStocks';
+import TotalStock from './pages/TotalStock';
+import BatchWiseReport from './pages/BatchWiseReport';
 
 const ProtectedRoute = ({ children, adminOnly = false }) => {
     const { user, isAdmin } = useAuth();
@@ -53,28 +64,28 @@ function App() {
                         <Route path="/masters/settings" element={<ProtectedRoute adminOnly={true}><Settings /></ProtectedRoute>} />
 
                         {/* Purchase Management */}
-                        <Route path="/purchases/po" element={<ProtectedRoute adminOnly={true}><PlaceholderPage title="PO Generation" /></ProtectedRoute>} />
-                        <Route path="/purchases/grn" element={<ProtectedRoute adminOnly={true}><PlaceholderPage title="GRN Entry" /></ProtectedRoute>} />
+                        <Route path="/purchases/po" element={<ProtectedRoute adminOnly={true}><POGeneration /></ProtectedRoute>} />
+                        <Route path="/purchases/grn" element={<ProtectedRoute adminOnly={true}><GRNEntry /></ProtectedRoute>} />
 
                         {/* Inventory Management */}
                         <Route path="/inventory/product-master" element={<ProtectedRoute><Inventory /></ProtectedRoute>} />
-                        <Route path="/inventory/report" element={<ProtectedRoute><PlaceholderPage title="Inventory Report" /></ProtectedRoute>} />
-                        <Route path="/inventory/stock-transfer" element={<ProtectedRoute><PlaceholderPage title="Stock Transfer" /></ProtectedRoute>} />
+                        <Route path="/inventory/report" element={<ProtectedRoute><InventoryReport /></ProtectedRoute>} />
+                        <Route path="/inventory/stock-transfer" element={<ProtectedRoute><StockTransfer /></ProtectedRoute>} />
 
                         {/* Production Management */}
-                        <Route path="/production/machine-master" element={<ProtectedRoute adminOnly={true}><PlaceholderPage title="Machine Master" /></ProtectedRoute>} />
-                        <Route path="/production/details" element={<ProtectedRoute adminOnly={true}><PlaceholderPage title="Production Details" /></ProtectedRoute>} />
+                        <Route path="/production/machine-master" element={<ProtectedRoute adminOnly={true}><MachineMaster /></ProtectedRoute>} />
+                        <Route path="/production/details" element={<ProtectedRoute adminOnly={true}><ProductionDetails /></ProtectedRoute>} />
 
                         {/* Sales Management */}
-                        <Route path="/sales/performa-invoice" element={<ProtectedRoute><PlaceholderPage title="Performa Invoice" /></ProtectedRoute>} />
-                        <Route path="/sales/delivery-challan" element={<ProtectedRoute><PlaceholderPage title="Delivery Challan" /></ProtectedRoute>} />
+                        <Route path="/sales/performa-invoice" element={<ProtectedRoute><ProformaInvoice /></ProtectedRoute>} />
+                        <Route path="/sales/delivery-challan" element={<ProtectedRoute><DeliveryChallan /></ProtectedRoute>} />
                         <Route path="/billing" element={<ProtectedRoute><Billing /></ProtectedRoute>} />
                         <Route path="/sales-analytics" element={<ProtectedRoute adminOnly={true}><SalesAnalytics /></ProtectedRoute>} />
 
                         {/* Reporting */}
-                        <Route path="/reporting/daily-stocks" element={<ProtectedRoute adminOnly={true}><PlaceholderPage title="Daily Stocks" /></ProtectedRoute>} />
-                        <Route path="/reporting/total-stock" element={<ProtectedRoute adminOnly={true}><PlaceholderPage title="Total Stock" /></ProtectedRoute>} />
-                        <Route path="/reporting/batch-wise" element={<ProtectedRoute adminOnly={true}><PlaceholderPage title="Batch-wise Item Report" /></ProtectedRoute>} />
+                        <Route path="/reporting/daily-stocks" element={<ProtectedRoute adminOnly={true}><DailyStocks /></ProtectedRoute>} />
+                        <Route path="/reporting/total-stock" element={<ProtectedRoute adminOnly={true}><TotalStock /></ProtectedRoute>} />
+                        <Route path="/reporting/batch-wise" element={<ProtectedRoute adminOnly={true}><BatchWiseReport /></ProtectedRoute>} />
 
                         {/* Legacy/Direct Routes */}
                         <Route path="/inventory" element={<Navigate to="/inventory/product-master" />} />

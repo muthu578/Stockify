@@ -95,15 +95,18 @@ const Finance = () => {
     return (
         <Layout>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-                <div>
-                    <h1 className="text-3xl font-bold text-secondary-900">Finance & Accounts</h1>
+                <div className="shrink-0">
+                    <h1 className="text-3xl font-bold text-secondary-900 flex items-center gap-3">
+                        <Landmark className="text-primary-500" />
+                        Finance & Accounts
+                    </h1>
                     <p className="text-secondary-500">Manage bank accounts, cash flow, and business expenses</p>
                 </div>
                 <button
                     onClick={() => setShowModal(true)}
-                    className="flex items-center space-x-2 px-6 py-3 bg-primary-600 text-white rounded-2xl hover:bg-primary-500 transition-all font-bold shadow-lg shadow-primary-600/20"
+                    className="flex items-center space-x-2 px-5 py-2.5 bg-primary-600 text-white rounded-xl hover:bg-primary-500 transition-all font-bold shadow-lg shadow-primary-600/20 shrink-0 text-sm"
                 >
-                    <Plus size={20} />
+                    <Plus size={18} />
                     <span>{activeTab === 'accounts' ? 'Add Account' : 'New Expense'}</span>
                 </button>
             </div>

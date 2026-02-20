@@ -49,8 +49,11 @@ const SalesAnalytics = () => {
     return (
         <Layout>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-                <div>
-                    <h1 className="text-3xl font-bold text-secondary-900">Sales Analytics</h1>
+                <div className="shrink-0">
+                    <h1 className="text-3xl font-bold text-secondary-900 flex items-center gap-3">
+                        <TrendingUp className="text-primary-500" />
+                        Sales Analytics
+                    </h1>
                     <p className="text-secondary-500">Deep dive into sold items and category performance</p>
                 </div>
             </div>

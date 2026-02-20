@@ -158,63 +158,58 @@ const Inventory = () => {
     return (
         <Layout>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-                <div>
+                <div className="shrink-0">
                     <h1 className="text-3xl font-bold text-secondary-900">Inventory</h1>
                     <p className="text-secondary-500">Manage your product stock and details</p>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 flex-1 justify-end flex-wrap">
+                    <div className="relative flex-1 min-w-[200px] max-w-xs">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary-400" size={16} />
+                        <input
+                            type="text"
+                            placeholder="Search by name or barcode..."
+                            className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500/20 outline-none text-sm font-medium"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </div>
+                    <div className="flex items-center">
+                        <select
+                            className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-medium outline-none"
+                            value={categoryFilter}
+                            onChange={(e) => setCategoryFilter(e.target.value)}
+                        >
+                            <option value="All">All Categories</option>
+                            <option value="Grocery">Grocery</option>
+                            <option value="Beverages">Beverages</option>
+                            <option value="Snacks">Snacks</option>
+                            <option value="Dairy">Dairy</option>
+                            <option value="Personal Care">Personal Care</option>
+                        </select>
+                    </div>
                     <button
                         onClick={handleExport}
-                        className="flex items-center space-x-2 px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 transition-all font-medium"
+                        className="flex items-center space-x-2 px-4 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 transition-all font-medium text-sm shrink-0"
                     >
-                        <Download size={18} />
+                        <Download size={16} />
                         <span>Export</span>
                     </button>
                     {isAdmin() && (
                         <>
-                            <label className="flex items-center space-x-2 px-4 py-2 bg-secondary-950 text-white rounded-xl hover:bg-secondary-800 transition-all font-medium cursor-pointer">
-                                <Upload size={18} />
+                            <label className="flex items-center space-x-2 px-4 py-2.5 bg-secondary-950 text-white rounded-xl hover:bg-secondary-800 transition-all font-medium cursor-pointer text-sm shrink-0">
+                                <Upload size={16} />
                                 <span>Bulk Upload</span>
                                 <input type="file" accept=".csv" className="hidden" onChange={handleBulkUpload} />
                             </label>
                             <button
                                 onClick={() => handleOpenModal()}
-                                className="flex items-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-xl hover:bg-primary-500 transition-all font-medium shadow-lg shadow-primary-600/20"
+                                className="flex items-center space-x-2 px-5 py-2.5 bg-primary-600 text-white rounded-xl hover:bg-primary-500 transition-all font-bold shadow-lg shadow-primary-600/20 text-sm shrink-0"
                             >
                                 <Plus size={18} />
                                 <span>Add Item</span>
                             </button>
                         </>
                     )}
-                </div>
-            </div>
-
-            {/* Filters */}
-            <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm mb-6 flex flex-wrap items-center gap-4">
-                <div className="relative flex-1 min-w-[300px]">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary-400" size={18} />
-                    <input
-                        type="text"
-                        placeholder="Search by name or barcode..."
-                        className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-primary-500/20 outline-none"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
-                <div className="flex items-center space-x-2">
-                    <Filter size={18} className="text-secondary-400" />
-                    <select
-                        className="bg-slate-50 border-none rounded-xl px-4 py-2.5 text-sm font-medium outline-none"
-                        value={categoryFilter}
-                        onChange={(e) => setCategoryFilter(e.target.value)}
-                    >
-                        <option value="All">All Categories</option>
-                        <option value="Grocery">Grocery</option>
-                        <option value="Beverages">Beverages</option>
-                        <option value="Snacks">Snacks</option>
-                        <option value="Dairy">Dairy</option>
-                        <option value="Personal Care">Personal Care</option>
-                    </select>
                 </div>
             </div>
 

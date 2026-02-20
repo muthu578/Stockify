@@ -101,29 +101,29 @@ const Contacts = ({ type }) => {
     return (
         <Layout>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-                <div>
+                <div className="shrink-0">
                     <h1 className="text-3xl font-bold text-secondary-900">{type}s</h1>
                     <p className="text-secondary-500">Manage your {type.toLowerCase()} directory and ledgers</p>
                 </div>
-                <button
-                    onClick={() => handleOpenModal()}
-                    className="flex items-center space-x-2 px-6 py-3 bg-primary-600 text-white rounded-2xl hover:bg-primary-500 transition-all font-bold shadow-lg shadow-primary-600/20"
-                >
-                    <UserPlus size={20} />
-                    <span>Add {type}</span>
-                </button>
-            </div>
 
-            <div className="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm mb-8">
-                <div className="relative">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-secondary-400" size={20} />
-                    <input
-                        type="text"
-                        placeholder={`Search ${type.toLowerCase()}s by name or phone...`}
-                        className="w-full pl-12 pr-6 py-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-primary-500/20 outline-none font-medium"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+                <div className="flex items-center gap-3 flex-1 max-w-xl ml-auto">
+                    <div className="relative flex-1">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary-400" size={16} />
+                        <input
+                            type="text"
+                            placeholder={`Search ${type.toLowerCase()}s by name or phone...`}
+                            className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500/20 outline-none text-sm font-medium"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </div>
+                    <button
+                        onClick={() => handleOpenModal()}
+                        className="flex items-center space-x-2 px-5 py-2.5 bg-primary-600 text-white rounded-xl hover:bg-primary-500 transition-all font-bold shadow-lg shadow-primary-600/20 shrink-0 text-sm"
+                    >
+                        <UserPlus size={18} />
+                        <span>Add {type}</span>
+                    </button>
                 </div>
             </div>
 

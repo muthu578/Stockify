@@ -3,6 +3,7 @@ import {
     Users,
     UserPlus,
     Trash2,
+    Search,
 } from 'lucide-react';
 import api from '../services/api';
 import Layout from '../components/Layout';
@@ -12,6 +13,7 @@ const UserManagement = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
     const [formData, setFormData] = useState({
         name: '',
         username: '',
@@ -61,28 +63,44 @@ const UserManagement = () => {
         }
     };
 
+    const filteredUsers = users.filter(user =>
+        user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.username.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <Layout>
-            <div className="mb-8">
-                <h1 className="text-3xl font-bold text-secondary-900">User Management</h1>
-                <p className="text-secondary-500">Manage system users and their roles</p>
-            </div>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <div className="shrink-0">
+                    <h1 className="text-3xl font-bold text-secondary-900 flex items-center gap-3">
+                        <Users className="text-primary-500" />
+                        User Management
+                    </h1>
+                    <p className="text-secondary-500">Manage system users and their roles</p>
+                </div>
 
-            <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
-                <div className="p-6 border-b border-slate-100 flex justify-between items-center">
-                    <div className="flex items-center space-x-3">
-                        <Users className="text-primary-500" size={20} />
-                        <h3 className="text-lg font-bold">All Users</h3>
+                <div className="flex items-center gap-3 flex-1 max-w-xl ml-auto">
+                    <div className="relative flex-1">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary-400" size={16} />
+                        <input
+                            type="text"
+                            placeholder="Search by name or username..."
+                            className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500/20 outline-none text-sm font-medium"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
                     </div>
                     <button
                         onClick={() => setShowModal(true)}
-                        className="flex items-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-xl hover:bg-primary-500 transition-all text-sm font-semibold"
+                        className="flex items-center space-x-2 px-5 py-2.5 bg-primary-600 text-white rounded-xl hover:bg-primary-500 transition-all font-bold shadow-lg shadow-primary-600/20 shrink-0 text-sm"
                     >
-                        <UserPlus size={16} />
-                        <span>Add New User</span>
+                        <UserPlus size={18} />
+                        <span>Add User</span>
                     </button>
                 </div>
+            </div>
 
+            <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead className="bg-slate-50">
@@ -96,7 +114,7 @@ const UserManagement = () => {
                         <tbody className="divide-y divide-slate-100">
                             {loading ? (
                                 <tr><td colSpan="4" className="p-10 text-center animate-pulse">Loading users...</td></tr>
-                            ) : users.map(user => (
+                            ) : filteredUsers.map(user => (
                                 <tr key={user._id} className="hover:bg-slate-50/50">
                                     <td className="px-6 py-4 font-semibold">{user.name}</td>
                                     <td className="px-6 py-4 text-secondary-500">{user.username}</td>
