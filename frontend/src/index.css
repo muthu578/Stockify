@@ -7,7 +7,8 @@
 @layer base {
   html {
     font-family: 'Outfit', 'Inter', sans-serif;
-    @apply text-slate-600 bg-slate-50;
+    color: #475569;
+    background-color: #f8fafc;
   }
 
   h1,

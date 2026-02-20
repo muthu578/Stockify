@@ -32,32 +32,43 @@ const loginUser = async (req, res) => {
 // @route   POST /api/auth/register
 // @access  Private/Admin
 const registerUser = async (req, res) => {
-    const { name, username, password, role } = req.body;
+    try {
+        const { name, username, password, role } = req.body;
 
-    const userExists = await User.findOne({ username });
+        // Basic validation
+        if (!name || !username || !password) {
+            res.status(400).json({ message: 'Please include all fields' });
+            return;
+        }
 
-    if (userExists) {
-        res.status(400).json({ message: 'User already exists' });
-        return;
-    }
+        const userExists = await User.findOne({ username });
 
-    const user = await User.create({
-        name,
-        username,
-        password,
-        role,
-    });
+        if (userExists) {
+            res.status(400).json({ message: 'User already exists' });
+            return;
+        }
 
-    if (user) {
-        res.status(201).json({
-            _id: user._id,
-            name: user.name,
-            username: user.username,
-            role: user.role,
-            token: generateToken(user._id),
+        const user = await User.create({
+            name,
+            username,
+            password,
+            role,
         });
-    } else {
-        res.status(400).json({ message: 'Invalid user data' });
+
+        if (user) {
+            res.status(201).json({
+                _id: user._id,
+                name: user.name,
+                username: user.username,
+                role: user.role,
+                token: generateToken(user._id),
+            });
+        } else {
+            res.status(400).json({ message: 'Invalid user data' });
+        }
+    } catch (error) {
+        console.error('Error in registerUser:', error);
+        res.status(500).json({ message: 'Server error: ' + error.message });
     }
 };
 

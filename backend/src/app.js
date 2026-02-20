@@ -10,6 +10,7 @@ const contactRoutes = require('./routes/contactRoutes');
 const purchaseRoutes = require('./routes/purchaseRoutes');
 const financeRoutes = require('./routes/financeRoutes');
 const hrRoutes = require('./routes/hrRoutes');
+const masterRoutes = require('./routes/masterRoutes');
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use('/api/contacts', contactRoutes);
 app.use('/api/purchases', purchaseRoutes);
 app.use('/api/finance', financeRoutes);
 app.use('/api/hr', hrRoutes);
+app.use('/api/masters', masterRoutes);
 
 app.get('/', (req, res) => {
     res.send('API is running...');

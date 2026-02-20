@@ -15,6 +15,9 @@ import Finance from './pages/Finance';
 import HR from './pages/HR';
 import SalesAnalytics from './pages/SalesAnalytics';
 import Register from './pages/Register';
+import PlaceholderPage from './pages/PlaceholderPage';
+import MasterManagement from './pages/MasterManagement';
+import UserManagement from './pages/UserManagement';
 
 const ProtectedRoute = ({ children, adminOnly = false }) => {
     const { user, isAdmin } = useAuth();
@@ -39,72 +42,50 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
 
-                        <Route path="/dashboard" element={
-                            <ProtectedRoute>
-                                <Dashboard />
-                            </ProtectedRoute>
-                        } />
+                        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
 
-                        <Route path="/inventory" element={
-                            <ProtectedRoute>
-                                <Inventory />
-                            </ProtectedRoute>
-                        } />
+                        {/* Master Management */}
+                        <Route path="/masters/storage-location" element={<ProtectedRoute adminOnly={true}><MasterManagement type="location" /></ProtectedRoute>} />
+                        <Route path="/masters/product-category" element={<ProtectedRoute adminOnly={true}><MasterManagement type="category" /></ProtectedRoute>} />
+                        <Route path="/masters/users" element={<ProtectedRoute adminOnly={true}><UserManagement /></ProtectedRoute>} />
+                        <Route path="/masters/customers" element={<ProtectedRoute><Contacts type="Customer" /></ProtectedRoute>} />
+                        <Route path="/masters/suppliers" element={<ProtectedRoute adminOnly={true}><Contacts type="Supplier" /></ProtectedRoute>} />
+                        <Route path="/masters/settings" element={<ProtectedRoute adminOnly={true}><Settings /></ProtectedRoute>} />
 
-                        <Route path="/billing" element={
-                            <ProtectedRoute>
-                                <Billing />
-                            </ProtectedRoute>
-                        } />
+                        {/* Purchase Management */}
+                        <Route path="/purchases/po" element={<ProtectedRoute adminOnly={true}><PlaceholderPage title="PO Generation" /></ProtectedRoute>} />
+                        <Route path="/purchases/grn" element={<ProtectedRoute adminOnly={true}><PlaceholderPage title="GRN Entry" /></ProtectedRoute>} />
 
-                        <Route path="/reports" element={
-                            <ProtectedRoute adminOnly={true}>
-                                <Reports />
-                            </ProtectedRoute>
-                        } />
+                        {/* Inventory Management */}
+                        <Route path="/inventory/product-master" element={<ProtectedRoute><Inventory /></ProtectedRoute>} />
+                        <Route path="/inventory/report" element={<ProtectedRoute><PlaceholderPage title="Inventory Report" /></ProtectedRoute>} />
+                        <Route path="/inventory/stock-transfer" element={<ProtectedRoute><PlaceholderPage title="Stock Transfer" /></ProtectedRoute>} />
 
-                        <Route path="/sales-analytics" element={
-                            <ProtectedRoute adminOnly={true}>
-                                <SalesAnalytics />
-                            </ProtectedRoute>
-                        } />
+                        {/* Production Management */}
+                        <Route path="/production/machine-master" element={<ProtectedRoute adminOnly={true}><PlaceholderPage title="Machine Master" /></ProtectedRoute>} />
+                        <Route path="/production/details" element={<ProtectedRoute adminOnly={true}><PlaceholderPage title="Production Details" /></ProtectedRoute>} />
 
-                        <Route path="/register" element={
-                            <ProtectedRoute adminOnly={true}>
-                                <Register />
-                            </ProtectedRoute>
-                        } />
+                        {/* Sales Management */}
+                        <Route path="/sales/performa-invoice" element={<ProtectedRoute><PlaceholderPage title="Performa Invoice" /></ProtectedRoute>} />
+                        <Route path="/sales/delivery-challan" element={<ProtectedRoute><PlaceholderPage title="Delivery Challan" /></ProtectedRoute>} />
+                        <Route path="/billing" element={<ProtectedRoute><Billing /></ProtectedRoute>} />
+                        <Route path="/sales-analytics" element={<ProtectedRoute adminOnly={true}><SalesAnalytics /></ProtectedRoute>} />
 
-                        <Route path="/settings" element={
-                            <ProtectedRoute adminOnly={true}>
-                                <Settings />
-                            </ProtectedRoute>
-                        } />
-                        <Route path="/purchases" element={
-                            <ProtectedRoute adminOnly={true}>
-                                <Purchases />
-                            </ProtectedRoute>
-                        } />
-                        <Route path="/accounts" element={
-                            <ProtectedRoute adminOnly={true}>
-                                <Finance />
-                            </ProtectedRoute>
-                        } />
-                        <Route path="/hr" element={
-                            <ProtectedRoute adminOnly={true}>
-                                <HR />
-                            </ProtectedRoute>
-                        } />
-                        <Route path="/customers" element={
-                            <ProtectedRoute>
-                                <Contacts type="Customer" />
-                            </ProtectedRoute>
-                        } />
-                        <Route path="/suppliers" element={
-                            <ProtectedRoute adminOnly={true}>
-                                <Contacts type="Supplier" />
-                            </ProtectedRoute>
-                        } />
+                        {/* Reporting */}
+                        <Route path="/reporting/daily-stocks" element={<ProtectedRoute adminOnly={true}><PlaceholderPage title="Daily Stocks" /></ProtectedRoute>} />
+                        <Route path="/reporting/total-stock" element={<ProtectedRoute adminOnly={true}><PlaceholderPage title="Total Stock" /></ProtectedRoute>} />
+                        <Route path="/reporting/batch-wise" element={<ProtectedRoute adminOnly={true}><PlaceholderPage title="Batch-wise Item Report" /></ProtectedRoute>} />
+
+                        {/* Legacy/Direct Routes */}
+                        <Route path="/inventory" element={<Navigate to="/inventory/product-master" />} />
+                        <Route path="/customers" element={<Navigate to="/masters/customers" />} />
+                        <Route path="/suppliers" element={<Navigate to="/masters/suppliers" />} />
+                        <Route path="/settings" element={<Navigate to="/masters/settings" />} />
+                        <Route path="/reports" element={<ProtectedRoute adminOnly={true}><Reports /></ProtectedRoute>} />
+                        <Route path="/purchases" element={<ProtectedRoute adminOnly={true}><Purchases /></ProtectedRoute>} />
+                        <Route path="/accounts" element={<ProtectedRoute adminOnly={true}><Finance /></ProtectedRoute>} />
+                        <Route path="/hr" element={<ProtectedRoute adminOnly={true}><HR /></ProtectedRoute>} />
+                        <Route path="/register" element={<ProtectedRoute adminOnly={true}><Register /></ProtectedRoute>} />
 
                         <Route path="/" element={<Navigate to="/dashboard" />} />
                     </Routes>
