@@ -29,10 +29,13 @@ const Inventory = () => {
     const [formData, setFormData] = useState({
         name: '',
         barcode: '',
+        brand: '',
+        hsnCode: '',
         category: '',
         price: '',
         buyPrice: '',
         stock: '',
+        minStockLevel: 10,
         unit: 'pcs',
         expiryDate: ''
     });
@@ -99,10 +102,13 @@ const Inventory = () => {
             setFormData({
                 name: item.name,
                 barcode: item.barcode || '',
+                brand: item.brand || '',
+                hsnCode: item.hsnCode || '',
                 category: item.category,
                 price: item.price,
                 buyPrice: item.buyPrice || '',
                 stock: item.stock,
+                minStockLevel: item.minStockLevel || 10,
                 unit: item.unit || 'pcs',
                 expiryDate: item.expiryDate ? new Date(item.expiryDate).toISOString().split('T')[0] : ''
             });
@@ -111,10 +117,13 @@ const Inventory = () => {
             setFormData({
                 name: '',
                 barcode: '',
+                brand: '',
+                hsnCode: '',
                 category: '',
                 price: '',
                 buyPrice: '',
                 stock: '',
+                minStockLevel: 10,
                 unit: 'pcs',
                 expiryDate: ''
             });
@@ -242,7 +251,10 @@ const Inventory = () => {
                                     <tr key={item._id} className="hover:bg-slate-50/50 transition-colors group">
                                         <td className="px-6 py-4">
                                             <div className="flex flex-col">
-                                                <span className="font-semibold text-secondary-900">{item.name}</span>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="font-semibold text-secondary-900">{item.name}</span>
+                                                    {item.brand && <span className="text-[10px] font-bold px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded uppercase tracking-wider">{item.brand}</span>}
+                                                </div>
                                                 <span className="text-xs text-secondary-400 font-mono">{item.barcode || 'N/A'}</span>
                                             </div>
                                         </td>
@@ -347,6 +359,24 @@ const Inventory = () => {
                                     />
                                 </div>
                                 <div>
+                                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Brand</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-4 py-2.5 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-primary-500/20 outline-none"
+                                        value={formData.brand}
+                                        onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">HSN Code</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-4 py-2.5 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-primary-500/20 outline-none"
+                                        value={formData.hsnCode}
+                                        onChange={(e) => setFormData({ ...formData, hsnCode: e.target.value })}
+                                    />
+                                </div>
+                                <div>
                                     <label className="block text-sm font-semibold text-slate-700 mb-1.5">Category</label>
                                     <select
                                         required
@@ -392,6 +422,16 @@ const Inventory = () => {
                                         className="w-full px-4 py-2.5 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-primary-500/20 outline-none"
                                         value={formData.stock}
                                         onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Min Stock (Alert)</label>
+                                    <input
+                                        type="number"
+                                        required
+                                        className="w-full px-4 py-2.5 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-primary-500/20 outline-none"
+                                        value={formData.minStockLevel}
+                                        onChange={(e) => setFormData({ ...formData, minStockLevel: e.target.value })}
                                     />
                                 </div>
                                 <div>

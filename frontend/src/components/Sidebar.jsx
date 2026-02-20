@@ -59,72 +59,72 @@ const Sidebar = () => {
             name: 'Dashboard',
             icon: LayoutDashboard,
             path: '/dashboard',
-            roles: ['Admin', 'Cashier']
+            roles: ['Admin', 'Manager', 'Cashier']
         },
         {
             name: 'Master Management',
             icon: Database,
-            roles: ['Admin', 'Cashier'],
+            roles: ['Admin', 'Manager', 'Cashier'],
             subItems: [
-                { name: 'Storage Location', path: '/masters/storage-location', roles: ['Admin'] },
-                { name: 'Product Category', path: '/masters/product-category', roles: ['Admin'] },
+                { name: 'Storage Location', path: '/masters/storage-location', roles: ['Admin', 'Manager'] },
+                { name: 'Product Category', path: '/masters/product-category', roles: ['Admin', 'Manager'] },
                 { name: 'User Management', path: '/masters/users', roles: ['Admin'] },
-                { name: 'Customer Master', path: '/masters/customers', roles: ['Admin', 'Cashier'] },
-                { name: 'Supplier Master', path: '/masters/suppliers', roles: ['Admin'] },
+                { name: 'Customer Master', path: '/masters/customers', roles: ['Admin', 'Manager', 'Cashier'] },
+                { name: 'Supplier Master', path: '/masters/suppliers', roles: ['Admin', 'Manager'] },
                 { name: 'Settings', path: '/masters/settings', roles: ['Admin'] },
             ]
         },
         {
             name: 'Purchase Mgmt',
             icon: Download,
-            roles: ['Admin'],
+            roles: ['Admin', 'Manager'],
             subItems: [
-                { name: 'PO Generation', path: '/purchases/po', roles: ['Admin'] },
-                { name: 'GRN Entry', path: '/purchases/grn', roles: ['Admin'] },
+                { name: 'PO Generation', path: '/purchases/po', roles: ['Admin', 'Manager'] },
+                { name: 'GRN Entry', path: '/purchases/grn', roles: ['Admin', 'Manager'] },
             ]
         },
         {
             name: 'Inventory Mgmt',
             icon: Package,
-            roles: ['Admin', 'Cashier'],
+            roles: ['Admin', 'Manager', 'Cashier'],
             subItems: [
-                { name: 'Product Master', path: '/inventory/product-master', roles: ['Admin', 'Cashier'] },
-                { name: 'Inventory Report', path: '/inventory/report', roles: ['Admin', 'Cashier'] },
-                { name: 'Stock Transfer', path: '/inventory/stock-transfer', roles: ['Admin', 'Cashier'] },
+                { name: 'Product Master', path: '/inventory/product-master', roles: ['Admin', 'Manager', 'Cashier'] },
+                { name: 'Inventory Report', path: '/inventory/report', roles: ['Admin', 'Manager', 'Cashier'] },
+                { name: 'Stock Transfer', path: '/inventory/stock-transfer', roles: ['Admin', 'Manager', 'Cashier'] },
             ]
         },
         {
             name: 'Production Mgmt',
             icon: Factory,
-            roles: ['Admin'],
+            roles: ['Admin', 'Manager'],
             subItems: [
-                { name: 'Machine Master', path: '/production/machine-master', roles: ['Admin'] },
-                { name: 'Production Details', path: '/production/details', roles: ['Admin'] },
+                { name: 'Machine Master', path: '/production/machine-master', roles: ['Admin', 'Manager'] },
+                { name: 'Production Details', path: '/production/details', roles: ['Admin', 'Manager'] },
             ]
         },
         {
             name: 'Sales Management',
             icon: ShoppingCart,
-            roles: ['Admin', 'Cashier'],
+            roles: ['Admin', 'Manager', 'Cashier'],
             subItems: [
-                { name: 'Performa Invoice', path: '/sales/performa-invoice', roles: ['Admin', 'Cashier'] },
-                { name: 'Delivery Challan', path: '/sales/delivery-challan', roles: ['Admin', 'Cashier'] },
-                { name: 'POS (Billing)', path: '/billing', roles: ['Admin', 'Cashier'] },
-                { name: 'Sales Analytics', path: '/sales-analytics', roles: ['Admin'] },
+                { name: 'Performa Invoice', path: '/sales/performa-invoice', roles: ['Admin', 'Manager', 'Cashier'] },
+                { name: 'Delivery Challan', path: '/sales/delivery-challan', roles: ['Admin', 'Manager', 'Cashier'] },
+                { name: 'POS (Billing)', path: '/billing', roles: ['Admin', 'Manager', 'Cashier'] },
+                { name: 'Sales Analytics', path: '/sales-analytics', roles: ['Admin', 'Manager'] },
             ]
         },
         {
             name: 'Reporting',
             icon: BarChart3,
-            roles: ['Admin'],
+            roles: ['Admin', 'Manager'],
             subItems: [
-                { name: 'Daily Stocks', path: '/reporting/daily-stocks', roles: ['Admin'] },
-                { name: 'Total Stock', path: '/reporting/total-stock', roles: ['Admin'] },
-                { name: 'Batch-wise Report', path: '/reporting/batch-wise', roles: ['Admin'] },
+                { name: 'Daily Stocks', path: '/reporting/daily-stocks', roles: ['Admin', 'Manager'] },
+                { name: 'Total Stock', path: '/reporting/total-stock', roles: ['Admin', 'Manager'] },
+                { name: 'Batch-wise Report', path: '/reporting/batch-wise', roles: ['Admin', 'Manager'] },
             ]
         },
-        { name: 'HR / Payroll', icon: Briefcase, path: '/hr', roles: ['Admin'] },
-        { name: 'Finance', icon: Landmark, path: '/accounts', roles: ['Admin'] },
+        { name: 'HR / Payroll', icon: Briefcase, path: '/hr', roles: ['Admin', 'Manager'] },
+        { name: 'Finance', icon: Landmark, path: '/accounts', roles: ['Admin', 'Manager'] },
     ];
 
     const hasPermission = (roles) => {

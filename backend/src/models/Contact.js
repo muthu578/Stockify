@@ -15,6 +15,9 @@ const contactSchema = new mongoose.Schema({
     address: {
         type: String,
     },
+    gstin: {
+        type: String,
+    },
     type: {
         type: String,
         enum: ['Customer', 'Supplier'],

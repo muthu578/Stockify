@@ -24,6 +24,7 @@ const Contacts = ({ type }) => {
         email: '',
         phone: '',
         address: '',
+        gstin: '',
         type: type
     });
 
@@ -78,6 +79,7 @@ const Contacts = ({ type }) => {
                 email: contact.email || '',
                 phone: contact.phone,
                 address: contact.address || '',
+                gstin: contact.gstin || '',
                 type: type
             });
         } else {
@@ -87,6 +89,7 @@ const Contacts = ({ type }) => {
                 email: '',
                 phone: '',
                 address: '',
+                gstin: '',
                 type: type
             });
         }
@@ -165,6 +168,11 @@ const Contacts = ({ type }) => {
                                     {contact.address}
                                 </div>
                             )}
+                            {contact.gstin && (
+                                <div className="flex items-center text-primary-600 text-[10px] font-black uppercase tracking-widest bg-primary-50 px-2 py-1 rounded-lg w-fit">
+                                    GST: {contact.gstin}
+                                </div>
+                            )}
                         </div>
 
                         <div className="mt-6 pt-4 border-t border-slate-50 flex justify-between items-center">
@@ -205,14 +213,23 @@ const Contacts = ({ type }) => {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1.5">Email Address</label>
+                                    <label className="block text-sm font-bold text-slate-700 mb-1.5">GSTIN (Optional)</label>
                                     <input
-                                        type="email"
+                                        type="text"
                                         className="w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-primary-500/20 outline-none"
-                                        value={formData.email}
-                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                        value={formData.gstin}
+                                        onChange={(e) => setFormData({ ...formData, gstin: e.target.value })}
                                     />
                                 </div>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-bold text-slate-700 mb-1.5">Email Address</label>
+                                <input
+                                    type="email"
+                                    className="w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-primary-500/20 outline-none"
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                />
                             </div>
                             <div>
                                 <label className="block text-sm font-bold text-slate-700 mb-1.5">Full Address</label>

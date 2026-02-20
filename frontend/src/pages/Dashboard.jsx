@@ -9,7 +9,8 @@ import {
     ArrowDownRight,
     Truck,
     Users,
-    AlertCircle
+    AlertCircle,
+    Factory
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Layout from '../components/Layout';
@@ -43,7 +44,7 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
-    const { user, isAdmin } = useAuth();
+    const { user, isAdmin, isManager } = useAuth();
     const [stats, setStats] = useState({
         totalSales: 0,
         orderCount: 0,
@@ -54,7 +55,9 @@ const Dashboard = () => {
         customerCount: 0,
         supplierCount: 0,
         purchaseCount: 0,
-        totalExpenses: 0
+        totalExpenses: 0,
+        pendingPOs: 0,
+        activeProductions: 0
     });
     const [loading, setLoading] = useState(true);
 
@@ -73,30 +76,38 @@ const Dashboard = () => {
                 api.get('/contacts')
             ];
 
-            // Only Admins can see Purchases & Expenses
-            if (isAdmin()) {
+            // Only Admins/Managers can see Purchases, Expenses, POs, Productions
+            if (isManager()) {
                 promises.push(api.get('/purchases'));
                 promises.push(api.get('/finance/expenses'));
+                promises.push(api.get('/purchase-orders'));
+                promises.push(api.get('/productions'));
             }
 
             const results = await Promise.all(promises);
             const salesRes = results[0];
             const itemRes = results[1];
             const contactRes = results[2];
-            const purchaseRes = isAdmin() ? results[3] : { data: [] };
-            const expenseRes = isAdmin() ? results[4] : { data: [] };
+            const purchaseRes = isManager() ? results[3] : { data: [] };
+            const expenseRes = isManager() ? results[4] : { data: [] };
+            const poRes = isManager() ? results[5] : { data: [] };
+            const prodRes = isManager() ? results[6] : { data: [] };
 
             const bills = salesRes.data || [];
             const items = itemRes.data || [];
             const contacts = contactRes.data || [];
             const purchases = purchaseRes.data || [];
             const expenses = expenseRes.data || [];
+            const pos = poRes.data || [];
+            const productions = prodRes.data || [];
 
             const totalSales = bills.reduce((acc, b) => acc + (b.finalAmount || 0), 0);
             const totalExpenses = expenses.reduce((acc, e) => acc + (e.amount || 0), 0);
             const lowStock = items.filter(i => i.stock < 10).length;
             const customers = contacts.filter(c => c.type === 'Customer').length;
             const suppliers = contacts.filter(c => c.type === 'Supplier').length;
+            const pendingPOs = pos.filter(po => po.status === 'Pending' || po.status === 'Partial').length;
+            const activeProductions = productions.filter(p => p.status === 'In Progress' || p.status === 'Planned').length;
 
             setStats(prev => ({
                 ...prev,
@@ -109,6 +120,8 @@ const Dashboard = () => {
                 customerCount: customers,
                 supplierCount: suppliers,
                 purchaseCount: purchases.length,
+                pendingPOs,
+                activeProductions
             }));
         } catch (error) {
             console.error('Dashboard Fetch Error:', error);
@@ -131,10 +144,10 @@ const Dashboard = () => {
     };
 
     const doughnutData = {
-        labels: ['Inventory', 'Sales', 'Purchases'],
+        labels: ['Inventory', 'Sales', 'Purchases', 'Production'],
         datasets: [{
-            data: [stats.stockCount, stats.orderCount, stats.purchaseCount],
-            backgroundColor: ['#2ecc71', '#f39c12', '#2c3e50'],
+            data: [stats.stockCount, stats.orderCount, stats.purchaseCount, stats.activeProductions],
+            backgroundColor: ['#2ecc71', '#f39c12', '#2c3e50', '#e74c3c'],
             borderWidth: 0,
         }]
     };
@@ -212,13 +225,37 @@ const Dashboard = () => {
                                         <span className="text-secondary-400 flex items-center"><div className="w-2 h-2 rounded-full bg-accent-500 mr-2" /> Total Sales</span>
                                         <span className="text-white">{stats.orderCount} Orders</span>
                                     </div>
+                                    <div className="flex justify-between items-center text-sm font-bold">
+                                        <span className="text-secondary-400 flex items-center"><div className="w-2 h-2 rounded-full bg-red-500 mr-2" /> Production</span>
+                                        <span className="text-white">{stats.activeProductions} Active</span>
+                                    </div>
                                 </div>
                             </div>
                             <div className="absolute top-[-10%] right-[-10%] w-40 h-40 bg-primary-500/10 blur-[80px] rounded-full group-hover:bg-primary-500/20 transition-all"></div>
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                        <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                            <h3 className="text-xl font-black text-secondary-900 mb-6">Operations Insights</h3>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="p-6 bg-slate-50 rounded-3xl flex items-center space-x-4">
+                                    <div className="p-3 bg-white rounded-2xl shadow-sm text-primary-500"><ShoppingCart size={24} /></div>
+                                    <div>
+                                        <p className="text-xs font-bold text-secondary-400 uppercase">Pending POs</p>
+                                        <p className="text-xl font-black">{stats.pendingPOs}</p>
+                                    </div>
+                                </div>
+                                <div className="p-6 bg-slate-50 rounded-3xl flex items-center space-x-4">
+                                    <div className="p-3 bg-white rounded-2xl shadow-sm text-rose-500"><Factory size={24} /></div>
+                                    <div>
+                                        <p className="text-xs font-bold text-secondary-400 uppercase">Productions</p>
+                                        <p className="text-xl font-black">{stats.activeProductions}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
                             <h3 className="text-xl font-black text-secondary-900 mb-6">Partner Insights</h3>
                             <div className="grid grid-cols-2 gap-4">
@@ -238,25 +275,25 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-                            <h3 className="text-xl font-black text-secondary-900 mb-6">Recent POS Transactions</h3>
-                            <div className="space-y-2">
-                                {stats.recentSales.map(sale => (
-                                    <div key={sale._id} className="flex items-center justify-between p-4 bg-slate-50/50 hover:bg-slate-50 rounded-2xl transition-colors">
-                                        <div className="flex items-center space-x-3">
-                                            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center font-black shadow-sm text-secondary-400 text-xs">
-                                                {sale.paymentMethod === 'Cash' ? '💵' : '💳'}
-                                            </div>
-                                            <div>
-                                                <p className="font-bold text-secondary-900">{sale.billId}</p>
-                                                <p className="text-xs text-secondary-400">{new Date(sale.createdAt).toLocaleTimeString()}</p>
-                                            </div>
+                    <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                        <h3 className="text-xl font-black text-secondary-900 mb-6">Recent POS Transactions</h3>
+                        <div className="space-y-2">
+                            {stats.recentSales.map(sale => (
+                                <div key={sale._id} className="flex items-center justify-between p-4 bg-slate-50/50 hover:bg-slate-50 rounded-2xl transition-colors">
+                                    <div className="flex items-center space-x-3">
+                                        <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center font-black shadow-sm text-secondary-400 text-xs">
+                                            {sale.paymentMethod === 'Cash' ? '💵' : '💳'}
                                         </div>
-                                        <span className="font-black text-secondary-900">₹{sale.finalAmount.toFixed(2)}</span>
+                                        <div>
+                                            <p className="font-bold text-secondary-900">{sale.billId}</p>
+                                            <p className="text-xs text-secondary-400">{new Date(sale.createdAt).toLocaleTimeString()}</p>
+                                        </div>
                                     </div>
-                                ))}
-                            </div>
+                                    <span className="font-black text-secondary-900">₹{sale.finalAmount.toFixed(2)}</span>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </>

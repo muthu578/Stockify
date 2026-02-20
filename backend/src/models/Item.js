@@ -22,6 +22,16 @@ const itemSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    brand: {
+        type: String,
+    },
+    hsnCode: {
+        type: String,
+    },
+    minStockLevel: {
+        type: Number,
+        default: 10,
+    },
     stock: {
         type: Number,
         required: true,

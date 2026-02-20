@@ -119,7 +119,9 @@ const UserManagement = () => {
                                     <td className="px-6 py-4 font-semibold">{user.name}</td>
                                     <td className="px-6 py-4 text-secondary-500">{user.username}</td>
                                     <td className="px-6 py-4">
-                                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${user.role === 'Admin' ? 'bg-purple-100 text-purple-600' : 'bg-primary-100 text-primary-600'
+                                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${user.role === 'Admin' ? 'bg-purple-100 text-purple-600' :
+                                            user.role === 'Manager' ? 'bg-blue-100 text-blue-600' :
+                                                'bg-primary-100 text-primary-600'
                                             }`}>
                                             {user.role}
                                         </span>
@@ -184,6 +186,7 @@ const UserManagement = () => {
                                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                                 >
                                     <option value="Cashier">Cashier</option>
+                                    <option value="Manager">Manager</option>
                                     <option value="Admin">Admin</option>
                                 </select>
                             </div>

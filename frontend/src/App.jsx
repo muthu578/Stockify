@@ -30,14 +30,18 @@ import DailyStocks from './pages/DailyStocks';
 import TotalStock from './pages/TotalStock';
 import BatchWiseReport from './pages/BatchWiseReport';
 
-const ProtectedRoute = ({ children, adminOnly = false }) => {
-    const { user, isAdmin } = useAuth();
+const ProtectedRoute = ({ children, adminOnly = false, managerOnly = false }) => {
+    const { user, isAdmin, isManager } = useAuth();
 
     if (!user) {
         return <Navigate to="/login" />;
     }
 
     if (adminOnly && !isAdmin()) {
+        return <Navigate to="/dashboard" />;
+    }
+
+    if (managerOnly && !isManager()) {
         return <Navigate to="/dashboard" />;
     }
 
@@ -56,16 +60,16 @@ function App() {
                         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
 
                         {/* Master Management */}
-                        <Route path="/masters/storage-location" element={<ProtectedRoute adminOnly={true}><MasterManagement type="location" /></ProtectedRoute>} />
-                        <Route path="/masters/product-category" element={<ProtectedRoute adminOnly={true}><MasterManagement type="category" /></ProtectedRoute>} />
+                        <Route path="/masters/storage-location" element={<ProtectedRoute managerOnly={true}><MasterManagement type="location" /></ProtectedRoute>} />
+                        <Route path="/masters/product-category" element={<ProtectedRoute managerOnly={true}><MasterManagement type="category" /></ProtectedRoute>} />
                         <Route path="/masters/users" element={<ProtectedRoute adminOnly={true}><UserManagement /></ProtectedRoute>} />
                         <Route path="/masters/customers" element={<ProtectedRoute><Contacts type="Customer" /></ProtectedRoute>} />
-                        <Route path="/masters/suppliers" element={<ProtectedRoute adminOnly={true}><Contacts type="Supplier" /></ProtectedRoute>} />
+                        <Route path="/masters/suppliers" element={<ProtectedRoute managerOnly={true}><Contacts type="Supplier" /></ProtectedRoute>} />
                         <Route path="/masters/settings" element={<ProtectedRoute adminOnly={true}><Settings /></ProtectedRoute>} />
 
                         {/* Purchase Management */}
-                        <Route path="/purchases/po" element={<ProtectedRoute adminOnly={true}><POGeneration /></ProtectedRoute>} />
-                        <Route path="/purchases/grn" element={<ProtectedRoute adminOnly={true}><GRNEntry /></ProtectedRoute>} />
+                        <Route path="/purchases/po" element={<ProtectedRoute managerOnly={true}><POGeneration /></ProtectedRoute>} />
+                        <Route path="/purchases/grn" element={<ProtectedRoute managerOnly={true}><GRNEntry /></ProtectedRoute>} />
 
                         {/* Inventory Management */}
                         <Route path="/inventory/product-master" element={<ProtectedRoute><Inventory /></ProtectedRoute>} />
@@ -73,29 +77,29 @@ function App() {
                         <Route path="/inventory/stock-transfer" element={<ProtectedRoute><StockTransfer /></ProtectedRoute>} />
 
                         {/* Production Management */}
-                        <Route path="/production/machine-master" element={<ProtectedRoute adminOnly={true}><MachineMaster /></ProtectedRoute>} />
-                        <Route path="/production/details" element={<ProtectedRoute adminOnly={true}><ProductionDetails /></ProtectedRoute>} />
+                        <Route path="/production/machine-master" element={<ProtectedRoute managerOnly={true}><MachineMaster /></ProtectedRoute>} />
+                        <Route path="/production/details" element={<ProtectedRoute managerOnly={true}><ProductionDetails /></ProtectedRoute>} />
 
                         {/* Sales Management */}
                         <Route path="/sales/performa-invoice" element={<ProtectedRoute><ProformaInvoice /></ProtectedRoute>} />
                         <Route path="/sales/delivery-challan" element={<ProtectedRoute><DeliveryChallan /></ProtectedRoute>} />
                         <Route path="/billing" element={<ProtectedRoute><Billing /></ProtectedRoute>} />
-                        <Route path="/sales-analytics" element={<ProtectedRoute adminOnly={true}><SalesAnalytics /></ProtectedRoute>} />
+                        <Route path="/sales-analytics" element={<ProtectedRoute managerOnly={true}><SalesAnalytics /></ProtectedRoute>} />
 
                         {/* Reporting */}
-                        <Route path="/reporting/daily-stocks" element={<ProtectedRoute adminOnly={true}><DailyStocks /></ProtectedRoute>} />
-                        <Route path="/reporting/total-stock" element={<ProtectedRoute adminOnly={true}><TotalStock /></ProtectedRoute>} />
-                        <Route path="/reporting/batch-wise" element={<ProtectedRoute adminOnly={true}><BatchWiseReport /></ProtectedRoute>} />
+                        <Route path="/reporting/daily-stocks" element={<ProtectedRoute managerOnly={true}><DailyStocks /></ProtectedRoute>} />
+                        <Route path="/reporting/total-stock" element={<ProtectedRoute managerOnly={true}><TotalStock /></ProtectedRoute>} />
+                        <Route path="/reporting/batch-wise" element={<ProtectedRoute managerOnly={true}><BatchWiseReport /></ProtectedRoute>} />
 
                         {/* Legacy/Direct Routes */}
                         <Route path="/inventory" element={<Navigate to="/inventory/product-master" />} />
                         <Route path="/customers" element={<Navigate to="/masters/customers" />} />
                         <Route path="/suppliers" element={<Navigate to="/masters/suppliers" />} />
                         <Route path="/settings" element={<Navigate to="/masters/settings" />} />
-                        <Route path="/reports" element={<ProtectedRoute adminOnly={true}><Reports /></ProtectedRoute>} />
-                        <Route path="/purchases" element={<ProtectedRoute adminOnly={true}><Purchases /></ProtectedRoute>} />
-                        <Route path="/accounts" element={<ProtectedRoute adminOnly={true}><Finance /></ProtectedRoute>} />
-                        <Route path="/hr" element={<ProtectedRoute adminOnly={true}><HR /></ProtectedRoute>} />
+                        <Route path="/reports" element={<ProtectedRoute managerOnly={true}><Reports /></ProtectedRoute>} />
+                        <Route path="/purchases" element={<ProtectedRoute managerOnly={true}><Purchases /></ProtectedRoute>} />
+                        <Route path="/accounts" element={<ProtectedRoute managerOnly={true}><Finance /></ProtectedRoute>} />
+                        <Route path="/hr" element={<ProtectedRoute managerOnly={true}><HR /></ProtectedRoute>} />
                         <Route path="/register" element={<ProtectedRoute adminOnly={true}><Register /></ProtectedRoute>} />
 
                         <Route path="/" element={<Navigate to="/dashboard" />} />

@@ -40,14 +40,18 @@ const getItemById = async (req, res) => {
 // @route   POST /api/items
 // @access  Private/Admin
 const createItem = async (req, res) => {
-    const { name, barcode, category, price, stock, expiryDate, unit } = req.body;
+    const { name, barcode, category, price, buyPrice, stock, minStockLevel, brand, hsnCode, expiryDate, unit } = req.body;
 
     const item = new Item({
         name,
         barcode,
         category,
         price,
+        buyPrice: buyPrice || 0,
         stock,
+        minStockLevel: minStockLevel || 10,
+        brand,
+        hsnCode,
         expiryDate,
         unit,
     });
@@ -60,7 +64,7 @@ const createItem = async (req, res) => {
 // @route   PUT /api/items/:id
 // @access  Private/Admin
 const updateItem = async (req, res) => {
-    const { name, barcode, category, price, stock, expiryDate, unit } = req.body;
+    const { name, barcode, category, price, buyPrice, stock, minStockLevel, brand, hsnCode, expiryDate, unit } = req.body;
 
     const item = await Item.findById(req.params.id);
 
@@ -68,8 +72,12 @@ const updateItem = async (req, res) => {
         item.name = name || item.name;
         item.barcode = barcode || item.barcode;
         item.category = category || item.category;
-        item.price = price || item.price;
+        item.price = price !== undefined ? price : item.price;
+        item.buyPrice = buyPrice !== undefined ? buyPrice : item.buyPrice;
         item.stock = stock !== undefined ? stock : item.stock;
+        item.minStockLevel = minStockLevel !== undefined ? minStockLevel : item.minStockLevel;
+        item.brand = brand || item.brand;
+        item.hsnCode = hsnCode || item.hsnCode;
         item.expiryDate = expiryDate || item.expiryDate;
         item.unit = unit || item.unit;
 
@@ -114,15 +122,21 @@ const bulkUploadItems = async (req, res) => {
                     name: row.name,
                     barcode: row.barcode,
                     category: row.category,
-                    price: parseFloat(row.price),
-                    stock: parseInt(row.stock),
+                    brand: row.brand,
+                    hsnCode: row.hsnCode,
+                    price: parseFloat(row.price || 0),
+                    buyPrice: parseFloat(row.buyPrice || 0),
+                    stock: parseInt(row.stock || 0),
+                    minStockLevel: parseInt(row.minStockLevel || 10),
                     unit: row.unit || 'pcs'
                 });
             })
             .on('end', async () => {
                 try {
                     await Item.insertMany(items);
-                    fs.unlinkSync(req.file.path); // Delete temp file
+                    if (fs.existsSync(req.file.path)) {
+                        fs.unlinkSync(req.file.path); // Delete temp file
+                    }
                     res.status(201).json({ message: `${items.length} items uploaded successfully` });
                 } catch (err) {
                     res.status(400).json({ message: 'Error inserting data', error: err.message });

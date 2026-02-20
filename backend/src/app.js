@@ -44,6 +44,19 @@ app.use('/api/productions', productionRoutes);
 app.use('/api/proforma-invoices', proformaInvoiceRoutes);
 app.use('/api/delivery-challans', deliveryChallanRoutes);
 
+// Route Aliases to match requested spec
+app.use('/api/customers', contactRoutes); // handled by controller logic or filter
+app.use('/api/suppliers', contactRoutes); // handled by controller logic or filter
+app.use('/api/inventory/products', itemRoutes);
+app.use('/api/purchase/orders', purchaseOrderRoutes);
+app.use('/api/purchase/grn', grnRoutes);
+app.use('/api/inventory/reports', reportRoutes);
+app.use('/api/inventory/transfer', stockTransferRoutes);
+app.use('/api/production/machines', machineRoutes);
+app.use('/api/production/details', productionRoutes);
+app.use('/api/sales/invoices', proformaInvoiceRoutes);
+app.use('/api/sales/challan', deliveryChallanRoutes);
+
 app.get('/', (req, res) => {
     res.send('API is running...');
 });
