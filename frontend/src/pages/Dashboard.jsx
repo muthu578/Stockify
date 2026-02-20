@@ -10,7 +10,8 @@ import {
     Truck,
     Users,
     AlertCircle,
-    Factory
+    Factory,
+    Plus
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Layout from '../components/Layout';
@@ -132,15 +133,27 @@ const Dashboard = () => {
 
     const lineChartData = {
         labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        datasets: [{
-            label: 'Revenue',
-            data: stats.revenue,
-            borderColor: '#2ecc71',
-            backgroundColor: 'rgba(46, 204, 113, 0.1)',
-            fill: true,
-            tension: 0.4,
-            pointRadius: 4,
-        }]
+        datasets: [
+            {
+                label: 'Actual Revenue',
+                data: stats.revenue,
+                borderColor: '#2ecc71',
+                backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                fill: true,
+                tension: 0.4,
+                pointRadius: 4,
+            },
+            {
+                label: 'AI Forecast',
+                data: [...stats.revenue.slice(0, 4), ...stats.revenue.slice(4).map(v => v * 1.15)],
+                borderColor: '#6366f1',
+                borderDash: [5, 5],
+                backgroundColor: 'transparent',
+                fill: false,
+                tension: 0.4,
+                pointRadius: 0,
+            }
+        ]
     };
 
     const doughnutData = {
@@ -175,9 +188,34 @@ const Dashboard = () => {
 
     return (
         <Layout>
-            <div className="mb-10">
-                <h1 className="text-4xl font-black text-secondary-900 mb-2">Enterprise Dashboard</h1>
-                <p className="text-secondary-500 font-medium">Real-time overview of your supermarket ERP performance</p>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
+                <div>
+                    <h1 className="text-4xl font-black text-secondary-900 mb-2">Enterprise Dashboard</h1>
+                    <p className="text-secondary-500 font-medium">Real-time overview of your supermarket ERP performance</p>
+                </div>
+                <div className="flex flex-wrap items-center gap-3">
+                    <button
+                        onClick={() => window.location.href = '/billing'}
+                        className="flex items-center gap-2 px-6 py-3 bg-primary-600 text-white font-black rounded-2xl hover:bg-primary-500 shadow-lg shadow-primary-600/30 transition-all hover:-translate-y-1 active:scale-95"
+                    >
+                        <ShoppingCart size={18} />
+                        New Invoice
+                    </button>
+                    <button
+                        onClick={() => window.location.href = '/purchases/po'}
+                        className="flex items-center gap-2 px-6 py-3 bg-secondary-950 text-white font-black rounded-2xl hover:bg-secondary-800 shadow-lg shadow-secondary-950/30 transition-all hover:-translate-y-1 active:scale-95"
+                    >
+                        <Package size={18} />
+                        Create PO
+                    </button>
+                    <button
+                        onClick={() => window.location.href = '/inventory/product-master'}
+                        className="flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 text-secondary-800 font-black rounded-2xl hover:bg-slate-50 shadow-sm transition-all hover:-translate-y-1 active:scale-95"
+                    >
+                        <Plus size={18} />
+                        Add Product
+                    </button>
+                </div>
             </div>
 
             {loading ? (

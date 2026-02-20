@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Plus, Search, FileText, X, Eye, Trash2, Send, CheckCircle2, Clock, XCircle, AlertCircle, DollarSign } from 'lucide-react';
+import { Plus, Search, FileText, X, Eye, Trash2, Send, CheckCircle2, Clock, XCircle, AlertCircle, DollarSign, BellRing } from 'lucide-react';
 import api from '../services/api';
 import Layout from '../components/Layout';
 import { useNotification } from '../context/NotificationContext';
@@ -26,6 +26,8 @@ const ProformaInvoice = () => {
     const [taxRate, setTaxRate] = useState(0);
     const [validUntil, setValidUntil] = useState('');
     const [notes, setNotes] = useState('');
+    const [shippingCharges, setShippingCharges] = useState(0);
+    const [discount, setDiscount] = useState(0);
     const [itemSearch, setItemSearch] = useState('');
     const { addNotification } = useNotification();
 
@@ -67,14 +69,24 @@ const ProformaInvoice = () => {
     };
 
     const totalAmt = cart.reduce((a, c) => a + c.subtotal, 0);
-    const taxAmt = (totalAmt * taxRate) / 100;
-    const grandTotal = totalAmt + taxAmt;
+    const discountAmt = (totalAmt * discount) / 100;
+    const taxableTotal = totalAmt - discountAmt;
+    const taxAmt = (taxableTotal * taxRate) / 100;
+    const grandTotal = taxableTotal + taxAmt + shippingCharges;
 
     const handleSubmit = async () => {
         if (!customer) return addNotification('Select customer', 'error');
         if (cart.length === 0) return addNotification('Add items', 'error');
         try {
-            await api.post('/proforma-invoices', { customer, items: cart, taxRate, validUntil: validUntil || undefined, notes });
+            await api.post('/proforma-invoices', {
+                customer,
+                items: cart,
+                taxRate,
+                shippingCharges,
+                discount,
+                validUntil: validUntil || undefined,
+                notes
+            });
             addNotification('Proforma Invoice created!'); setShowModal(false); fetchData();
         } catch (e) { addNotification(e.response?.data?.message || 'Error', 'error'); }
     };
@@ -148,6 +160,7 @@ const ProformaInvoice = () => {
                                             <td className="px-6 py-4 text-sm text-secondary-500">{new Date(inv.createdAt).toLocaleDateString()}</td>
                                             <td className="px-6 py-4"><span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${S.color}`}><S.icon size={12} />{inv.status}</span></td>
                                             <td className="px-6 py-4"><div className="flex items-center justify-end gap-1">
+                                                <button onClick={() => addNotification('Payment reminder sent to customer!', 'success')} className="p-2 text-slate-400 hover:text-amber-500 hover:bg-amber-50 rounded-lg transition-all" title="Send Reminder"><BellRing size={16} /></button>
                                                 <button onClick={() => handleViewDetails(inv._id)} className="p-2 text-slate-400 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all"><Eye size={16} /></button>
                                                 {inv.status === 'Draft' && <><button onClick={() => handleStatus(inv._id, 'Sent')} className="p-2 text-slate-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-all" title="Send"><Send size={16} /></button><button onClick={() => handleDelete(inv._id)} className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"><Trash2 size={16} /></button></>}
                                                 {inv.status === 'Sent' && <button onClick={() => handleStatus(inv._id, 'Accepted')} className="p-2 text-slate-400 hover:text-emerald-500 hover:bg-emerald-50 rounded-lg transition-all" title="Accept"><CheckCircle2 size={16} /></button>}
@@ -169,7 +182,9 @@ const ProformaInvoice = () => {
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Customer *</label><select className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-semibold outline-none" value={customer} onChange={(e) => setCustomer(e.target.value)}><option value="">Select...</option>{customers.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}</select></div>
                                 <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Tax Rate (%)</label><input type="number" className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-semibold outline-none" value={taxRate} onChange={(e) => setTaxRate(parseFloat(e.target.value) || 0)} /></div>
-                                <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Valid Until</label><input type="date" className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-semibold outline-none" value={validUntil} onChange={(e) => setValidUntil(e.target.value)} /></div>
+                                <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Shipping Charges</label><input type="number" className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-semibold outline-none" value={shippingCharges} onChange={(e) => setShippingCharges(parseFloat(e.target.value) || 0)} /></div>
+                                <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Discount (%)</label><input type="number" className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-semibold outline-none" value={discount} onChange={(e) => setDiscount(parseFloat(e.target.value) || 0)} /></div>
+                                <div className="md:col-span-2"><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Valid Until</label><input type="date" className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-semibold outline-none" value={validUntil} onChange={(e) => setValidUntil(e.target.value)} /></div>
                             </div>
                             <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Add Items</label><input type="text" placeholder="Search products..." className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none mb-2" value={itemSearch} onChange={(e) => setItemSearch(e.target.value)} />
                                 <div className="flex flex-wrap gap-2 max-h-28 overflow-y-auto">{filteredItems.map(p => <button key={p._id} onClick={() => addToCart(p)} className="text-xs bg-slate-50 hover:bg-primary-50 border border-slate-200 hover:border-primary-300 rounded-lg px-3 py-1.5 font-semibold transition-all">{p.name} <span className="text-secondary-400">₹{p.price}</span></button>)}</div></div>
@@ -180,7 +195,9 @@ const ProformaInvoice = () => {
                         <div className="p-5 bg-white border-t border-slate-100 flex items-end justify-between shrink-0">
                             <div className="flex gap-6">
                                 <div><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Subtotal</p><p className="text-lg font-black text-secondary-900">₹{totalAmt.toFixed(2)}</p></div>
+                                {discount > 0 && <div><p className="text-[10px] font-bold text-rose-400 uppercase tracking-widest">Disc. ({discount}%)</p><p className="text-lg font-black text-rose-500">-₹{discountAmt.toFixed(2)}</p></div>}
                                 <div><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Tax ({taxRate}%)</p><p className="text-lg font-black text-secondary-500">₹{taxAmt.toFixed(2)}</p></div>
+                                {shippingCharges > 0 && <div><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Shipping</p><p className="text-lg font-black text-secondary-900">₹{shippingCharges.toFixed(2)}</p></div>}
                                 <div><p className="text-[10px] font-bold text-primary-500 uppercase tracking-widest">Grand Total</p><p className="text-2xl font-black text-primary-600">₹{grandTotal.toFixed(2)}</p></div>
                             </div>
                             <div className="flex gap-3"><button onClick={() => setShowModal(false)} className="px-5 py-2.5 bg-slate-100 text-slate-600 rounded-xl font-bold text-sm hover:bg-slate-200">Cancel</button><button onClick={handleSubmit} className="px-6 py-2.5 bg-primary-600 text-white rounded-xl font-bold text-sm hover:bg-primary-500 shadow-lg shadow-primary-600/20">Create Invoice</button></div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Plus, Search, X, Settings2, Trash2, Edit, CheckCircle2, AlertTriangle, Pause, XCircle, Wrench } from 'lucide-react';
+import { Plus, Search, X, Settings2, Trash2, Edit, CheckCircle2, AlertTriangle, Pause, XCircle, Wrench, Activity, Thermometer, Droplets, Gauge } from 'lucide-react';
 import api from '../services/api';
 import Layout from '../components/Layout';
 import { useNotification } from '../context/NotificationContext';
@@ -31,6 +31,17 @@ const MachineMaster = () => {
     const filtered = useMemo(() => machines.filter(m =>
         m.name.toLowerCase().includes(searchTerm.toLowerCase()) || m.machineCode.toLowerCase().includes(searchTerm.toLowerCase()) || m.type.toLowerCase().includes(searchTerm.toLowerCase())
     ), [machines, searchTerm]);
+
+    const iotSimulation = useMemo(() => {
+        return machines.reduce((acc, m) => {
+            acc[m._id] = {
+                temp: Math.floor(Math.random() * 20) + 40,
+                load: Math.floor(Math.random() * 40) + 50,
+                humidity: Math.floor(Math.random() * 15) + 30
+            };
+            return acc;
+        }, {});
+    }, [machines]);
 
     const openCreate = () => { setForm({ name: '', type: '', manufacturer: '', capacity: '', location: '', installDate: '', notes: '' }); setEditId(null); setShowModal(true); };
     const openEdit = (m) => { setForm({ name: m.name, type: m.type, manufacturer: m.manufacturer || '', capacity: m.capacity || '', location: m.location || '', installDate: m.installDate ? m.installDate.split('T')[0] : '', notes: m.notes || '', status: m.status }); setEditId(m._id); setShowModal(true); };
@@ -79,6 +90,7 @@ const MachineMaster = () => {
                             <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase tracking-wider">Type</th>
                             <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase tracking-wider">Manufacturer</th>
                             <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase tracking-wider">Location</th>
+                            <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase tracking-wider text-center">IoT Status</th>
                             <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase tracking-wider">Status</th>
                             <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase tracking-wider text-right">Actions</th>
                         </tr></thead>
@@ -93,6 +105,22 @@ const MachineMaster = () => {
                                             <td className="px-6 py-4"><span className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full text-xs font-bold">{m.type}</span></td>
                                             <td className="px-6 py-4 text-sm text-secondary-500">{m.manufacturer || '—'}</td>
                                             <td className="px-6 py-4 text-sm text-secondary-500">{m.location || '—'}</td>
+                                            <td className="px-6 py-4">
+                                                <div className="flex items-center justify-center gap-4">
+                                                    <div className="flex items-center gap-1 text-[10px] font-bold text-secondary-400">
+                                                        <Thermometer size={10} className="text-rose-500" />
+                                                        {iotSimulation[m._id]?.temp}°C
+                                                    </div>
+                                                    <div className="flex items-center gap-1 text-[10px] font-bold text-secondary-400">
+                                                        <Gauge size={10} className="text-secondary-500" />
+                                                        {iotSimulation[m._id]?.load}%
+                                                    </div>
+                                                    <div className="flex items-center gap-1 text-[10px] font-bold text-secondary-400">
+                                                        <Droplets size={10} className="text-blue-500" />
+                                                        {iotSimulation[m._id]?.humidity}%
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td className="px-6 py-4"><span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${S.color}`}><S.icon size={12} />{m.status}</span></td>
                                             <td className="px-6 py-4"><div className="flex items-center justify-end gap-1"><button onClick={() => openEdit(m)} className="p-2 text-slate-400 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all"><Edit size={16} /></button><button onClick={() => handleDelete(m._id)} className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"><Trash2 size={16} /></button></div></td>
                                         </tr>);

@@ -8,8 +8,12 @@ import {
     Phone,
     Mail,
     MapPin,
-    X
+    X,
+    ExternalLink,
+    Copy,
+    Check
 } from 'lucide-react';
+import { useNotification } from '../context/NotificationContext';
 import api from '../services/api';
 import Layout from '../components/Layout';
 
@@ -27,6 +31,7 @@ const Contacts = ({ type }) => {
         gstin: '',
         type: type
     });
+    const { addNotification } = useNotification();
 
     useEffect(() => {
         fetchContacts();
@@ -140,6 +145,18 @@ const Contacts = ({ type }) => {
                                 {contact.name.charAt(0)}
                             </div>
                             <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                {type === 'Customer' && (
+                                    <button
+                                        onClick={() => {
+                                            navigator.clipboard.writeText(`https://stockify-erp.com/portal/${contact._id}`);
+                                            addNotification('Portal link copied to clipboard!', 'success');
+                                        }}
+                                        className="p-2 hover:bg-slate-100 text-secondary-400 hover:text-emerald-600 rounded-xl"
+                                        title="Copy Portal Link"
+                                    >
+                                        <ExternalLink size={16} />
+                                    </button>
+                                )}
                                 <button onClick={() => handleOpenModal(contact)} className="p-2 hover:bg-slate-100 text-secondary-400 hover:text-primary-600 rounded-xl">
                                     <Edit2 size={16} />
                                 </button>

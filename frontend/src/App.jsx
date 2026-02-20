@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { NotificationProvider } from './context/NotificationContext';
@@ -26,6 +25,7 @@ import MachineMaster from './pages/MachineMaster';
 import ProductionDetails from './pages/ProductionDetails';
 import ProformaInvoice from './pages/ProformaInvoice';
 import DeliveryChallan from './pages/DeliveryChallan';
+import CreditDebitNotes from './pages/CreditDebitNotes';
 import DailyStocks from './pages/DailyStocks';
 import TotalStock from './pages/TotalStock';
 import BatchWiseReport from './pages/BatchWiseReport';
@@ -83,6 +83,7 @@ function App() {
                         {/* Sales Management */}
                         <Route path="/sales/performa-invoice" element={<ProtectedRoute><ProformaInvoice /></ProtectedRoute>} />
                         <Route path="/sales/delivery-challan" element={<ProtectedRoute><DeliveryChallan /></ProtectedRoute>} />
+                        <Route path="/sales/notes" element={<ProtectedRoute managerOnly={true}><CreditDebitNotes /></ProtectedRoute>} />
                         <Route path="/billing" element={<ProtectedRoute><Billing /></ProtectedRoute>} />
                         <Route path="/sales-analytics" element={<ProtectedRoute managerOnly={true}><SalesAnalytics /></ProtectedRoute>} />
 

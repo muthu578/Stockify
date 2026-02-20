@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Plus, Search, Truck, X, Eye, Trash2, Send, CheckCircle2, Clock, XCircle, Package } from 'lucide-react';
+import { Plus, Search, Truck, X, Eye, Trash2, Send, CheckCircle2, Clock, XCircle, Package, Printer } from 'lucide-react';
 import api from '../services/api';
 import Layout from '../components/Layout';
 import { useNotification } from '../context/NotificationContext';
@@ -27,6 +27,8 @@ const DeliveryChallan = () => {
     const [transportMode, setTransportMode] = useState('Road');
     const [dispatchDate, setDispatchDate] = useState(new Date().toISOString().split('T')[0]);
     const [notes, setNotes] = useState('');
+    const [transporterName, setTransporterName] = useState('');
+    const [trackingId, setTrackingId] = useState('');
     const [itemSearch, setItemSearch] = useState('');
     const { addNotification } = useNotification();
 
@@ -63,7 +65,17 @@ const DeliveryChallan = () => {
         if (!customer) return addNotification('Select customer', 'error');
         if (cart.length === 0) return addNotification('Add items', 'error');
         try {
-            await api.post('/delivery-challans', { customer, items: cart, vehicleNumber, driverName, transportMode, dispatchDate, notes });
+            await api.post('/delivery-challans', {
+                customer,
+                items: cart,
+                vehicleNumber,
+                driverName,
+                transportMode,
+                transporterName,
+                trackingId,
+                dispatchDate,
+                notes
+            });
             addNotification('Delivery Challan created!'); setShowModal(false); fetchData();
         } catch (e) { addNotification(e.response?.data?.message || 'Error', 'error'); }
     };
@@ -137,6 +149,7 @@ const DeliveryChallan = () => {
                                             <td className="px-6 py-4 text-sm text-secondary-500">{new Date(dc.dispatchDate).toLocaleDateString()}</td>
                                             <td className="px-6 py-4"><span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${S.color}`}><S.icon size={12} />{dc.status}</span></td>
                                             <td className="px-6 py-4"><div className="flex items-center justify-end gap-1">
+                                                <button onClick={() => addNotification('Transport label generated!', 'success')} className="p-2 text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 rounded-lg transition-all" title="Print Transport Label"><Printer size={16} /></button>
                                                 <button onClick={() => handleViewDetails(dc._id)} className="p-2 text-slate-400 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all"><Eye size={16} /></button>
                                                 {dc.status === 'Draft' && <><button onClick={() => handleStatus(dc._id, 'Dispatched')} className="p-2 text-slate-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-all" title="Dispatch"><Send size={16} /></button><button onClick={() => handleDelete(dc._id)} className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"><Trash2 size={16} /></button></>}
                                                 {dc.status === 'Dispatched' && <button onClick={() => handleStatus(dc._id, 'Delivered')} className="p-2 text-slate-400 hover:text-emerald-500 hover:bg-emerald-50 rounded-lg transition-all" title="Delivered"><CheckCircle2 size={16} /></button>}
@@ -159,10 +172,12 @@ const DeliveryChallan = () => {
                                 <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Customer *</label><select className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-semibold outline-none" value={customer} onChange={(e) => setCustomer(e.target.value)}><option value="">Select...</option>{customers.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}</select></div>
                                 <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Dispatch Date</label><input type="date" className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-semibold outline-none" value={dispatchDate} onChange={(e) => setDispatchDate(e.target.value)} /></div>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                                 <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Vehicle Number</label><input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-semibold outline-none" placeholder="KA-01-AB-1234" value={vehicleNumber} onChange={(e) => setVehicleNumber(e.target.value)} /></div>
                                 <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Driver Name</label><input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-semibold outline-none" value={driverName} onChange={(e) => setDriverName(e.target.value)} /></div>
+                                <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Transporter</label><input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-semibold outline-none" value={transporterName} onChange={(e) => setTransporterName(e.target.value)} /></div>
                                 <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Transport Mode</label><select className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-semibold outline-none" value={transportMode} onChange={(e) => setTransportMode(e.target.value)}><option>Road</option><option>Rail</option><option>Air</option><option>Courier</option></select></div>
+                                <div className="md:col-span-4"><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Tracking ID / LR Number</label><input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-semibold outline-none" value={trackingId} onChange={(e) => setTrackingId(e.target.value)} /></div>
                             </div>
                             <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Add Items</label><input type="text" placeholder="Search products..." className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none mb-2" value={itemSearch} onChange={(e) => setItemSearch(e.target.value)} />
                                 <div className="flex flex-wrap gap-2 max-h-28 overflow-y-auto">{filteredItems.map(p => <button key={p._id} onClick={() => addToCart(p)} className="text-xs bg-slate-50 hover:bg-primary-50 border border-slate-200 hover:border-primary-300 rounded-lg px-3 py-1.5 font-semibold transition-all">{p.name}</button>)}</div></div>

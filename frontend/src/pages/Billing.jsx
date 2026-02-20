@@ -34,6 +34,8 @@ const POS = () => {
     const [loading, setLoading] = useState(true);
     const [isProcessing, setIsProcessing] = useState(false);
     const [categoryFilter, setCategoryFilter] = useState('All');
+    const [isRecurring, setIsRecurring] = useState(false);
+    const [onlineMethod, setOnlineMethod] = useState('UPI'); // UPI, QR, Bank
     const { addNotification } = useNotification();
 
     // Success State
@@ -113,7 +115,9 @@ const POS = () => {
                 discount,
                 tax,
                 finalAmount,
-                paymentMethod,
+                finalAmount,
+                paymentMethod: paymentMethod === 'Online' ? `Online (${onlineMethod})` : paymentMethod,
+                isRecurring,
                 customer: selectedCustomer?._id
             };
 
@@ -317,6 +321,30 @@ const POS = () => {
                                         <button onClick={() => setPaymentMethod('Card')} className={`px-2 py-0.5 rounded-md text-[9px] font-bold transition-all shadow-sm ${paymentMethod === 'Card' ? 'bg-white text-slate-900' : 'text-slate-400 hover:text-slate-600'}`}>
                                             Card
                                         </button>
+                                        <button onClick={() => setPaymentMethod('Online')} className={`px-2 py-0.5 rounded-md text-[9px] font-bold transition-all shadow-sm ${paymentMethod === 'Online' ? 'bg-white text-slate-900' : 'text-slate-400 hover:text-slate-600'}`}>
+                                            Online
+                                        </button>
+                                    </div>
+                                    {paymentMethod === 'Online' && (
+                                        <select
+                                            value={onlineMethod}
+                                            onChange={(e) => setOnlineMethod(e.target.value)}
+                                            className="bg-primary-50 text-[8px] font-black text-primary-700 px-2 py-1 rounded-md border-none outline-none animate-in fade-in slide-in-from-top-1"
+                                        >
+                                            <option>UPI</option>
+                                            <option>QR Scanner</option>
+                                            <option>Bank Transfer</option>
+                                        </select>
+                                    )}
+                                    <div className="flex items-center gap-2 mt-1">
+                                        <button
+                                            onClick={() => setIsRecurring(!isRecurring)}
+                                            className={`p-1 rounded-md border transition-all ${isRecurring ? 'bg-emerald-50 border-emerald-200 text-emerald-600' : 'bg-slate-50 border-slate-200 text-slate-300'}`}
+                                            title="Set as recurring monthly order"
+                                        >
+                                            <CheckCircle2 size={12} />
+                                        </button>
+                                        <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter">Recurring</span>
                                     </div>
                                 </div>
                                 <div className="text-right">

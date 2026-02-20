@@ -18,9 +18,16 @@ const UserManagement = () => {
         name: '',
         username: '',
         password: '',
-        role: 'Cashier'
+        role: 'Cashier',
+        status: 'Active'
     });
     const { addNotification } = useNotification();
+
+    const rolePermissions = {
+        Admin: ['Full System Access', 'Manage Users', 'Financial Reports', 'Settings'],
+        Manager: ['Inventory Control', 'Purchase Orders', 'Basic Reports', 'Production'],
+        Cashier: ['Billing/POS', 'Customer Search', 'Shortage Entry']
+    };
 
     useEffect(() => {
         fetchUsers();
@@ -108,6 +115,8 @@ const UserManagement = () => {
                                 <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Name</th>
                                 <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Username</th>
                                 <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Role</th>
+                                <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Status</th>
+                                <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Last Login</th>
                                 <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase text-right">Action</th>
                             </tr>
                         </thead>
@@ -125,6 +134,15 @@ const UserManagement = () => {
                                             }`}>
                                             {user.role}
                                         </span>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center gap-2">
+                                            <div className={`w-2 h-2 rounded-full ${user.status === 'Suspended' ? 'bg-rose-500' : 'bg-emerald-500'}`} />
+                                            <span className="text-sm font-bold text-secondary-900">{user.status || 'Active'}</span>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4 text-sm font-medium text-secondary-400">
+                                        {user.lastLogin ? new Date(user.lastLogin).toLocaleDateString() : 'Never'}
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         <button
@@ -189,6 +207,18 @@ const UserManagement = () => {
                                     <option value="Manager">Manager</option>
                                     <option value="Admin">Admin</option>
                                 </select>
+                            </div>
+
+                            <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                <p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-3">Permissions Preview</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {(rolePermissions[formData.role] || []).map(p => (
+                                        <span key={p} className="flex items-center gap-1.5 px-3 py-1 bg-white border border-slate-200 rounded-full text-[10px] font-bold text-secondary-600">
+                                            <div className="w-1 h-1 rounded-full bg-emerald-500" />
+                                            {p}
+                                        </span>
+                                    ))}
+                                </div>
                             </div>
 
                             <div className="pt-4 flex gap-3">

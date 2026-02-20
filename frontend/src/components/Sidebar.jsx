@@ -110,6 +110,7 @@ const Sidebar = () => {
                 { name: 'Performa Invoice', path: '/sales/performa-invoice', roles: ['Admin', 'Manager', 'Cashier'] },
                 { name: 'Delivery Challan', path: '/sales/delivery-challan', roles: ['Admin', 'Manager', 'Cashier'] },
                 { name: 'POS (Billing)', path: '/billing', roles: ['Admin', 'Manager', 'Cashier'] },
+                { name: 'Notes (Credit/Debit)', path: '/sales/notes', roles: ['Admin', 'Manager'] },
                 { name: 'Sales Analytics', path: '/sales-analytics', roles: ['Admin', 'Manager'] },
             ]
         },
