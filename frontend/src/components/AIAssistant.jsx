@@ -92,7 +92,11 @@ const AIAssistant = () => {
                                 </div>
                             </div>
                         </div>
-                        <button onClick={() => setIsOpen(false)} className="bg-white/10 hover:bg-white/20 p-2 rounded-xl transition-colors">
+                        <button 
+                            onClick={() => setIsOpen(false)} 
+                            className="bg-white/10 hover:bg-white/20 p-2 rounded-xl transition-colors"
+                            aria-label="Close chat"
+                        >
                             <X size={20} />
                         </button>
                     </div>
@@ -139,7 +143,7 @@ const AIAssistant = () => {
                     </div>
 
                     {/* Input Area */}
-                    <form onSubmit={handleSend} className="p-6">
+                    <form onSubmit={handleSend} className="p-6" aria-label="AI Chat Form">
                         <div className="bg-white/10 border border-white/10 rounded-2xl p-1.5 flex items-center gap-2 focus-within:ring-2 focus-within:ring-primary-500/30 transition-all">
                             <input
                                 type="text"
@@ -151,6 +155,7 @@ const AIAssistant = () => {
                             <button
                                 type="submit"
                                 className="bg-primary-600 text-white p-2.5 rounded-xl hover:bg-primary-500 transition-all shadow-lg shadow-primary-600/20"
+                                aria-label="Send message"
                             >
                                 <Send size={18} />
                             </button>
