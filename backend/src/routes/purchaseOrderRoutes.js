@@ -8,18 +8,18 @@ const {
     updatePOStatus,
     deletePurchaseOrder,
 } = require('../controllers/purchaseOrderController');
-const { protect, admin } = require('../middleware/authMiddleware');
+const { protect, admin, manager } = require('../middleware/authMiddleware');
 
 router.route('/')
-    .get(protect, admin, getPurchaseOrders)
-    .post(protect, admin, createPurchaseOrder);
+    .get(protect, manager, getPurchaseOrders)
+    .post(protect, manager, createPurchaseOrder);
 
 router.route('/:id')
-    .get(protect, admin, getPurchaseOrderById)
-    .put(protect, admin, updatePurchaseOrder)
+    .get(protect, manager, getPurchaseOrderById)
+    .put(protect, manager, updatePurchaseOrder)
     .delete(protect, admin, deletePurchaseOrder);
 
 router.route('/:id/status')
-    .patch(protect, admin, updatePOStatus);
+    .patch(protect, manager, updatePOStatus);
 
 module.exports = router;

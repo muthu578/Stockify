@@ -22,94 +22,125 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex bg-slate-50">
+        <div className="min-h-screen flex bg-slate-50 font-sans selection:bg-emerald-100 selection:text-emerald-900">
             {/* Left Side - Hero/Branding (Hidden on mobile) */}
-            <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-emerald-600 to-teal-800 relative overflow-hidden flex-col justify-between p-12 text-white">
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1578916171728-46686eac8d58?q=80&w=2574&auto=format&fit=crop')] bg-cover bg-center opacity-20 mix-blend-overlay"></div>
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60"></div>
+            <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-900 relative overflow-hidden flex-col justify-between p-12 text-white">
+                {/* Decorative elements */}
+                <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-white/10 rounded-full blur-3xl animate-pulse-subtle"></div>
+                <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-emerald-400/10 rounded-full blur-3xl animate-pulse-subtle"></div>
+                
+                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1534452207293-19443cfa5d73?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center opacity-15 mix-blend-overlay"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/40 via-transparent to-black/70"></div>
 
-                <div className="relative z-10">
-                    <div className="flex items-center gap-3 text-white mb-8">
-                        <div className="p-2 bg-white/20 backdrop-blur-sm rounded-lg">
-                            <Store size={32} />
+                <div className="relative z-10 animate-slide-in">
+                    <div className="flex items-center gap-3 mb-12">
+                        <div className="p-2.5 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl">
+                            <Store size={38} className="text-white fill-white/10" />
                         </div>
-                        <h1 className="text-3xl font-bold tracking-tight">Stockify</h1>
+                        <h1 className="text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-emerald-100">Stockify</h1>
                     </div>
                 </div>
 
-                <div className="relative z-10 max-w-lg">
-                    <h2 className="text-4xl font-bold mb-6 leading-tight">Welcome Back!</h2>
-                    <p className="text-emerald-100 text-lg mb-8">Log in to manage your inventory, track sales, and handle billing efficiently.</p>
+                <div className="relative z-10 max-w-lg mb-12">
+                    <h2 className="text-5xl font-black mb-6 leading-[1.1] animate-slide-in [animation-delay:100ms] text-white">
+                        Management <br /> 
+                        <span className="text-emerald-400">Simplified.</span>
+                    </h2>
+                    <p className="text-emerald-50/80 text-xl mb-12 leading-relaxed animate-slide-in [animation-delay:200ms]">
+                        Join thousands of smart retailers who trust Stockify to power their daily operations.
+                    </p>
 
-                    <div className="space-y-4">
-                        <div className="flex items-center gap-4 p-4 bg-white/10 backdrop-blur-md rounded-xl border border-white/10">
-                            <BadgePercent className="text-emerald-400 shrink-0" />
+                    <div className="space-y-5 animate-slide-in [animation-delay:300ms]">
+                        <div className="flex items-center gap-5 p-5 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300 group cursor-default">
+                            <div className="p-3 bg-emerald-500/20 rounded-xl group-hover:scale-110 transition-transform">
+                                <BadgePercent className="text-emerald-300 shrink-0" size={24} />
+                            </div>
                             <div>
-                                <h3 className="font-semibold">Sales Dashboard</h3>
-                                <p className="text-sm text-emerald-100">View daily earnings and trends</p>
+                                <h3 className="font-bold text-lg text-white">Dynamic Dashboards</h3>
+                                <p className="text-sm text-emerald-100/60">Real-time insights at your fingertips</p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-4 p-4 bg-white/10 backdrop-blur-md rounded-xl border border-white/10">
-                            <ShoppingCart className="text-emerald-400 shrink-0" />
+                        <div className="flex items-center gap-5 p-5 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300 group cursor-default">
+                            <div className="p-3 bg-emerald-500/20 rounded-xl group-hover:scale-110 transition-transform">
+                                <ShoppingCart className="text-emerald-300 shrink-0" size={24} />
+                            </div>
                             <div>
-                                <h3 className="font-semibold">Inventory Tracking</h3>
-                                <p className="text-sm text-emerald-100">Real-time stock updates</p>
+                                <h3 className="font-bold text-lg text-white">Smart Inventory</h3>
+                                <p className="text-sm text-emerald-100/60">Automated stock tracking & alerts</p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-5 p-5 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300 group cursor-default">
+                            <div className="p-3 bg-emerald-500/20 rounded-xl group-hover:scale-110 transition-transform">
+                                <CheckCircle className="text-emerald-300 shrink-0" size={24} />
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-lg text-white">Secure Access</h3>
+                                <p className="text-sm text-emerald-100/60">Enterprise-grade security protocols</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="relative z-10 text-sm text-emerald-200">
-                    © 2026 Stockify Systems. All rights reserved.
+                <div className="relative z-10 text-sm font-medium text-emerald-100/40 flex justify-between items-center animate-slide-in [animation-delay:400ms]">
+                    <span>© 2026 Stockify Systems</span>
+                    <div className="flex gap-4">
+                        <span className="hover:text-white cursor-pointer transition-colors">Support</span>
+                        <span className="hover:text-white cursor-pointer transition-colors">Privacy</span>
+                    </div>
                 </div>
             </div>
 
             {/* Right Side - Form */}
-            <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-12">
-                <div className="w-full max-w-md">
-                    <div className="mb-8">
-                        <h2 className="text-3xl font-bold text-slate-900">Sign In</h2>
-                        <p className="text-slate-500 mt-2">Access your dashboard</p>
+            <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white lg:bg-slate-50/30">
+                <div className="w-full max-w-md bg-white p-8 lg:p-10 rounded-[2.5rem] lg:shadow-2xl lg:shadow-emerald-900/5 border border-slate-100 animate-slide-in">
+                    <div className="mb-10 text-center lg:text-left">
+                        <h2 className="text-4xl font-black text-slate-900 tracking-tight">Welcome Back</h2>
+                        <p className="text-slate-500 mt-3 font-medium">Please enter your details to sign in</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
-                        <div className="space-y-4">
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1.5">Username / Email</label>
+                        <div className="space-y-5">
+                            <div className="group">
+                                <label className="block text-sm font-bold text-slate-700 mb-2 ml-1">Username / Email</label>
                                 <div className="relative">
-                                    <User className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors">
+                                        <User size={20} />
+                                    </div>
                                     <input
                                         type="text"
                                         required
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
-                                        className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all text-slate-800"
-                                        placeholder="Enter your username"
+                                        className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-[1.25rem] focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all text-slate-800 font-medium placeholder:text-slate-400"
+                                        placeholder="admin@stockify.com"
                                     />
                                 </div>
                             </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
+                            <div className="group">
+                                <div className="flex justify-between items-center mb-2 px-1">
+                                    <label className="text-sm font-bold text-slate-700">Password</label>
+                                    <a href="#" className="text-xs font-bold text-emerald-600 hover:text-emerald-700 transition-colors">Forgot Password?</a>
+                                </div>
                                 <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <Lock size={20} className="text-slate-400" />
+                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors">
+                                        <Lock size={20} />
                                     </div>
                                     <input
                                         type="password"
                                         required
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all text-slate-800"
+                                        className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-[1.25rem] focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all text-slate-800 font-medium placeholder:text-slate-400"
                                         placeholder="••••••••"
                                     />
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1.5">Login As</label>
-                                <div className="grid grid-cols-2 gap-3">
-                                    <label className={`cursor-pointer border rounded-xl p-3 flex items-center justify-center gap-2 transition-all ${role === 'Admin' ? 'border-emerald-500 bg-emerald-50 text-emerald-700 ring-1 ring-emerald-500' : 'border-slate-200 hover:border-slate-300'}`}>
+                                <label className="block text-sm font-bold text-slate-700 mb-3 ml-1">Login Role</label>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <label className={`cursor-pointer border-2 rounded-2xl p-4 flex flex-col items-center gap-2 transition-all duration-300 ${role === 'Admin' ? 'border-emerald-500 bg-emerald-50/50 text-emerald-700 ring-4 ring-emerald-500/5' : 'border-slate-100 hover:border-slate-200 bg-slate-50/50'}`}>
                                         <input
                                             type="radio"
                                             name="role"
@@ -118,12 +149,10 @@ const Login = () => {
                                             onChange={(e) => setRole(e.target.value)}
                                             className="hidden"
                                         />
-                                        <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${role === 'Admin' ? 'border-emerald-500' : 'border-slate-300'}`}>
-                                            {role === 'Admin' && <div className="w-2 h-2 rounded-full bg-emerald-500" />}
-                                        </div>
-                                        <span className="font-semibold text-sm">Admin</span>
+                                        <User size={24} className={role === 'Admin' ? 'text-emerald-600' : 'text-slate-400'} />
+                                        <span className="font-bold text-sm">Administrator</span>
                                     </label>
-                                    <label className={`cursor-pointer border rounded-xl p-3 flex items-center justify-center gap-2 transition-all ${role === 'Cashier' ? 'border-emerald-500 bg-emerald-50 text-emerald-700 ring-1 ring-emerald-500' : 'border-slate-200 hover:border-slate-300'}`}>
+                                    <label className={`cursor-pointer border-2 rounded-2xl p-4 flex flex-col items-center gap-2 transition-all duration-300 ${role === 'Cashier' ? 'border-emerald-500 bg-emerald-50/50 text-emerald-700 ring-4 ring-emerald-500/5' : 'border-slate-100 hover:border-slate-200 bg-slate-50/50'}`}>
                                         <input
                                             type="radio"
                                             name="role"
@@ -132,33 +161,35 @@ const Login = () => {
                                             onChange={(e) => setRole(e.target.value)}
                                             className="hidden"
                                         />
-                                        <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${role === 'Cashier' ? 'border-emerald-500' : 'border-slate-300'}`}>
-                                            {role === 'Cashier' && <div className="w-2 h-2 rounded-full bg-emerald-500" />}
-                                        </div>
-                                        <span className="font-semibold text-sm">Cashier</span>
+                                        <ShoppingCart size={24} className={role === 'Cashier' ? 'text-emerald-600' : 'text-slate-400'} />
+                                        <span className="font-bold text-sm">Cashier / Staff</span>
                                     </label>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="flex items-center justify-between">
-                            <label className="flex items-center">
-                                <input
-                                    type="checkbox"
-                                    className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
-                                    checked={rememberMe}
-                                    onChange={(e) => setRememberMe(e.target.checked)}
-                                />
-                                <span className="ml-2 text-sm text-slate-600">Remember me</span>
+                        <div className="flex items-center px-1">
+                            <label className="flex items-center cursor-pointer group">
+                                <div className="relative">
+                                    <input
+                                        type="checkbox"
+                                        className="sr-only"
+                                        checked={rememberMe}
+                                        onChange={(e) => setRememberMe(e.target.checked)}
+                                    />
+                                    <div className={`w-5 h-5 border-2 rounded-md transition-all ${rememberMe ? 'bg-emerald-600 border-emerald-600' : 'bg-white border-slate-300 group-hover:border-emerald-500'}`}>
+                                        {rememberMe && <CheckCircle size={14} className="text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />}
+                                    </div>
+                                </div>
+                                <span className="ml-3 text-sm font-semibold text-slate-600">Keep me logged in</span>
                             </label>
-                            <a href="#" className="text-sm font-medium text-emerald-600 hover:text-emerald-500 hover:underline">
-                                Forgot password?
-                            </a>
                         </div>
 
                         {error && (
-                            <div className="p-3 bg-red-50 border border-red-100 rounded-lg text-red-600 text-sm flex items-center gap-2">
-                                <div className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
+                            <div className="p-4 bg-red-50 border border-red-100 rounded-2xl text-red-600 text-sm font-medium flex items-center gap-3 animate-shake">
+                                <div className="p-1.5 bg-red-100 rounded-lg">
+                                    <div className="w-2 h-2 rounded-full bg-red-500" />
+                                </div>
                                 {error}
                             </div>
                         )}
@@ -166,16 +197,18 @@ const Login = () => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/20 transition-all duration-200 flex items-center justify-center gap-2 transform active:scale-[0.98]"
+                            className="w-full group relative py-4 bg-slate-900 hover:bg-black text-white font-black rounded-2xl shadow-xl shadow-slate-200 transition-all duration-300 flex items-center justify-center gap-3 transform active:scale-[0.98] overflow-hidden"
                         >
-                            {loading ? <Loader2 className="animate-spin" /> : <>Sign In <ArrowRight size={20} /></>}
+                            <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-teal-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <span className="relative z-10">{loading ? 'Processing...' : 'Sign In to Dashboard'}</span>
+                            {loading ? <Loader2 className="animate-spin relative z-10" size={20} /> : <ArrowRight className="relative z-10 group-hover:translate-x-1 transition-transform" size={20} />}
                         </button>
                     </form>
 
-                    <div className="mt-8 text-center">
-                        <p className="text-slate-600 text-sm">
-                            Don't have an account?{' '}
-                            <Link to="/signup" className="text-emerald-600 font-bold hover:underline">
+                    <div className="mt-10 text-center">
+                        <p className="text-slate-500 text-sm font-medium">
+                            Don't have an account yet?{' '}
+                            <Link to="/signup" className="text-emerald-600 font-black hover:text-emerald-700 underline underline-offset-4 decoration-2 decoration-emerald-500/20 hover:decoration-emerald-500 transition-all">
                                 Create Account
                             </Link>
                         </p>

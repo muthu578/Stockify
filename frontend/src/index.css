@@ -18,6 +18,16 @@
   h5,
   h6 {
     color: theme('colors.secondary.900');
+    font-weight: 700;
+  }
+
+  .text-white h1,
+  .text-white h2,
+  .text-white h3,
+  .text-white h4,
+  .text-white h5,
+  .text-white h6 {
+    color: white;
   }
 }
 
@@ -75,6 +85,16 @@
 
 .animate-pulse-subtle {
   animation: pulse-subtle 2s infinite ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: shake 0.2s ease-in-out 0s 2;
 }
 
 /* Custom Scrollbar */

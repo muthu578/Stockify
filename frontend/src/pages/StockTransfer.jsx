@@ -31,7 +31,7 @@ const StockTransfer = () => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const [tRes, iRes, lRes] = await Promise.all([api.get('/stock-transfers'), api.get('/items'), api.get('/masters/locations')]);
+            const [tRes, iRes, lRes] = await Promise.all([api.get('/stock-transfers'), api.get('/items'), api.get('/masters/storage-locations')]);
             setTransfers(tRes.data); setItems(iRes.data); setLocations(lRes.data);
         } catch (e) { addNotification('Error loading data', 'error'); }
         finally { setLoading(false); }

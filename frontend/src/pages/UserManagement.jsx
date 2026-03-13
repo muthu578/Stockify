@@ -4,16 +4,33 @@ import {
     UserPlus,
     Trash2,
     Search,
+    Shield,
+    Lock,
+    Eye,
+    EyeOff,
+    MoreHorizontal,
+    X,
+    Activity,
+    Clock,
+    UserCheck,
+    AlertCircle,
+    ChevronRight,
+    Key
 } from 'lucide-react';
 import api from '../services/api';
 import Layout from '../components/Layout';
 import { useNotification } from '../context/NotificationContext';
+import Card, { CardHeader, CardTitle, CardDescription } from '../components/ui/Card';
+import Button from '../components/ui/Button';
+import Badge from '../components/ui/Badge';
+import Input from '../components/ui/Input';
 
 const UserManagement = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         username: '',
@@ -52,20 +69,20 @@ const UserManagement = () => {
             setShowModal(false);
             fetchUsers();
             setFormData({ name: '', username: '', password: '', role: 'Cashier' });
-            addNotification('User account created successfully!');
+            addNotification('Security credentials provisioned successfully', 'success');
         } catch (error) {
-            addNotification(error.response?.data?.message || 'Error creating user', 'error');
+            addNotification(error.response?.data?.message || 'Access rejected by system', 'error');
         }
     };
 
     const handleDeleteUser = async (id) => {
-        if (window.confirm('Delete this user account?')) {
+        if (window.confirm('IRREVERSIBLE ACTION: Deauthorize this user and revoke all access?')) {
             try {
                 await api.delete(`/users/${id}`);
                 fetchUsers();
-                addNotification('User deleted successfully!', 'error');
+                addNotification('User identity purged from system', 'error');
             } catch (error) {
-                addNotification(error.response?.data?.message || 'Error deleting user', 'error');
+                addNotification(error.response?.data?.message || 'Authorization failure', 'error');
             }
         }
     };
@@ -77,167 +94,215 @@ const UserManagement = () => {
 
     return (
         <Layout>
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-                <div className="shrink-0">
-                    <h1 className="text-3xl font-bold text-secondary-900 flex items-center gap-3">
-                        <Users className="text-primary-500" />
-                        User Management
-                    </h1>
-                    <p className="text-secondary-500">Manage system users and their roles</p>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                <div>
+                    <div className="flex items-center gap-2 mb-3">
+                        <Badge variant="primary" dot>Access Control</Badge>
+                        <span className="text-slate-300">•</span>
+                        <div className="flex items-center gap-1.5 text-slate-400 font-bold text-[10px] uppercase tracking-wider">
+                            <Shield size={12} />
+                            Governance Module
+                        </div>
+                    </div>
+                    <h1 className="text-5xl font-black text-slate-900 tracking-tight leading-none">Command Center</h1>
+                    <p className="text-slate-500 font-medium mt-3 text-lg">Managing <span className="text-slate-900 font-bold">Identity and Access</span> protocols across enterprise nodes.</p>
                 </div>
 
-                <div className="flex items-center gap-3 flex-1 max-w-xl ml-auto">
-                    <div className="relative flex-1">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary-400" size={16} />
-                        <input
-                            type="text"
-                            placeholder="Search by name or username..."
-                            className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500/20 outline-none text-sm font-medium"
+                <div className="flex flex-wrap items-center gap-4">
+                    <div className="relative group">
+                        <Input 
+                            placeholder="Identify Personnel..." 
+                            icon={Search}
+                            containerClassName="min-w-[300px]"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
-                    <button
+                    <Button 
+                        variant="primary" 
+                        size="lg"
+                        icon={UserPlus}
                         onClick={() => setShowModal(true)}
-                        className="flex items-center space-x-2 px-5 py-2.5 bg-primary-600 text-white rounded-xl hover:bg-primary-500 transition-all font-bold shadow-lg shadow-primary-600/20 shrink-0 text-sm"
                     >
-                        <UserPlus size={18} />
-                        <span>Add User</span>
-                    </button>
+                        Provision User
+                    </Button>
                 </div>
             </div>
 
-            <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+            <Card className="mb-12 overflow-hidden border-transparent" padding="p-0">
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left">
-                        <thead className="bg-slate-50">
-                            <tr>
-                                <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Name</th>
-                                <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Username</th>
-                                <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Role</th>
-                                <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Status</th>
-                                <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase">Last Login</th>
-                                <th className="px-6 py-4 text-xs font-bold text-secondary-500 uppercase text-right">Action</th>
+                    <table className="w-full text-left border-collapse">
+                        <thead>
+                            <tr className="border-b border-slate-50 bg-slate-50/50">
+                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Personnel Identity</th>
+                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Network Role</th>
+                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Auth Status</th>
+                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Last Active</th>
+                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-100">
+                        <tbody className="divide-y divide-slate-50">
                             {loading ? (
-                                <tr><td colSpan="4" className="p-10 text-center animate-pulse">Loading users...</td></tr>
+                                <tr><td colSpan="5" className="px-8 py-20 text-center animate-pulse">
+                                    <div className="flex flex-col items-center">
+                                        <div className="w-12 h-12 border-4 border-slate-900 border-t-transparent rounded-full animate-spin mb-4"></div>
+                                        <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Synchronizing Identity Database...</p>
+                                    </div>
+                                </td></tr>
+                            ) : filteredUsers.length === 0 ? (
+                                <tr><td colSpan="5" className="px-8 py-20 text-center text-slate-400">
+                                    <Users size={48} className="mx-auto mb-4 opacity-10" />
+                                    <p className="font-bold uppercase tracking-widest text-xs">No personnel matched query</p>
+                                </td></tr>
                             ) : filteredUsers.map(user => (
-                                <tr key={user._id} className="hover:bg-slate-50/50">
-                                    <td className="px-6 py-4 font-semibold">{user.name}</td>
-                                    <td className="px-6 py-4 text-secondary-500">{user.username}</td>
-                                    <td className="px-6 py-4">
-                                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${user.role === 'Admin' ? 'bg-purple-100 text-purple-600' :
-                                            user.role === 'Manager' ? 'bg-blue-100 text-blue-600' :
-                                                'bg-primary-100 text-primary-600'
-                                            }`}>
-                                            {user.role}
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <div className="flex items-center gap-2">
-                                            <div className={`w-2 h-2 rounded-full ${user.status === 'Suspended' ? 'bg-rose-500' : 'bg-emerald-500'}`} />
-                                            <span className="text-sm font-bold text-secondary-900">{user.status || 'Active'}</span>
+                                <tr key={user._id} className="group hover:bg-slate-50/30 transition-colors">
+                                    <td className="px-8 py-6">
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-12 h-12 bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center font-black group-hover:bg-slate-900 group-hover:text-white transition-all duration-300">
+                                                {user.name.charAt(0)}
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <span className="font-black text-slate-900 leading-none">{user.name}</span>
+                                                <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1.5">{user.username}</span>
+                                            </div>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4 text-sm font-medium text-secondary-400">
-                                        {user.lastLogin ? new Date(user.lastLogin).toLocaleDateString() : 'Never'}
-                                    </td>
-                                    <td className="px-6 py-4 text-right">
-                                        <button
-                                            onClick={() => handleDeleteUser(user._id)}
-                                            className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                                    <td className="px-8 py-6">
+                                        <Badge 
+                                            variant={user.role === 'Admin' ? 'primary' : user.role === 'Manager' ? 'secondary' : 'primary'} 
+                                            className={user.role === 'Admin' ? 'bg-indigo-50 text-indigo-600 border-indigo-100' : user.role === 'Manager' ? 'bg-sky-50 text-sky-600 border-sky-100' : 'bg-slate-50 text-slate-600 border-slate-100'}
                                         >
-                                            <Trash2 size={16} />
-                                        </button>
+                                            {user.role}
+                                        </Badge>
+                                    </td>
+                                    <td className="px-8 py-6">
+                                        <div className="flex items-center gap-2">
+                                            <div className={`w-2 h-2 rounded-full ${user.status === 'Suspended' ? 'bg-rose-500 animate-pulse' : 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]'}`} />
+                                            <span className="text-sm font-black text-slate-900 uppercase tracking-tighter">{user.status || 'Verified'}</span>
+                                        </div>
+                                    </td>
+                                    <td className="px-8 py-6">
+                                        <div className="flex items-center gap-2 text-slate-400 font-bold text-xs bg-slate-50/50 w-fit px-3 py-1.5 rounded-lg border border-slate-100">
+                                            <Clock size={14} className="text-slate-300" />
+                                            {user.lastLogin ? new Date(user.lastLogin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short' }) : 'PROTOCOL NEVER INITIALIZED'}
+                                        </div>
+                                    </td>
+                                    <td className="px-8 py-6 text-right">
+                                        <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            <Button variant="ghost" size="sm" icon={Activity} className="h-10 w-10 p-0 text-slate-300 hover:text-slate-900" />
+                                            <Button 
+                                                variant="ghost" 
+                                                size="sm" 
+                                                icon={Trash2} 
+                                                className="h-10 w-10 p-0 text-slate-300 hover:text-rose-500"
+                                                onClick={() => handleDeleteUser(user._id)}
+                                            />
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </Card>
 
             {/* Add User Modal */}
             {showModal && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-secondary-950/60 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
-                    <div className="relative bg-white w-full max-w-md rounded-3xl shadow-2xl p-8 animate-in fade-in zoom-in duration-200">
-                        <h3 className="text-2xl font-black text-secondary-900 mb-6">Create Account</h3>
-                        <form onSubmit={handleCreateUser} className="space-y-4">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 sm:p-12">
+                    <div className="absolute inset-0 bg-[#090b14]/80 backdrop-blur-md animate-in fade-in duration-500" onClick={() => setShowModal(false)}></div>
+                    <Card className="relative w-full max-w-xl bg-white shadow-2xl border-transparent animate-in zoom-in slide-in-from-bottom-20 duration-500 overflow-hidden flex flex-col" padding="p-0">
+                        <div className="p-8 border-b border-slate-50 flex items-center justify-between bg-slate-50/30">
                             <div>
-                                <label className="block text-sm font-bold text-slate-700 mb-1.5">Full Name</label>
-                                <input
-                                    type="text"
+                                <Badge variant="primary" className="mb-2">Security Provisioning</Badge>
+                                <CardTitle>Initialize Access Protocol</CardTitle>
+                            </div>
+                            <Button variant="ghost" size="sm" className="rounded-full h-10 w-10 p-0" onClick={() => setShowModal(false)}>
+                                <X size={24} />
+                            </Button>
+                        </div>
+
+                        <form onSubmit={handleCreateUser} className="p-8">
+                            <div className="space-y-6 mb-10">
+                                <Input 
+                                    label="Personnel Legal Name"
+                                    placeholder="Enter full identity name..."
+                                    icon={Users}
                                     required
-                                    className="w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-primary-500/20 outline-none"
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                 />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-bold text-slate-700 mb-1.5">Username</label>
-                                <input
-                                    type="text"
-                                    required
-                                    className="w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-primary-500/20 outline-none"
-                                    value={formData.username}
-                                    onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-bold text-slate-700 mb-1.5">Password</label>
-                                <input
-                                    type="password"
-                                    required
-                                    className="w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-primary-500/20 outline-none"
-                                    value={formData.password}
-                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-bold text-slate-700 mb-1.5">Role</label>
-                                <select
-                                    className="w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-primary-500/20 outline-none"
-                                    value={formData.role}
-                                    onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                                >
-                                    <option value="Cashier">Cashier</option>
-                                    <option value="Manager">Manager</option>
-                                    <option value="Admin">Admin</option>
-                                </select>
-                            </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <Input 
+                                        label="System Handle"
+                                        placeholder="Enter username..."
+                                        icon={UserCheck}
+                                        required
+                                        value={formData.username}
+                                        onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                                    />
+                                    <div className="flex flex-col gap-2 relative">
+                                        <Input 
+                                            label="Secret Cipher"
+                                            type={showPassword ? "text" : "password"}
+                                            placeholder="••••••••"
+                                            icon={Lock}
+                                            required
+                                            value={formData.password}
+                                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                        />
+                                        <button 
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute right-4 bottom-3.5 text-slate-300 hover:text-slate-900 transition-colors"
+                                        >
+                                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-xs font-black text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                        <Shield size={12} /> Authorization Level
+                                    </label>
+                                    <div className="grid grid-cols-3 gap-3">
+                                        {['Cashier', 'Manager', 'Admin'].map(role => (
+                                            <button
+                                                key={role}
+                                                type="button"
+                                                onClick={() => setFormData({ ...formData, role })}
+                                                className={`py-4 rounded-2xl border-2 font-black text-sm uppercase tracking-tighter transition-all ${
+                                                    formData.role === role 
+                                                    ? 'border-indigo-600 bg-indigo-50 text-indigo-600 shadow-lg shadow-indigo-500/10 scale-[1.02]' 
+                                                    : 'border-slate-100 bg-slate-50 text-slate-400 hover:border-slate-200 hover:bg-white'
+                                                }`}
+                                            >
+                                                {role}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
 
-                            <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                                <p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-3">Permissions Preview</p>
-                                <div className="flex flex-wrap gap-2">
-                                    {(rolePermissions[formData.role] || []).map(p => (
-                                        <span key={p} className="flex items-center gap-1.5 px-3 py-1 bg-white border border-slate-200 rounded-full text-[10px] font-bold text-secondary-600">
-                                            <div className="w-1 h-1 rounded-full bg-emerald-500" />
-                                            {p}
-                                        </span>
-                                    ))}
+                                <div className="p-6 bg-slate-50 rounded-[2rem] border border-slate-100">
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                        <Key size={12} /> Privilege Manifest
+                                    </p>
+                                    <div className="flex flex-wrap gap-2">
+                                        {(rolePermissions[formData.role] || []).map(p => (
+                                            <Badge key={p} variant="primary" className="bg-white border-slate-200 text-slate-600 font-bold py-1.5 px-4 shadow-sm">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mr-2" />
+                                                {p}
+                                            </Badge>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="pt-4 flex gap-3">
-                                <button
-                                    type="button"
-                                    onClick={() => setShowModal(false)}
-                                    className="flex-1 py-3 bg-slate-100 text-slate-600 font-bold rounded-xl hover:bg-slate-200"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="flex-1 py-3 bg-primary-600 text-white font-bold rounded-xl hover:bg-primary-500 shadow-lg shadow-primary-600/20"
-                                >
-                                    Create User
-                                </button>
+                            <div className="flex items-center justify-end gap-3 pt-6 border-t border-slate-50">
+                                <Button variant="ghost" onClick={() => setShowModal(false)} type="button">Decline</Button>
+                                <Button variant="secondary" className="px-12" type="submit" icon={Lock}>Authorize Access</Button>
                             </div>
                         </form>
-                    </div>
+                    </Card>
                 </div>
             )}
         </Layout>

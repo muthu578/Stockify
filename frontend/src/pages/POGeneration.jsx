@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
     Plus,
     Search,
@@ -58,9 +59,26 @@ const POGeneration = () => {
 
     const { addNotification } = useNotification();
 
+    const location = useLocation();
+
     useEffect(() => {
         fetchData();
     }, []);
+
+    // Handle deep-link from reports (Restock Item)
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const itemId = params.get('itemId');
+        if (itemId && items.length > 0) {
+            const item = items.find(i => i._id === itemId);
+            if (item) {
+                addToCart(item);
+                handleOpenModal();
+                // Clear the URL parameter so it doesn't trigger again on refresh
+                window.history.replaceState({}, '', '/purchases/po');
+            }
+        }
+    }, [items, location.search]);
 
     const fetchData = async () => {
         try {
