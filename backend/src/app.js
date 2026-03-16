@@ -22,7 +22,7 @@ const deliveryChallanRoutes = require('./routes/deliveryChallanRoutes');
 dotenv.config();
 
 const connectDB = require('./config/db');
-connectDB(); // Ensure DB is connected in serverless environments
+connectDB().catch(console.error); // Ensure DB is connected, don't crash lambda on start
 
 const app = express();
 
@@ -62,6 +62,27 @@ app.use('/api/sales/challan', deliveryChallanRoutes);
 
 app.get('/', (req, res) => {
     res.send('API is running...');
+});
+
+app.get('/api/health', (req, res) => {
+    const mongoose = require('mongoose');
+    res.json({
+        status: 'UP',
+        dbState: mongoose.connection.readyState,
+        hasMongoUri: !!process.env.MONGO_URI,
+        mongoUriPreview: process.env.MONGO_URI ? process.env.MONGO_URI.substring(0, 20) + '...' : 'undefined',
+        nodeEnv: process.env.NODE_ENV,
+        hasJwtSecret: !!process.env.JWT_SECRET
+    });
+});
+
+// Global error handler
+app.use((err, req, res, next) => {
+    console.error('Unhandled Error:', err);
+    res.status(500).json({
+        message: err.message,
+        stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack,
+    });
 });
 
 module.exports = app;
