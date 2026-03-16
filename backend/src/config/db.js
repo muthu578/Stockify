@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
-const { MongoMemoryServer } = require('mongodb-memory-server');
+// Conditional require for memory DB to save lambda space
+let MongoMemoryServer;
+if (process.env.NODE_ENV !== 'production') {
+    MongoMemoryServer = require('mongodb-memory-server').MongoMemoryServer;
+}
 const User = require('../models/User');
 
 const seedData = async () => {
