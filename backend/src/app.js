@@ -21,6 +21,9 @@ const deliveryChallanRoutes = require('./routes/deliveryChallanRoutes');
 
 dotenv.config();
 
+const connectDB = require('./config/db');
+connectDB(); // Ensure DB is connected in serverless environments
+
 const app = express();
 
 app.use(cors());

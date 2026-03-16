@@ -141,6 +141,10 @@ const seedData = async () => {
 const seedAdmin = seedData;
 
 const connectDB = async () => {
+    if (mongoose.connection.readyState >= 1) {
+        return;
+    }
+    
     try {
         let dbUri = process.env.MONGO_URI;
 
