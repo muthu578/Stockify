@@ -161,17 +161,25 @@ const connectDB = async () => {
         await seedAdmin();
     } catch (error) {
         console.error(`❌ Error Message: ${error.message}`);
+        console.error('Stack:', error.stack);
 
-        if (error.message.includes('ECONNREFUSED')) {
+        if (process.env.NODE_ENV !== 'production' && error.message.includes('ECONNREFUSED')) {
             console.log('⚠️ Local MongoDB not found. Auto-starting In-Memory DB...');
-            const mongoServer = await MongoMemoryServer.create();
-            const conn = await mongoose.connect(mongoServer.getUri());
-            console.log(`🚀 In-Memory MongoDB Started: ${conn.connection.host}`);
-            await seedAdmin();
+            try {
+                const mongoServer = await MongoMemoryServer.create();
+                const conn = await mongoose.connect(mongoServer.getUri());
+                console.log(`🚀 In-Memory MongoDB Started: ${conn.connection.host}`);
+                await seedAdmin();
+            } catch (memError) {
+                console.error('Memory DB Start Error:', memError);
+            }
             return;
         }
 
-        process.exit(1);
+        // Do not process.exit in serverless environments
+        if (process.env.NODE_ENV !== 'production') {
+            process.exit(1);
+        }
     }
 };
 
