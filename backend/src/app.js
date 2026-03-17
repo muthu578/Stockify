@@ -1,91 +1,91 @@
 let app;
 try {
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const authRoutes = require('./routes/authRoutes');
-const itemRoutes = require('./routes/itemRoutes');
-const billingRoutes = require('./routes/billingRoutes');
-const reportRoutes = require('./routes/reportRoutes');
-const userRoutes = require('./routes/userRoutes');
-const contactRoutes = require('./routes/contactRoutes');
-const purchaseRoutes = require('./routes/purchaseRoutes');
-const financeRoutes = require('./routes/financeRoutes');
-const hrRoutes = require('./routes/hrRoutes');
-const masterRoutes = require('./routes/masterRoutes');
-const purchaseOrderRoutes = require('./routes/purchaseOrderRoutes');
-const grnRoutes = require('./routes/grnRoutes');
-const stockTransferRoutes = require('./routes/stockTransferRoutes');
-const machineRoutes = require('./routes/machineRoutes');
-const productionRoutes = require('./routes/productionRoutes');
-const proformaInvoiceRoutes = require('./routes/proformaInvoiceRoutes');
-const deliveryChallanRoutes = require('./routes/deliveryChallanRoutes');
+    const express = require('express');
+    const cors = require('cors');
+    const dotenv = require('dotenv');
+    const authRoutes = require('./routes/authRoutes');
+    const itemRoutes = require('./routes/itemRoutes');
+    const billingRoutes = require('./routes/billingRoutes');
+    const reportRoutes = require('./routes/reportRoutes');
+    const userRoutes = require('./routes/userRoutes');
+    const contactRoutes = require('./routes/contactRoutes');
+    const purchaseRoutes = require('./routes/purchaseRoutes');
+    const financeRoutes = require('./routes/financeRoutes');
+    const hrRoutes = require('./routes/hrRoutes');
+    const masterRoutes = require('./routes/masterRoutes');
+    const purchaseOrderRoutes = require('./routes/purchaseOrderRoutes');
+    const grnRoutes = require('./routes/grnRoutes');
+    const stockTransferRoutes = require('./routes/stockTransferRoutes');
+    const machineRoutes = require('./routes/machineRoutes');
+    const productionRoutes = require('./routes/productionRoutes');
+    const proformaInvoiceRoutes = require('./routes/proformaInvoiceRoutes');
+    const deliveryChallanRoutes = require('./routes/deliveryChallanRoutes');
 
-dotenv.config();
+    dotenv.config();
 
-const connectDB = require('./config/db');
-connectDB().catch(console.error); // Ensure DB is connected, don't crash lambda on start
+    const connectDB = require('./config/db');
+    connectDB().catch(console.error); // Ensure DB is connected, don't crash lambda on start
 
-app = express();
+    app = express();
 
-app.use(cors());
-app.use(express.json());
+    app.use(cors());
+    app.use(express.json());
 
-app.use('/api/auth', authRoutes);
-app.use('/api/items', itemRoutes);
-app.use('/api/billing', billingRoutes);
-app.use('/api/reports', reportRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/contacts', contactRoutes);
-app.use('/api/purchases', purchaseRoutes);
-app.use('/api/finance', financeRoutes);
-app.use('/api/hr', hrRoutes);
-app.use('/api/masters', masterRoutes);
-app.use('/api/purchase-orders', purchaseOrderRoutes);
-app.use('/api/grn', grnRoutes);
-app.use('/api/stock-transfers', stockTransferRoutes);
-app.use('/api/machines', machineRoutes);
-app.use('/api/productions', productionRoutes);
-app.use('/api/proforma-invoices', proformaInvoiceRoutes);
-app.use('/api/delivery-challans', deliveryChallanRoutes);
+    app.use('/api/auth', authRoutes);
+    app.use('/api/items', itemRoutes);
+    app.use('/api/billing', billingRoutes);
+    app.use('/api/reports', reportRoutes);
+    app.use('/api/users', userRoutes);
+    app.use('/api/contacts', contactRoutes);
+    app.use('/api/purchases', purchaseRoutes);
+    app.use('/api/finance', financeRoutes);
+    app.use('/api/hr', hrRoutes);
+    app.use('/api/masters', masterRoutes);
+    app.use('/api/purchase-orders', purchaseOrderRoutes);
+    app.use('/api/grn', grnRoutes);
+    app.use('/api/stock-transfers', stockTransferRoutes);
+    app.use('/api/machines', machineRoutes);
+    app.use('/api/productions', productionRoutes);
+    app.use('/api/proforma-invoices', proformaInvoiceRoutes);
+    app.use('/api/delivery-challans', deliveryChallanRoutes);
 
-// Route Aliases to match requested spec
-app.use('/api/customers', contactRoutes); // handled by controller logic or filter
-app.use('/api/suppliers', contactRoutes); // handled by controller logic or filter
-app.use('/api/inventory/products', itemRoutes);
-app.use('/api/purchase/orders', purchaseOrderRoutes);
-app.use('/api/purchase/grn', grnRoutes);
-app.use('/api/inventory/reports', reportRoutes);
-app.use('/api/inventory/transfer', stockTransferRoutes);
-app.use('/api/production/machines', machineRoutes);
-app.use('/api/production/details', productionRoutes);
-app.use('/api/sales/invoices', proformaInvoiceRoutes);
-app.use('/api/sales/challan', deliveryChallanRoutes);
+    // Route Aliases to match requested spec
+    app.use('/api/customers', contactRoutes); // handled by controller logic or filter
+    app.use('/api/suppliers', contactRoutes); // handled by controller logic or filter
+    app.use('/api/inventory/products', itemRoutes);
+    app.use('/api/purchase/orders', purchaseOrderRoutes);
+    app.use('/api/purchase/grn', grnRoutes);
+    app.use('/api/inventory/reports', reportRoutes);
+    app.use('/api/inventory/transfer', stockTransferRoutes);
+    app.use('/api/production/machines', machineRoutes);
+    app.use('/api/production/details', productionRoutes);
+    app.use('/api/sales/invoices', proformaInvoiceRoutes);
+    app.use('/api/sales/challan', deliveryChallanRoutes);
 
-app.get('/', (req, res) => {
-    res.send('API is running...');
-});
-
-app.get('/api/health', (req, res) => {
-    const mongoose = require('mongoose');
-    res.json({
-        status: 'UP',
-        dbState: mongoose.connection.readyState,
-        hasMongoUri: !!process.env.MONGO_URI,
-        mongoUriPreview: process.env.MONGO_URI ? process.env.MONGO_URI.substring(0, 20) + '...' : 'undefined',
-        nodeEnv: process.env.NODE_ENV,
-        hasJwtSecret: !!process.env.JWT_SECRET
+    app.get('/', (req, res) => {
+        res.send('API is running...');
     });
-});
 
-// Global error handler
-app.use((err, req, res, next) => {
-    console.error('Unhandled Error:', err);
-    res.status(500).json({
-        message: err.message,
-        stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack,
+    app.get('/api/health', (req, res) => {
+        const mongoose = require('mongoose');
+        res.json({
+            status: 'UP',
+            dbState: mongoose.connection.readyState,
+            hasMongoUri: !!process.env.MONGO_URI,
+            mongoUriPreview: process.env.MONGO_URI ? process.env.MONGO_URI.substring(0, 20) + '...' : 'undefined',
+            nodeEnv: process.env.NODE_ENV,
+            hasJwtSecret: !!process.env.JWT_SECRET
+        });
     });
-});
+
+    // Global error handler
+    app.use((err, req, res, next) => {
+        console.error('Unhandled Error:', err);
+        res.status(500).json({
+            message: err.message,
+            stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack,
+        });
+    });
 } catch (error) {
     const express = require('express');
     app = express();
