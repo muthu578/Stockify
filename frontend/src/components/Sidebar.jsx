@@ -160,15 +160,34 @@ const Sidebar = () => {
     return (
         <aside className="w-64 h-screen flex flex-col z-50 bg-[#090b14] border-r border-white/5 shadow-2xl overflow-hidden font-sans">
             <div className="p-8 flex items-center gap-5 shrink-0 transition-all duration-500 group/logo cursor-pointer hover:translate-x-1">
-                <div className="p-3.5 bg-gradient-to-br from-emerald-400 via-emerald-600 to-teal-700 rounded-2xl shadow-2xl shadow-emerald-500/30 relative overflow-hidden ring-4 ring-white/5 group-hover/logo:scale-110 group-hover/logo:rotate-3 transition-all duration-500">
-                    <Zap size={26} className="text-white relative z-10 fill-white/20" />
-                    <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover/logo:translate-x-0 transition-transform duration-700 skew-x-12"></div>
+                {/* Prism Icon Container */}
+                <div className="w-14 h-14 rounded-[1.25rem] relative overflow-hidden flex items-center justify-center ring-4 ring-white/10 group-hover/logo:scale-110 group-hover/logo:rotate-3 transition-all duration-500 shadow-2xl shadow-indigo-500/40"
+                    style={{ background: 'linear-gradient(160deg, #1e1b4b 0%, #0f172a 100%)' }}>
+                    {/* Prism SVG — triangle splitting into spectrum beams */}
+                    <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10">
+                        {/* Core prism triangle */}
+                        <path d="M19 6L30 26H8L19 6Z" fill="white" fillOpacity="0.08" stroke="white" strokeWidth="1.2" strokeLinejoin="round" />
+                        {/* Light entering the prism — top beam */}
+                        <line x1="19" y1="2" x2="19" y2="6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.7"/>
+                        {/* Spectrum beams exiting bottom */}
+                        <line x1="8" y1="26" x2="3" y2="33" stroke="#6366f1" strokeWidth="2.5" strokeLinecap="round"/>
+                        <line x1="11" y1="26" x2="8"  y2="33" stroke="#818cf8" strokeWidth="2" strokeLinecap="round"/>
+                        <line x1="14" y1="26" x2="13" y2="33" stroke="#10b981" strokeWidth="2" strokeLinecap="round"/>
+                        <line x1="19" y1="26" x2="19" y2="33" stroke="#34d399" strokeWidth="2.5" strokeLinecap="round"/>
+                        <line x1="23" y1="26" x2="25" y2="33" stroke="#2dd4bf" strokeWidth="2" strokeLinecap="round"/>
+                        <line x1="27" y1="26" x2="30" y2="33" stroke="#06b6d4" strokeWidth="2" strokeLinecap="round"/>
+                        <line x1="30" y1="26" x2="35" y2="33" stroke="#0ea5e9" strokeWidth="2.5" strokeLinecap="round"/>
+                    </svg>
+                    {/* Animated shine on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover/logo:translate-x-full transition-transform duration-700 ease-in-out"></div>
                 </div>
+
                 <div>
-                    <h1 className="text-2xl font-black tracking-tighter text-white leading-none flex items-center gap-1">
-                        STOCKIFY<span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <h1 className="text-[26px] font-black tracking-[-0.04em] leading-none"
+                        style={{ background: 'linear-gradient(90deg, #818cf8, #10b981, #06b6d4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                        STOCKIFY
                     </h1>
-                    <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em] mt-2.5 group-hover/logo:text-emerald-400 transition-colors duration-500">Neural Commerce</p>
+                    <p className="text-[8px] font-black uppercase tracking-[0.45em] mt-2 text-slate-500 group-hover/logo:text-indigo-400 transition-colors duration-500">Spectrum ERP</p>
                 </div>
             </div>
 
