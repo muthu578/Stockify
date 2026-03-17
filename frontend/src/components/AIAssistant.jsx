@@ -5,7 +5,7 @@ import api from '../services/api';
 const AIAssistant = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([
-        { role: 'assistant', content: 'Hello! I am your Stockify AI. How can I help you optimize your business today?', type: 'text' }
+        { role: 'assistant', content: 'Hello! I am your CORE AI. How can I help you optimize your business today?', type: 'text' }
     ]);
     const [input, setInput] = useState('');
     const [isTyping, setIsTyping] = useState(false);
@@ -86,7 +86,7 @@ const AIAssistant = () => {
                                 <Sparkles size={20} className="text-white" />
                             </div>
                             <div>
-                                <h3 className="font-black text-sm tracking-wide">STOCKIFY AI</h3>
+                                <h3 className="font-black text-sm tracking-wide">CORE AI</h3>
                                 <div className="flex items-center gap-1.5">
                                     <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
                                     <span className="text-[10px] font-bold text-primary-100 uppercase tracking-widest">Online & Thinking</span>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { User, Mail, Lock, CheckCircle, ShoppingCart, ArrowRight, Loader2 } from 'lucide-react';
+import { User, Mail, Lock, CheckCircle, ShoppingCart, ArrowRight, Loader2, Zap } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Signup = () => {
@@ -71,11 +71,11 @@ const Signup = () => {
                 <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/40 via-transparent to-black/70"></div>
 
                 <div className="relative z-10 animate-slide-in">
-                    <div className="flex items-center gap-3 mb-12">
-                        <div className="p-2.5 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl">
-                            <ShoppingCart size={38} className="text-white fill-white/10" />
+                    <div className="flex items-center gap-4 mb-12 group/logo cursor-pointer">
+                        <div className="p-3 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl group-hover/logo:scale-110 group-hover/logo:rotate-3 transition-all duration-500">
+                            <Zap size={38} className="text-white fill-white/10" />
                         </div>
-                        <h1 className="text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-emerald-100">Stockify</h1>
+                        <h1 className="text-4xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white to-emerald-300">STOCKIFY<span className="text-emerald-400">.</span></h1>
                     </div>
                 </div>
 

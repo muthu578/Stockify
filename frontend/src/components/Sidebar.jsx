@@ -18,6 +18,7 @@ import {
     Factory,
     ChevronDown,
     ChevronRight,
+    Zap,
     Layout as LayoutIcon
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -158,14 +159,16 @@ const Sidebar = () => {
 
     return (
         <aside className="w-64 h-screen flex flex-col z-50 bg-[#090b14] border-r border-white/5 shadow-2xl overflow-hidden font-sans">
-            <div className="p-8 flex items-center gap-4 shrink-0 transition-all duration-500 hover:scale-105">
-                <div className="p-3 bg-gradient-to-tr from-emerald-500 to-teal-400 rounded-2xl shadow-2xl shadow-emerald-500/20 group relative overflow-hidden">
-                    <ShoppingCart size={24} className="text-white relative z-10" />
-                    <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform"></div>
+            <div className="p-8 flex items-center gap-5 shrink-0 transition-all duration-500 group/logo cursor-pointer hover:translate-x-1">
+                <div className="p-3.5 bg-gradient-to-br from-emerald-400 via-emerald-600 to-teal-700 rounded-2xl shadow-2xl shadow-emerald-500/30 relative overflow-hidden ring-4 ring-white/5 group-hover/logo:scale-110 group-hover/logo:rotate-3 transition-all duration-500">
+                    <Zap size={26} className="text-white relative z-10 fill-white/20" />
+                    <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover/logo:translate-x-0 transition-transform duration-700 skew-x-12"></div>
                 </div>
                 <div>
-                    <h1 className="text-2xl font-black tracking-tight text-white leading-none">Stockify</h1>
-                    <p className="text-[10px] font-bold text-emerald-500 uppercase tracking-[0.3em] mt-1.5 opacity-80">Supermarket ERP</p>
+                    <h1 className="text-2xl font-black tracking-tighter text-white leading-none flex items-center gap-1">
+                        STOCKIFY<span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    </h1>
+                    <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em] mt-2.5 group-hover/logo:text-emerald-400 transition-colors duration-500">Neural Commerce</p>
                 </div>
             </div>
 
