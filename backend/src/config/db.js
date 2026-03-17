@@ -163,7 +163,10 @@ const connectDB = async () => {
             console.log('🚀 Using In-Memory MongoDB for zero-setup demo!');
         }
 
-        const conn = await mongoose.connect(dbUri || 'mongodb://127.0.0.1:27017/supermarket');
+        const conn = await mongoose.connect(dbUri || 'mongodb://127.0.0.1:27017/supermarket', {
+            serverSelectionTimeoutMS: 3000,
+            socketTimeoutMS: 3000
+        });
         console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
 
         // Seed admin user
