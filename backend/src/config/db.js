@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 let MongoMemoryServer;
 if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
     try {
-        MongoMemoryServer = require('mongodb-memory-server').MongoMemoryServer;
+        const memSrvStr = 'mongodb-memory-server';
+        MongoMemoryServer = require(memSrvStr).MongoMemoryServer;
     } catch (e) {
         console.warn('MongoMemoryServer not available');
     }
