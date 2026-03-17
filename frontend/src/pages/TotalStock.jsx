@@ -86,15 +86,15 @@ const TotalStock = () => {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Products</p><p className="text-2xl font-black text-secondary-900">{totals.items}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Units</p><p className="text-2xl font-black text-secondary-900">{totals.stock.toLocaleString()}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest mb-1">Sell Value</p><p className="text-2xl font-black text-primary-600">₹{totals.value.toLocaleString()}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Margin</p><p className="text-2xl font-black text-emerald-600">₹{(totals.value - totals.cost).toLocaleString()}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Products</p><p className="text-2xl font-black text-secondary-900">{totals.items}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Units</p><p className="text-2xl font-black text-secondary-900">{totals.stock.toLocaleString()}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest mb-1">Sell Value</p><p className="text-2xl font-black text-primary-600">₹{totals.value.toLocaleString()}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Margin</p><p className="text-2xl font-black text-emerald-600">₹{(totals.value - totals.cost).toLocaleString()}</p></div>
             </div>
 
             {/* Category Summary */}
-            <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden mb-8">
-                <div className="px-6 py-4 bg-slate-50/50 border-b border-slate-100"><h3 className="font-bold text-secondary-700 text-sm">Category Summary</h3></div>
+            <div className="bg-white rounded-3xl border border-slate-200/60 shadow-sm overflow-hidden mb-8">
+                <div className="px-6 py-4 bg-slate-50/50 border-b border-slate-200/60"><h3 className="font-bold text-secondary-700 text-sm">Category Summary</h3></div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead className="bg-slate-50"><tr>
@@ -122,8 +122,8 @@ const TotalStock = () => {
             </div>
 
             {/* Detailed Table */}
-            <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
-                <div className="px-6 py-4 bg-slate-50/50 border-b border-slate-100"><h3 className="font-bold text-secondary-700 text-sm">Item-wise Stock ({filtered.length} items)</h3></div>
+            <div className="bg-white rounded-3xl border border-slate-200/60 shadow-sm overflow-hidden">
+                <div className="px-6 py-4 bg-slate-50/50 border-b border-slate-200/60"><h3 className="font-bold text-secondary-700 text-sm">Item-wise Stock ({filtered.length} items)</h3></div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead className="bg-slate-50"><tr>

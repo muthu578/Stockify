@@ -60,7 +60,7 @@ const SalesAnalytics = () => {
 
             {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4">
+                <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex items-center space-x-4">
                     <div className="p-4 bg-primary-50 text-primary-600 rounded-2xl">
                         <Package size={24} />
                     </div>
@@ -69,7 +69,7 @@ const SalesAnalytics = () => {
                         <h3 className="text-2xl font-black text-secondary-900">{totalItemsSold.toLocaleString()}</h3>
                     </div>
                 </div>
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4">
+                <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex items-center space-x-4">
                     <div className="p-4 bg-emerald-50 text-emerald-600 rounded-2xl">
                         <TrendingUp size={24} />
                     </div>
@@ -90,8 +90,8 @@ const SalesAnalytics = () => {
             </div>
 
             {/* Most Sold Items (Top List) */}
-            <div className="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden mb-8">
-                <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+            <div className="bg-white rounded-[2rem] border border-slate-200/60 shadow-sm overflow-hidden mb-8">
+                <div className="p-6 border-b border-slate-200/60 flex items-center justify-between bg-slate-50/50">
                     <h3 className="text-lg font-bold text-secondary-900 flex items-center">
                         <BarChart2 className="mr-2 text-primary-500" size={20} />
                         Most Sold Items
@@ -100,7 +100,7 @@ const SalesAnalytics = () => {
                 <div className="p-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                         {soldItems.slice(0, 5).map((item, index) => (
-                            <div key={item._id} className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col items-center text-center">
+                            <div key={item._id} className="p-4 bg-slate-50 rounded-2xl border border-slate-200/60 flex flex-col items-center text-center">
                                 <span className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-black text-xs mb-3 ${index === 0 ? 'bg-amber-400' : index === 1 ? 'bg-secondary-950' : index === 2 ? 'bg-amber-600' : 'bg-primary-500'
                                     }`}>
                                     #{index + 1}
@@ -118,8 +118,8 @@ const SalesAnalytics = () => {
             </div>
 
             {/* Detailed List and Filter */}
-            <div className="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden">
-                <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/50">
+            <div className="bg-white rounded-[2rem] border border-slate-200/60 shadow-sm overflow-hidden">
+                <div className="p-6 border-b border-slate-200/60 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/50">
                     <h3 className="text-lg font-bold text-secondary-900 flex items-center">
                         <List className="mr-2 text-primary-500" size={20} />
                         Sold Items Directory

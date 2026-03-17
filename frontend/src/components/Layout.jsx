@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import AIAssistant from './AIAssistant';
+import Breadcrumbs from './ui/Breadcrumbs';
 
 const Layout = ({ children }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -28,10 +29,11 @@ const Layout = ({ children }) => {
                 
                 <main className="flex-1 overflow-y-auto p-6 lg:p-10 print:p-0 no-scrollbar animate-slide-in">
                     <div className="max-w-[1600px] mx-auto">
+                        <Breadcrumbs />
                         {children}
                     </div>
                     
-                    <footer className="print:hidden mt-10 p-2 text-center border-t border-slate-100 bg-white/50 rounded-3xl">
+                    <footer className="print:hidden mt-10 p-2 text-center border-t border-slate-200/60 bg-white/50 rounded-3xl">
                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
                             © 2026 Stockify Enterprise • <span className="text-emerald-500">v2.4.0</span>
                         </p>

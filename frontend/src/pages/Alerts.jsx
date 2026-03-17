@@ -86,7 +86,7 @@ const Alerts = () => {
                 {loading ? (
                     <div className="p-20 text-center animate-pulse text-slate-400 font-bold uppercase tracking-widest">Synchronizing Alerts...</div>
                 ) : filteredAlerts.length === 0 ? (
-                    <div className="bg-white rounded-[2rem] p-20 text-center border border-slate-100 flex flex-col items-center">
+                    <div className="bg-white rounded-[2rem] p-20 text-center border border-slate-200/60 flex flex-col items-center">
                         <div className="w-20 h-20 bg-emerald-50 text-emerald-500 rounded-3xl flex items-center justify-center mb-6">
                             <CheckCircle size={40} />
                         </div>
@@ -98,7 +98,7 @@ const Alerts = () => {
                         <div 
                             key={alert._id} 
                             className={`p-6 bg-white rounded-3xl border transition-all duration-300 flex items-center gap-6 group
-                                ${alert.isRead ? 'border-slate-100 opacity-60' : 'border-emerald-500/20 bg-emerald-50/5 shadow-xl shadow-slate-900/5'}
+                                ${alert.isRead ? 'border-slate-200/60 opacity-60' : 'border-emerald-500/20 bg-emerald-50/5 shadow-xl shadow-slate-900/5'}
                             `}
                         >
                             <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all

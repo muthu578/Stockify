@@ -75,13 +75,13 @@ const MachineMaster = () => {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total</p><p className="text-2xl font-black text-secondary-900">{machines.length}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Active</p><p className="text-2xl font-black text-emerald-600">{machines.filter(m => m.status === 'Active').length}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-amber-400 uppercase tracking-widest mb-1">Maintenance</p><p className="text-2xl font-black text-amber-600">{machines.filter(m => m.status === 'Maintenance').length}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Idle</p><p className="text-2xl font-black text-slate-600">{machines.filter(m => m.status === 'Idle').length}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total</p><p className="text-2xl font-black text-secondary-900">{machines.length}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Active</p><p className="text-2xl font-black text-emerald-600">{machines.filter(m => m.status === 'Active').length}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-amber-400 uppercase tracking-widest mb-1">Maintenance</p><p className="text-2xl font-black text-amber-600">{machines.filter(m => m.status === 'Maintenance').length}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Idle</p><p className="text-2xl font-black text-slate-600">{machines.filter(m => m.status === 'Idle').length}</p></div>
             </div>
 
-            <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-3xl border border-slate-200/60 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead className="bg-slate-50"><tr>
@@ -134,7 +134,7 @@ const MachineMaster = () => {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-secondary-950/60 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
                     <div className="relative bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden">
-                        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50"><h3 className="text-xl font-black text-secondary-900">{editId ? 'Edit Machine' : 'Add Machine'}</h3><button onClick={() => setShowModal(false)} className="p-2 hover:bg-slate-200 rounded-full"><X size={20} /></button></div>
+                        <div className="px-6 py-4 border-b border-slate-200/60 flex items-center justify-between bg-slate-50/50"><h3 className="text-xl font-black text-secondary-900">{editId ? 'Edit Machine' : 'Add Machine'}</h3><button onClick={() => setShowModal(false)} className="p-2 hover:bg-slate-200 rounded-full"><X size={20} /></button></div>
                         <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
                             <div className="grid grid-cols-2 gap-4">
                                 <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Name *</label><input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-semibold outline-none" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
@@ -155,7 +155,7 @@ const MachineMaster = () => {
                             )}
                             <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Notes</label><textarea rows={2} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none resize-none" value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
                         </div>
-                        <div className="p-5 bg-white border-t border-slate-100 flex justify-end gap-3">
+                        <div className="p-5 bg-white border-t border-slate-200/60 flex justify-end gap-3">
                             <button onClick={() => setShowModal(false)} className="px-5 py-2.5 bg-slate-100 text-slate-600 rounded-xl font-bold text-sm hover:bg-slate-200">Cancel</button>
                             <button onClick={handleSubmit} className="px-6 py-2.5 bg-primary-600 text-white rounded-xl font-bold text-sm hover:bg-primary-500 shadow-lg shadow-primary-600/20">{editId ? 'Update' : 'Create'} Machine</button>
                         </div>

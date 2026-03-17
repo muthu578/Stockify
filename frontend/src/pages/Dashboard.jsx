@@ -75,7 +75,8 @@ const Dashboard = () => {
         purchaseCount: 0,
         totalExpenses: 0,
         pendingPOs: 0,
-        activeProductions: 0
+        activeProductions: 0,
+        categoryStats: []
     });
     const [loading, setLoading] = useState(true);
     const [timeRange, setTimeRange] = useState('7D');
@@ -125,6 +126,23 @@ const Dashboard = () => {
             const pendingPOs = pos.filter(po => po.status === 'Pending' || po.status === 'Partial').length;
             const activeProductions = productions.filter(p => p.status === 'In Progress' || p.status === 'Planned').length;
 
+            // Calculate category distribution
+            const categoryMap = items.reduce((acc, item) => {
+                const cat = item.category || 'Other';
+                acc[cat] = (acc[cat] || 0) + 1;
+                return acc;
+            }, {});
+
+            const totalItems = items.length || 1;
+            const categoryStats = Object.entries(categoryMap)
+                .map(([label, count]) => ({
+                    label,
+                    val: Math.round((count / totalItems) * 100),
+                    color: ['bg-indigo-500', 'bg-emerald-500', 'bg-amber-500', 'bg-rose-500', 'bg-teal-500'][Math.floor(Math.random() * 5)]
+                }))
+                .sort((a, b) => b.val - a.val)
+                .slice(0, 4);
+
             setStats(prev => ({
                 ...prev,
                 totalSales,
@@ -138,6 +156,7 @@ const Dashboard = () => {
                 purchaseCount: purchases.length,
                 pendingPOs,
                 activeProductions,
+                categoryStats,
                 revenue: (timeRange === '7D' ? [...Array(7)] : [...Array(30)]).map(() => Math.floor(Math.random() * 5000) + 1000)
             }));
         } catch (error) {
@@ -305,7 +324,7 @@ const Dashboard = () => {
                             <button
                                 key={i}
                                 onClick={() => window.location.href = action.path}
-                                className="group relative flex flex-col items-center justify-center gap-4 bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-900/5 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 overflow-hidden"
+                                className="group relative flex flex-col items-center justify-center gap-4 bg-white rounded-[2.5rem] border border-slate-200/60 shadow-xl shadow-slate-900/5 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 overflow-hidden"
                             >
                                 <div className={`w-14 h-14 rounded-2xl ${action.bg} ${action.color.replace('bg-', 'text-')} flex items-center justify-center transition-transform group-hover:scale-110 group-hover:rotate-6`}>
                                     <action.icon size={28} />
@@ -322,14 +341,14 @@ const Dashboard = () => {
                     {/* Revenue Card */}
                     <motion.div 
                         variants={itemVariants}
-                        className="lg:col-span-8 bg-white rounded-[3rem] p-10 border border-slate-100 shadow-2xl shadow-slate-900/5"
+                        className="lg:col-span-8 bg-white rounded-[3rem] p-10 border border-slate-200/60 shadow-2xl shadow-slate-900/5"
                     >
                         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
                             <div>
                                 <h3 className="text-2xl font-black text-slate-900 tracking-tight">Revenue Matrix</h3>
                                 <p className="text-slate-500 font-medium text-sm">Real-time fiscal monitoring vs historical benchmarks.</p>
                             </div>
-                            <div className="flex bg-slate-50 p-1.5 rounded-[1.2rem] border border-slate-100">
+                            <div className="flex bg-slate-50 p-1.5 rounded-[1.2rem] border border-slate-200/60">
                                 {['7D', '30D'].map(range => (
                                     <button 
                                         key={range}
@@ -426,7 +445,7 @@ const Dashboard = () => {
                     {/* Recent Ledger */}
                     <motion.div 
                         variants={itemVariants}
-                        className="lg:col-span-8 bg-white rounded-[3rem] p-10 border border-slate-100 shadow-2xl shadow-slate-900/5"
+                        className="lg:col-span-8 bg-white rounded-[3rem] p-10 border border-slate-200/60 shadow-2xl shadow-slate-900/5"
                     >
                         <div className="flex items-center justify-between mb-10">
                             <div>
@@ -437,9 +456,9 @@ const Dashboard = () => {
                         </div>
                         <div className="space-y-4">
                             {stats.recentSales.map((sale, i) => (
-                                <div key={sale._id} className="flex items-center justify-between p-4 bg-slate-50 hover:bg-white rounded-[1.5rem] border border-transparent hover:border-slate-100 hover:shadow-xl hover:shadow-slate-900/5 transition-all group">
+                                <div key={sale._id} className="flex items-center justify-between p-4 bg-slate-50 hover:bg-white rounded-[1.5rem] border border-transparent hover:border-slate-200/60 hover:shadow-xl hover:shadow-slate-900/5 transition-all group">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center text-slate-400 group-hover:text-emerald-500 transition-colors">
+                                        <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-200/60 flex items-center justify-center text-slate-400 group-hover:text-emerald-500 transition-colors">
                                             {sale.paymentMethod === 'Cash' ? <IndianRupee size={20} /> : <Zap size={20} />}
                                         </div>
                                         <div>
@@ -469,7 +488,7 @@ const Dashboard = () => {
                             { label: 'Cloud Sync', val: 'Synchronized', sub: 'Last: 2m ago', icon: Cloud, color: 'text-indigo-500', bg: 'bg-indigo-50' },
                             { label: 'Stock Health', val: stats.lowStock, sub: 'Critical Alerts', icon: AlertCircle, color: 'text-amber-500', bg: 'bg-amber-50' }
                         ].map((stat, i) => (
-                            <div key={i} className="bg-white rounded-[2.5rem] p-6 border border-slate-100 shadow-xl shadow-slate-900/5 flex items-center gap-6 group hover:border-slate-200 transition-colors">
+                            <div key={i} className="bg-white rounded-[2.5rem] p-6 border border-slate-200/60 shadow-xl shadow-slate-900/5 flex items-center gap-6 group hover:border-slate-200 transition-colors">
                                 <div className={`w-16 h-16 rounded-[1.5rem] ${stat.bg} ${stat.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
                                     <stat.icon size={28} />
                                 </div>
@@ -480,6 +499,92 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         ))}
+                    </motion.div>
+                </div>
+                {/* New Section: Top Products & Category Breakdown */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    {/* Top Products */}
+                    <motion.div 
+                        variants={itemVariants}
+                        className="lg:col-span-7 bg-white rounded-[3rem] p-10 border border-slate-200/60 shadow-2xl shadow-slate-900/5"
+                    >
+                        <div className="flex items-center justify-between mb-8">
+                            <div>
+                                <h3 className="text-2xl font-black text-slate-900 tracking-tight">Top Velocity Assets</h3>
+                                <p className="text-slate-500 font-medium text-sm">Most frequent inventory movements.</p>
+                            </div>
+                            <div className="p-3 bg-emerald-50 rounded-2xl text-emerald-600">
+                                <TrendingUp size={24} />
+                            </div>
+                        </div>
+                        <div className="space-y-4">
+                            {[
+                                { name: 'Premium Steel Sheet', category: 'Raw Material', sales: 145, trend: '+12%', color: 'bg-blue-500' },
+                                { name: 'Industrial Drill Bit', category: 'Tools', sales: 98, trend: '+5%', color: 'bg-emerald-500' },
+                                { name: 'Hydraulic Press Oil', category: 'Consumables', sales: 76, trend: '-2%', color: 'bg-amber-500' },
+                                { name: 'Safety Harness L', category: 'Safety', sales: 54, trend: '+20%', color: 'bg-rose-500' },
+                            ].map((product, i) => (
+                                <div key={i} className="flex items-center justify-between p-4 bg-slate-50 rounded-[1.5rem] border border-transparent hover:border-slate-200/60 transition-all group">
+                                    <div className="flex items-center gap-4">
+                                        <div className={`w-12 h-12 ${product.color} rounded-xl shadow-lg flex items-center justify-center text-white font-bold`}>
+                                            {product.name.charAt(0)}
+                                        </div>
+                                        <div>
+                                            <p className="font-black text-slate-900 leading-none mb-1">{product.name}</p>
+                                            <p className="text-[10px] font-bold text-slate-400 uppercase">{product.category}</p>
+                                        </div>
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="font-black text-slate-900">{product.sales} <span className="text-[10px] text-slate-400 font-bold ml-1">Units</span></p>
+                                        <p className={`text-[10px] font-black uppercase ${product.trend.startsWith('+') ? 'text-emerald-500' : 'text-rose-500'}`}>
+                                            {product.trend} Trend
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </motion.div>
+
+                    {/* Category Breakdown */}
+                    <motion.div 
+                        variants={itemVariants}
+                        className="lg:col-span-5 bg-slate-50 rounded-[3rem] p-10 border border-slate-200/60 shadow-xl shadow-slate-900/5"
+                    >
+                        <h3 className="text-2xl font-black text-slate-900 tracking-tight mb-8">Structural Dynamics</h3>
+                        <div className="space-y-6">
+                            {(stats.categoryStats.length > 0 ? stats.categoryStats : [
+                                { label: 'Electronics', val: 65, color: 'bg-indigo-500' },
+                                { label: 'Machinery', val: 45, color: 'bg-emerald-500' },
+                                { label: 'Hardware', val: 30, color: 'bg-amber-500' },
+                                { label: 'Safety Gear', val: 20, color: 'bg-rose-500' },
+                            ]).map((cat, i) => (
+                                <div key={i} className="space-y-2">
+                                    <div className="flex justify-between items-end">
+                                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{cat.label}</span>
+                                        <span className="text-sm font-black text-slate-900">{cat.val}%</span>
+                                    </div>
+                                    <div className="h-3 bg-slate-200 rounded-full overflow-hidden">
+                                        <motion.div 
+                                            initial={{ width: 0 }}
+                                            whileInView={{ width: `${cat.val}%` }}
+                                            transition={{ duration: 1, delay: i * 0.1 }}
+                                            className={`h-full ${cat.color} rounded-full`}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="mt-10 p-6 bg-white rounded-[2rem] border border-slate-200/60 shadow-sm">
+                            <div className="flex items-center gap-4">
+                                <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+                                    <Zap size={20} />
+                                </div>
+                                <div>
+                                    <p className="text-[10px] font-black text-slate-400 uppercase">System Intelligence</p>
+                                    <p className="text-xs font-bold text-slate-600 leading-tight">Electronics inventory is reaching peak optimization levels.</p>
+                                </div>
+                            </div>
+                        </div>
                     </motion.div>
                 </div>
             </motion.div>

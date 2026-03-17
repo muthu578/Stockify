@@ -82,10 +82,10 @@ const BatchWiseReport = () => {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Categories</p><p className="text-2xl font-black text-secondary-900">{stats.categories}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Items</p><p className="text-2xl font-black text-secondary-900">{stats.totalItems}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Stock</p><p className="text-2xl font-black text-secondary-900">{stats.totalStock.toLocaleString()}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest mb-1">Total Value</p><p className="text-2xl font-black text-primary-600">₹{stats.totalValue.toLocaleString()}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Categories</p><p className="text-2xl font-black text-secondary-900">{stats.categories}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Items</p><p className="text-2xl font-black text-secondary-900">{stats.totalItems}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Stock</p><p className="text-2xl font-black text-secondary-900">{stats.totalStock.toLocaleString()}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest mb-1">Total Value</p><p className="text-2xl font-black text-primary-600">₹{stats.totalValue.toLocaleString()}</p></div>
             </div>
 
             <div className="flex gap-2 mb-4">
@@ -95,11 +95,11 @@ const BatchWiseReport = () => {
             </div>
 
             {loading ? <div className="text-center p-10 text-secondary-400 animate-pulse">Loading...</div>
-                : grouped.length === 0 ? <div className="bg-white rounded-3xl p-16 text-center border border-slate-100 shadow-sm"><Archive size={40} className="mx-auto text-slate-200 mb-3" /><p className="font-bold text-secondary-400">No items found</p></div>
+                : grouped.length === 0 ? <div className="bg-white rounded-3xl p-16 text-center border border-slate-200/60 shadow-sm"><Archive size={40} className="mx-auto text-slate-200 mb-3" /><p className="font-bold text-secondary-400">No items found</p></div>
                     : (
                         <div className="space-y-3">
                             {grouped.map(g => (
-                                <div key={g.category} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+                                <div key={g.category} className="bg-white rounded-2xl border border-slate-200/60 shadow-sm overflow-hidden">
                                     {/* Category Header */}
                                     <button onClick={() => toggleCategory(g.category)} className="w-full px-6 py-4 flex items-center justify-between hover:bg-slate-50/50 transition-colors">
                                         <div className="flex items-center gap-3">
@@ -117,7 +117,7 @@ const BatchWiseReport = () => {
 
                                     {/* Expanded Items */}
                                     {expandedCategories.has(g.category) && (
-                                        <div className="border-t border-slate-100">
+                                        <div className="border-t border-slate-200/60">
                                             <table className="w-full text-left">
                                                 <thead className="bg-slate-50/30"><tr>
                                                     <th className="px-6 py-2.5 text-[10px] font-bold text-secondary-400 uppercase tracking-widest">#</th>

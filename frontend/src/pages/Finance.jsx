@@ -112,7 +112,7 @@ const Finance = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4">
+                <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex items-center space-x-4">
                     <div className="p-4 bg-emerald-50 text-emerald-600 rounded-2xl">
                         <Landmark size={24} />
                     </div>
@@ -121,7 +121,7 @@ const Finance = () => {
                         <h3 className="text-2xl font-black text-secondary-900">₹{totalBankBalance.toLocaleString()}</h3>
                     </div>
                 </div>
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4">
+                <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex items-center space-x-4">
                     <div className="p-4 bg-rose-50 text-rose-600 rounded-2xl">
                         <TrendingDown size={24} />
                     </div>
@@ -141,8 +141,8 @@ const Finance = () => {
                 </div>
             </div>
 
-            <div className="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden min-h-[500px]">
-                <div className="flex border-b border-slate-100">
+            <div className="bg-white rounded-[2rem] border border-slate-200/60 shadow-sm overflow-hidden min-h-[500px]">
+                <div className="flex border-b border-slate-200/60">
                     <button
                         onClick={() => setActiveTab('accounts')}
                         className={`px-8 py-4 font-bold text-sm transition-all ${activeTab === 'accounts' ? 'bg-primary-50 text-primary-600 border-b-2 border-primary-600' : 'text-secondary-400 hover:bg-slate-50'}`}
@@ -161,7 +161,7 @@ const Finance = () => {
                     {activeTab === 'accounts' ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {accounts.map(acc => (
-                                <div key={acc._id} className="p-6 bg-slate-50 rounded-3xl border border-slate-100 relative group overflow-hidden">
+                                <div key={acc._id} className="p-6 bg-slate-50 rounded-3xl border border-slate-200/60 relative group overflow-hidden">
                                     <div className="flex justify-between items-start mb-6">
                                         <div className={`p-3 rounded-xl bg-white shadow-sm ${acc.type === 'Bank' ? 'text-primary-500' : 'text-amber-500'}`}>
                                             {acc.type === 'Bank' ? <Landmark size={20} /> : <Wallet size={20} />}

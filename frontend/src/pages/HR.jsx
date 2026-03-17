@@ -114,7 +114,7 @@ const HR = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4">
+                <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex items-center space-x-4">
                     <div className="p-4 bg-indigo-50 text-indigo-600 rounded-2xl">
                         <Users size={24} />
                     </div>
@@ -123,7 +123,7 @@ const HR = () => {
                         <h3 className="text-2xl font-black text-secondary-900">{employees.length} Members</h3>
                     </div>
                 </div>
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4">
+                <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex items-center space-x-4">
                     <div className="p-4 bg-emerald-50 text-emerald-600 rounded-2xl">
                         <UserCheck size={24} />
                     </div>
@@ -143,8 +143,8 @@ const HR = () => {
                 </div>
             </div>
 
-            <div className="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden min-h-[500px]">
-                <div className="flex border-b border-slate-100">
+            <div className="bg-white rounded-[2rem] border border-slate-200/60 shadow-sm overflow-hidden min-h-[500px]">
+                <div className="flex border-b border-slate-200/60">
                     <button
                         onClick={() => setActiveTab('employees')}
                         className={`px-8 py-4 font-bold text-sm transition-all ${activeTab === 'employees' ? 'bg-primary-50 text-primary-600 border-b-2 border-primary-600' : 'text-secondary-400 hover:bg-slate-50'}`}
@@ -163,8 +163,8 @@ const HR = () => {
                     {activeTab === 'employees' ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
                             {employees.map(emp => (
-                                <div key={emp._id} className="p-6 bg-slate-50 rounded-3xl border border-slate-100 group hover:border-primary-200 transition-all">
-                                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 text-secondary-400 group-hover:text-primary-500 shadow-sm border border-slate-100">
+                                <div key={emp._id} className="p-6 bg-slate-50 rounded-3xl border border-slate-200/60 group hover:border-primary-200 transition-all">
+                                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 text-secondary-400 group-hover:text-primary-500 shadow-sm border border-slate-200/60">
                                         <Briefcase size={32} />
                                     </div>
                                     <h4 className="text-lg font-black text-secondary-900">{emp.name}</h4>

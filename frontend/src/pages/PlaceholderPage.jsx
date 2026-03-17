@@ -33,7 +33,7 @@ const PlaceholderPage = ({ title }) => {
                 </div>
             </div>
 
-            <div className="flex flex-col items-center justify-center p-16 text-center bg-white rounded-3xl border border-slate-100 shadow-sm">
+            <div className="flex flex-col items-center justify-center p-16 text-center bg-white rounded-3xl border border-slate-200/60 shadow-sm">
                 <div className="bg-gradient-to-br from-primary-50 to-orange-50 p-6 rounded-3xl mb-6">
                     <Construction size={48} className="text-primary-500" />
                 </div>

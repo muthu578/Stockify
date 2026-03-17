@@ -107,7 +107,7 @@ const StockTransfer = () => {
                 </div>
             </div>
 
-            <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-3xl border border-slate-200/60 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead className="bg-slate-50"><tr>
@@ -153,7 +153,7 @@ const StockTransfer = () => {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-secondary-950/60 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
                     <div className="relative bg-white w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col">
-                        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 shrink-0">
+                        <div className="px-6 py-4 border-b border-slate-200/60 flex items-center justify-between bg-slate-50/50 shrink-0">
                             <div><h3 className="text-xl font-black text-secondary-900">New Stock Transfer</h3><p className="text-xs text-secondary-400">Move stock between locations</p></div>
                             <button onClick={() => setShowModal(false)} className="p-2 hover:bg-slate-200 rounded-full"><X size={20} /></button>
                         </div>
@@ -186,9 +186,9 @@ const StockTransfer = () => {
                                 </div>
                             </div>
                             {cart.length > 0 && (
-                                <div className="bg-slate-50 rounded-2xl border border-slate-100 overflow-hidden">
+                                <div className="bg-slate-50 rounded-2xl border border-slate-200/60 overflow-hidden">
                                     <table className="w-full">
-                                        <thead><tr className="border-b border-slate-100">
+                                        <thead><tr className="border-b border-slate-200/60">
                                             <th className="px-4 py-3 text-left text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Item</th>
                                             <th className="px-4 py-3 text-center text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Available</th>
                                             <th className="px-4 py-3 text-center text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Transfer Qty</th>
@@ -211,7 +211,7 @@ const StockTransfer = () => {
                             )}
                             <textarea rows={2} placeholder="Reason for transfer (optional)..." className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none resize-none" value={reason} onChange={(e) => setReason(e.target.value)} />
                         </div>
-                        <div className="p-5 bg-white border-t border-slate-100 flex justify-end gap-3 shrink-0">
+                        <div className="p-5 bg-white border-t border-slate-200/60 flex justify-end gap-3 shrink-0">
                             <button onClick={() => setShowModal(false)} className="px-5 py-2.5 bg-slate-100 text-slate-600 rounded-xl font-bold text-sm hover:bg-slate-200">Cancel</button>
                             <button onClick={handleSubmit} className="px-6 py-2.5 bg-primary-600 text-white rounded-xl font-bold text-sm hover:bg-primary-500 shadow-lg shadow-primary-600/20 flex items-center gap-2"><ArrowRightLeft size={16} />Create Transfer</button>
                         </div>
@@ -224,7 +224,7 @@ const StockTransfer = () => {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-secondary-950/60 backdrop-blur-sm" onClick={() => setShowView(null)}></div>
                     <div className="relative bg-white w-full max-w-2xl max-h-[80vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col">
-                        <div className="px-6 py-5 border-b border-slate-100 flex items-start justify-between bg-slate-50/50 shrink-0">
+                        <div className="px-6 py-5 border-b border-slate-200/60 flex items-start justify-between bg-slate-50/50 shrink-0">
                             <div>
                                 <div className="flex items-center gap-3 mb-1"><h3 className="text-xl font-black text-secondary-900">{showView.transferNumber}</h3><span className={`px-3 py-0.5 rounded-full text-xs font-bold ${statusCfg[showView.status]?.color}`}>{showView.status}</span></div>
                                 <p className="text-xs text-secondary-400">{showView.fromLocation} → {showView.toLocation} • {new Date(showView.createdAt).toLocaleDateString()}</p>
@@ -232,9 +232,9 @@ const StockTransfer = () => {
                             <button onClick={() => setShowView(null)} className="p-2 hover:bg-slate-200 rounded-full"><X size={20} /></button>
                         </div>
                         <div className="flex-1 overflow-y-auto p-6">
-                            <div className="bg-slate-50/50 rounded-2xl border border-slate-100 overflow-hidden">
+                            <div className="bg-slate-50/50 rounded-2xl border border-slate-200/60 overflow-hidden">
                                 <table className="w-full">
-                                    <thead><tr className="border-b border-slate-100">
+                                    <thead><tr className="border-b border-slate-200/60">
                                         <th className="px-4 py-3 text-left text-[10px] font-bold text-secondary-400 uppercase tracking-widest">#</th>
                                         <th className="px-4 py-3 text-left text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Item</th>
                                         <th className="px-4 py-3 text-center text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Qty</th>

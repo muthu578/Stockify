@@ -89,34 +89,34 @@ const InventoryReport = () => {
 
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-8">
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
                     <p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Products</p>
                     <p className="text-2xl font-black text-secondary-900">{stats.totalItems}</p>
                 </div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
                     <p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Stock</p>
                     <p className="text-2xl font-black text-secondary-900">{stats.totalStock.toLocaleString()}</p>
                 </div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
                     <p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest mb-1">Stock Value</p>
                     <p className="text-2xl font-black text-primary-600">₹{stats.totalValue.toLocaleString()}</p>
                 </div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
                     <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Cost Value</p>
                     <p className="text-2xl font-black text-emerald-600">₹{stats.totalCost.toLocaleString()}</p>
                 </div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
                     <p className="text-[10px] font-bold text-amber-400 uppercase tracking-widest mb-1">Low Stock</p>
                     <p className="text-2xl font-black text-amber-600">{stats.lowStock}</p>
                 </div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
                     <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-1">Out of Stock</p>
                     <p className="text-2xl font-black text-red-600">{stats.outOfStock}</p>
                 </div>
             </div>
 
             {/* Table */}
-            <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-3xl border border-slate-200/60 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead className="bg-slate-50">

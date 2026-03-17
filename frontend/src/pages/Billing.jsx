@@ -244,7 +244,7 @@ const POS = () => {
                 {/* TOP: Discovery & Catalog */}
                 <div className={`flex-1 flex flex-col min-h-0 overflow-hidden transition-all duration-500`}>
                     {/* Catalog Header */}
-                    <div className="bg-white p-4 lg:p-6 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100 mb-4 animate-in slide-in-from-top-4 duration-500">
+                    <div className="bg-white p-4 lg:p-6 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-200/60 mb-4 animate-in slide-in-from-top-4 duration-500">
                         <div className="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4">
                             <div>
                                 <h1 className="text-2xl font-black text-slate-900 tracking-tighter uppercase">Commerce Node</h1>
@@ -258,7 +258,7 @@ const POS = () => {
                                     <input 
                                         type="text"
                                         placeholder="Identify Asset..."
-                                        className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border-2 border-slate-50 rounded-[1rem] focus:bg-white focus:border-emerald-500 outline-none transition-all text-xs font-bold text-slate-800 placeholder:text-slate-300 shadow-inner"
+                                        className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border-2 border-slate-200/60 rounded-[1rem] focus:bg-white focus:border-emerald-500 outline-none transition-all text-xs font-bold text-slate-800 placeholder:text-slate-300 shadow-inner"
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                     />
@@ -286,7 +286,7 @@ const POS = () => {
                                 ))}
                             </div>
                         ) : filteredItems.length === 0 ? (
-                            <div className="h-full flex flex-col items-center justify-center bg-white rounded-[2rem] border-4 border-dashed border-slate-50 text-center p-8">
+                            <div className="h-full flex flex-col items-center justify-center bg-white rounded-[2rem] border-4 border-dashed border-slate-200/60 text-center p-8">
                                 <SearchX size={40} className="text-slate-200 mb-4" />
                                 <h3 className="text-lg font-black text-slate-900 mb-1 leading-none">Index Empty</h3>
                             </div>
@@ -295,7 +295,7 @@ const POS = () => {
                                 {filteredItems.map(item => (
                                     <div 
                                         key={item._id} 
-                                        className={`group relative bg-white rounded-[1.5rem] p-4 border-2 transition-all duration-500 cursor-pointer flex flex-col ${cart.find(i => i._id === item._id) ? 'border-emerald-500 bg-emerald-50/20 shadow-md' : 'border-transparent hover:border-slate-200 hover:shadow-lg'}`}
+                                        className={`group relative bg-white rounded-[1.5rem] p-4 border transition-all duration-500 cursor-pointer flex flex-col ${cart.find(i => i._id === item._id) ? 'border-emerald-500 bg-emerald-50/20 shadow-md ring-2 ring-emerald-500/10' : 'border-slate-200 shadow-sm hover:border-emerald-400 hover:shadow-xl hover:-translate-y-1'}`}
                                         onClick={() => addToCart(item)}
                                     >
                                         <div className="flex justify-between items-start mb-2">
@@ -345,7 +345,7 @@ const POS = () => {
                             </button>
                         </div>
 
-                        <div className={`h-[140px] bg-white rounded-[2rem] border border-slate-100 shadow-[0_-20px_80px_-20px_rgba(0,0,0,0.15)] flex overflow-hidden ring-4 ring-slate-900/5`}>
+                        <div className={`h-[140px] bg-white rounded-[2rem] border border-slate-200/60 shadow-[0_-20px_80px_-20px_rgba(0,0,0,0.15)] flex overflow-hidden ring-4 ring-slate-900/5`}>
                             {/* Summary (Left) */}
                             <div className="w-[240px] bg-slate-900 p-4 flex flex-col justify-between relative overflow-hidden">
                                 <div className="flex items-center gap-2 relative z-10">
@@ -389,14 +389,14 @@ const POS = () => {
                                 
                                 <div className="flex-1 flex gap-3 overflow-x-auto no-scrollbar items-center py-1">
                                     {cart.map((item) => (
-                                        <div key={item._id} className="w-[140px] shrink-0 bg-slate-50 rounded-xl p-3 border border-slate-100 flex flex-col justify-between h-[80px] hover:bg-white hover:shadow-xl hover:border-emerald-100 transition-all group">
+                                        <div key={item._id} className="w-[140px] shrink-0 bg-slate-50 rounded-xl p-3 border border-slate-200/60 flex flex-col justify-between h-[80px] hover:bg-white hover:shadow-xl hover:border-emerald-100 transition-all group">
                                             <div className="flex justify-between items-start">
                                                 <h5 className="text-[9px] font-black text-slate-800 uppercase truncate pr-1 group-hover:text-emerald-600 transition-colors">{item.name}</h5>
                                                 <button onClick={() => removeFromCart(item._id)} className="text-slate-200 hover:text-rose-500 transition-colors"><X size={10} /></button>
                                             </div>
                                             <div className="flex items-end justify-between">
                                                 <p className="text-[9px] font-black text-slate-900">₹{item.price.toLocaleString()}</p>
-                                                <div className="flex items-center gap-2 bg-white rounded-lg px-2 py-1 shadow-sm border border-slate-50">
+                                                <div className="flex items-center gap-2 bg-white rounded-lg px-2 py-1 shadow-sm border border-slate-200/60">
                                                     <button onClick={() => updateQty(item._id, -1)} className="text-slate-400 hover:text-rose-500"><Minus size={10} /></button>
                                                     <span className="text-[10px] font-black text-slate-900 w-3 text-center">{item.quantity}</span>
                                                     <button onClick={() => updateQty(item._id, 1)} className="text-slate-400 hover:text-emerald-500"><Plus size={10} /></button>
@@ -408,7 +408,7 @@ const POS = () => {
                             </div>
 
                             {/* Payment Selection (Right) */}
-                            <div className="w-[200px] border-l border-slate-50 p-4 flex flex-col justify-center gap-2 bg-slate-50/50">
+                            <div className="w-[200px] border-l border-slate-200/60 p-4 flex flex-col justify-center gap-2 bg-slate-50/50">
                                 <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest text-center mb-1">Settlement</p>
                                 <div className="grid grid-cols-3 gap-2">
                                     {[

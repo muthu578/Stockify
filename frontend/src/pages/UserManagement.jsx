@@ -133,7 +133,7 @@ const UserManagement = () => {
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="border-b border-slate-50 bg-slate-50/50">
+                            <tr className="border-b border-slate-200/60 bg-slate-50/50">
                                 <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Personnel Identity</th>
                                 <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Network Role</th>
                                 <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Auth Status</th>
@@ -170,7 +170,7 @@ const UserManagement = () => {
                                     <td className="px-8 py-6">
                                         <Badge 
                                             variant={user.role === 'Admin' ? 'primary' : user.role === 'Manager' ? 'secondary' : 'primary'} 
-                                            className={user.role === 'Admin' ? 'bg-indigo-50 text-indigo-600 border-indigo-100' : user.role === 'Manager' ? 'bg-sky-50 text-sky-600 border-sky-100' : 'bg-slate-50 text-slate-600 border-slate-100'}
+                                            className={user.role === 'Admin' ? 'bg-indigo-50 text-indigo-600 border-indigo-100' : user.role === 'Manager' ? 'bg-sky-50 text-sky-600 border-sky-100' : 'bg-slate-50 text-slate-600 border-slate-200/60'}
                                         >
                                             {user.role}
                                         </Badge>
@@ -182,7 +182,7 @@ const UserManagement = () => {
                                         </div>
                                     </td>
                                     <td className="px-8 py-6">
-                                        <div className="flex items-center gap-2 text-slate-400 font-bold text-xs bg-slate-50/50 w-fit px-3 py-1.5 rounded-lg border border-slate-100">
+                                        <div className="flex items-center gap-2 text-slate-400 font-bold text-xs bg-slate-50/50 w-fit px-3 py-1.5 rounded-lg border border-slate-200/60">
                                             <Clock size={14} className="text-slate-300" />
                                             {user.lastLogin ? new Date(user.lastLogin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short' }) : 'PROTOCOL NEVER INITIALIZED'}
                                         </div>
@@ -211,7 +211,7 @@ const UserManagement = () => {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 sm:p-12">
                     <div className="absolute inset-0 bg-[#090b14]/80 backdrop-blur-md animate-in fade-in duration-500" onClick={() => setShowModal(false)}></div>
                     <Card className="relative w-full max-w-xl bg-white shadow-2xl border-transparent animate-in zoom-in slide-in-from-bottom-20 duration-500 overflow-hidden flex flex-col" padding="p-0">
-                        <div className="p-8 border-b border-slate-50 flex items-center justify-between bg-slate-50/30">
+                        <div className="p-8 border-b border-slate-200/60 flex items-center justify-between bg-slate-50/30">
                             <div>
                                 <Badge variant="primary" className="mb-2">Security Provisioning</Badge>
                                 <CardTitle>Initialize Access Protocol</CardTitle>
@@ -273,7 +273,7 @@ const UserManagement = () => {
                                                 className={`py-4 rounded-2xl border-2 font-black text-sm uppercase tracking-tighter transition-all ${
                                                     formData.role === role 
                                                     ? 'border-indigo-600 bg-indigo-50 text-indigo-600 shadow-lg shadow-indigo-500/10 scale-[1.02]' 
-                                                    : 'border-slate-100 bg-slate-50 text-slate-400 hover:border-slate-200 hover:bg-white'
+                                                    : 'border-slate-200/60 bg-slate-50 text-slate-400 hover:border-slate-200 hover:bg-white'
                                                 }`}
                                             >
                                                 {role}
@@ -282,7 +282,7 @@ const UserManagement = () => {
                                     </div>
                                 </div>
 
-                                <div className="p-6 bg-slate-50 rounded-[2rem] border border-slate-100">
+                                <div className="p-6 bg-slate-50 rounded-[2rem] border border-slate-200/60">
                                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                                         <Key size={12} /> Privilege Manifest
                                     </p>
@@ -297,7 +297,7 @@ const UserManagement = () => {
                                 </div>
                             </div>
 
-                            <div className="flex items-center justify-end gap-3 pt-6 border-t border-slate-50">
+                            <div className="flex items-center justify-end gap-3 pt-6 border-t border-slate-200/60">
                                 <Button variant="ghost" onClick={() => setShowModal(false)} type="button">Decline</Button>
                                 <Button variant="secondary" className="px-12" type="submit" icon={Lock}>Authorize Access</Button>
                             </div>

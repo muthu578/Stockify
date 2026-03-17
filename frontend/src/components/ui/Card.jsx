@@ -11,7 +11,7 @@ const Card = ({
     return (
         <div className={`
             ${glass ? 'glass' : 'bg-white'} 
-            rounded-[2.5rem] border border-slate-100 
+            rounded-[2.5rem] border border-slate-200/60 shadow-sm
             ${hover ? 'hover:shadow-2xl hover:shadow-slate-200/50 hover:-translate-y-1 transition-all duration-500' : ''} 
             ${animate ? 'animate-slide-in' : ''} 
             ${padding} 

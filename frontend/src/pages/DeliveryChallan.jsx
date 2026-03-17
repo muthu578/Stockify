@@ -127,13 +127,13 @@ const DeliveryChallan = () => {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Challans</p><p className="text-2xl font-black text-secondary-900">{stats.total}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Pending</p><p className="text-2xl font-black text-slate-600">{stats.pending}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1">Dispatched</p><p className="text-2xl font-black text-blue-600">{stats.dispatched}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Delivered</p><p className="text-2xl font-black text-emerald-600">{stats.delivered}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Challans</p><p className="text-2xl font-black text-secondary-900">{stats.total}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Pending</p><p className="text-2xl font-black text-slate-600">{stats.pending}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1">Dispatched</p><p className="text-2xl font-black text-blue-600">{stats.dispatched}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Delivered</p><p className="text-2xl font-black text-emerald-600">{stats.delivered}</p></div>
             </div>
 
-            <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-3xl border border-slate-200/60 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead className="bg-slate-50"><tr>
@@ -175,7 +175,7 @@ const DeliveryChallan = () => {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-secondary-950/60 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
                     <div className="relative bg-white w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col">
-                        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 shrink-0"><h3 className="text-xl font-black text-secondary-900">New Delivery Challan</h3><button onClick={() => setShowModal(false)} className="p-2 hover:bg-slate-200 rounded-full"><X size={20} /></button></div>
+                        <div className="px-6 py-4 border-b border-slate-200/60 flex items-center justify-between bg-slate-50/50 shrink-0"><h3 className="text-xl font-black text-secondary-900">New Delivery Challan</h3><button onClick={() => setShowModal(false)} className="p-2 hover:bg-slate-200 rounded-full"><X size={20} /></button></div>
                         <div className="flex-1 overflow-y-auto p-6 space-y-5">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Customer *</label><select className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-semibold outline-none" value={customer} onChange={(e) => setCustomer(e.target.value)}><option value="">Select...</option>{customers.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}</select></div>
@@ -190,11 +190,11 @@ const DeliveryChallan = () => {
                             </div>
                             <div><label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Add Items</label><input type="text" placeholder="Search products..." className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none mb-2" value={itemSearch} onChange={(e) => setItemSearch(e.target.value)} />
                                 <div className="flex flex-wrap gap-2 max-h-28 overflow-y-auto">{filteredItems.map(p => <button key={p._id} onClick={() => addToCart(p)} className="text-xs bg-slate-50 hover:bg-primary-50 border border-slate-200 hover:border-primary-300 rounded-lg px-3 py-1.5 font-semibold transition-all">{p.name}</button>)}</div></div>
-                            {cart.length > 0 && <div className="bg-slate-50 rounded-2xl border border-slate-100 overflow-hidden"><table className="w-full"><thead><tr className="border-b border-slate-100"><th className="px-4 py-3 text-left text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Item</th><th className="px-3 py-3 text-center text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Qty</th><th className="w-10"></th></tr></thead>
+                            {cart.length > 0 && <div className="bg-slate-50 rounded-2xl border border-slate-200/60 overflow-hidden"><table className="w-full"><thead><tr className="border-b border-slate-200/60"><th className="px-4 py-3 text-left text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Item</th><th className="px-3 py-3 text-center text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Qty</th><th className="w-10"></th></tr></thead>
                                 <tbody className="divide-y divide-slate-100">{cart.map(c => <tr key={c.item}><td className="px-4 py-3 font-semibold text-sm">{c.itemName}</td><td className="px-3 py-3 text-center"><input type="number" min="1" className="w-16 px-2 py-1 bg-white border border-slate-200 rounded-lg text-center text-sm font-bold outline-none" value={c.quantity} onChange={(e) => setCart(cart.map(x => x.item === c.item ? { ...x, quantity: parseInt(e.target.value) || 1 } : x))} /></td><td className="pr-3"><button onClick={() => setCart(cart.filter(x => x.item !== c.item))} className="p-1 text-slate-300 hover:text-red-500"><Trash2 size={14} /></button></td></tr>)}</tbody></table></div>}
                             <textarea rows={2} placeholder="Notes (optional)..." className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none resize-none" value={notes} onChange={(e) => setNotes(e.target.value)} />
                         </div>
-                        <div className="p-5 bg-white border-t border-slate-100 flex justify-end gap-3 shrink-0"><button onClick={() => setShowModal(false)} className="px-5 py-2.5 bg-slate-100 text-slate-600 rounded-xl font-bold text-sm hover:bg-slate-200">Cancel</button><button onClick={handleSubmit} className="px-6 py-2.5 bg-primary-600 text-white rounded-xl font-bold text-sm hover:bg-primary-500 shadow-lg shadow-primary-600/20 flex items-center gap-2"><Truck size={16} />Create Challan</button></div>
+                        <div className="p-5 bg-white border-t border-slate-200/60 flex justify-end gap-3 shrink-0"><button onClick={() => setShowModal(false)} className="px-5 py-2.5 bg-slate-100 text-slate-600 rounded-xl font-bold text-sm hover:bg-slate-200">Cancel</button><button onClick={handleSubmit} className="px-6 py-2.5 bg-primary-600 text-white rounded-xl font-bold text-sm hover:bg-primary-500 shadow-lg shadow-primary-600/20 flex items-center gap-2"><Truck size={16} />Create Challan</button></div>
                     </div>
                 </div>
             )}
@@ -204,7 +204,7 @@ const DeliveryChallan = () => {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-secondary-950/60 backdrop-blur-sm" onClick={() => setShowView(null)}></div>
                     <div className="relative bg-white w-full max-w-3xl max-h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col">
-                        <div className="px-6 py-5 border-b border-slate-100 flex items-start justify-between bg-slate-50/50 shrink-0">
+                        <div className="px-6 py-5 border-b border-slate-200/60 flex items-start justify-between bg-slate-50/50 shrink-0">
                             <div><div className="flex items-center gap-3 mb-1"><h3 className="text-xl font-black text-secondary-900">{showView.challanNumber}</h3><span className={`px-3 py-0.5 rounded-full text-xs font-bold ${statusCfg[showView.status]?.color}`}>{showView.status}</span></div><p className="text-xs text-secondary-400">{showView.customer?.name} • {new Date(showView.dispatchDate).toLocaleDateString()}</p></div>
                             <button onClick={() => setShowView(null)} className="p-2 hover:bg-slate-200 rounded-full"><X size={20} /></button>
                         </div>
@@ -214,7 +214,7 @@ const DeliveryChallan = () => {
                                 <div><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Driver</p><p className="font-bold text-sm">{showView.driverName || '—'}</p></div>
                                 <div><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Transport</p><p className="font-bold text-sm">{showView.transportMode}</p></div>
                             </div>
-                            <div className="bg-slate-50/50 rounded-2xl border border-slate-100 overflow-hidden"><table className="w-full"><thead><tr className="border-b border-slate-100"><th className="px-4 py-3 text-left text-[10px] font-bold text-secondary-400 uppercase tracking-widest">#</th><th className="px-4 py-3 text-left text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Item</th><th className="px-3 py-3 text-center text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Qty</th></tr></thead>
+                            <div className="bg-slate-50/50 rounded-2xl border border-slate-200/60 overflow-hidden"><table className="w-full"><thead><tr className="border-b border-slate-200/60"><th className="px-4 py-3 text-left text-[10px] font-bold text-secondary-400 uppercase tracking-widest">#</th><th className="px-4 py-3 text-left text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Item</th><th className="px-3 py-3 text-center text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Qty</th></tr></thead>
                                 <tbody className="divide-y divide-slate-100">{showView.items.map((i, idx) => <tr key={idx}><td className="px-4 py-3 text-xs text-secondary-400">{idx + 1}</td><td className="px-4 py-3 font-semibold text-sm">{i.itemName}</td><td className="px-3 py-3 text-center font-bold text-sm">{i.quantity} {i.unit}</td></tr>)}</tbody></table></div>
                             {showView.notes && <div className="mt-4"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Notes</p><p className="text-sm text-secondary-600 bg-slate-50 rounded-xl p-3">{showView.notes}</p></div>}
                         </div>

@@ -91,21 +91,21 @@ const CreditDebitNotes = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                <div className="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm flex items-center gap-6">
+                <div className="bg-white p-6 rounded-[2.5rem] border border-slate-200/60 shadow-sm flex items-center gap-6">
                     <div className="p-4 bg-emerald-50 text-emerald-600 rounded-3xl shrink-0"><ArrowDownLeft size={32} /></div>
                     <div>
                         <p className="text-xs font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Credit</p>
                         <p className="text-3xl font-black text-secondary-900">₹{notes.filter(n => n.type === 'Credit').reduce((a, b) => a + b.amount, 0).toLocaleString()}</p>
                     </div>
                 </div>
-                <div className="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm flex items-center gap-6">
+                <div className="bg-white p-6 rounded-[2.5rem] border border-slate-200/60 shadow-sm flex items-center gap-6">
                     <div className="p-4 bg-rose-50 text-rose-600 rounded-3xl shrink-0"><ArrowUpRight size={32} /></div>
                     <div>
                         <p className="text-xs font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Debit</p>
                         <p className="text-3xl font-black text-secondary-900">₹{notes.filter(n => n.type === 'Debit').reduce((a, b) => a + b.amount, 0).toLocaleString()}</p>
                     </div>
                 </div>
-                <div className="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm flex items-center gap-6">
+                <div className="bg-white p-6 rounded-[2.5rem] border border-slate-200/60 shadow-sm flex items-center gap-6">
                     <div className="p-4 bg-amber-50 text-amber-600 rounded-3xl shrink-0"><Info size={32} /></div>
                     <div>
                         <p className="text-xs font-bold text-secondary-400 uppercase tracking-widest mb-1">Pending Sync</p>
@@ -114,7 +114,7 @@ const CreditDebitNotes = () => {
                 </div>
             </div>
 
-            <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-[2.5rem] border border-slate-200/60 shadow-sm overflow-hidden">
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="bg-slate-50/50">
@@ -175,14 +175,14 @@ const CreditDebitNotes = () => {
                                 <button
                                     type="button"
                                     onClick={() => setFormData({ ...formData, type: 'Credit' })}
-                                    className={`py-4 rounded-2xl font-black text-sm transition-all border-2 ${formData.type === 'Credit' ? 'bg-emerald-50 border-emerald-500 text-emerald-600 shadow-lg shadow-emerald-500/10' : 'bg-white border-slate-100 text-slate-400 hover:border-slate-200'}`}
+                                    className={`py-4 rounded-2xl font-black text-sm transition-all border-2 ${formData.type === 'Credit' ? 'bg-emerald-50 border-emerald-500 text-emerald-600 shadow-lg shadow-emerald-500/10' : 'bg-white border-slate-200/60 text-slate-400 hover:border-slate-200'}`}
                                 >
                                     Credit Note
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => setFormData({ ...formData, type: 'Debit' })}
-                                    className={`py-4 rounded-2xl font-black text-sm transition-all border-2 ${formData.type === 'Debit' ? 'bg-rose-50 border-rose-500 text-rose-600 shadow-lg shadow-rose-500/10' : 'bg-white border-slate-100 text-slate-400 hover:border-slate-200'}`}
+                                    className={`py-4 rounded-2xl font-black text-sm transition-all border-2 ${formData.type === 'Debit' ? 'bg-rose-50 border-rose-500 text-rose-600 shadow-lg shadow-rose-500/10' : 'bg-white border-slate-200/60 text-slate-400 hover:border-slate-200'}`}
                                 >
                                     Debit Note
                                 </button>

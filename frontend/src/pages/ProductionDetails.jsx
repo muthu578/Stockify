@@ -111,13 +111,13 @@ const ProductionDetails = () => {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Batches</p><p className="text-2xl font-black text-secondary-900">{stats.total}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1">In Progress</p><p className="text-2xl font-black text-blue-600">{stats.inProg}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Completed</p><p className="text-2xl font-black text-emerald-600">{stats.completed}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest mb-1">Total Produced</p><p className="text-2xl font-black text-primary-600">{stats.totalProduced.toLocaleString()}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Batches</p><p className="text-2xl font-black text-secondary-900">{stats.total}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1">In Progress</p><p className="text-2xl font-black text-blue-600">{stats.inProg}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Completed</p><p className="text-2xl font-black text-emerald-600">{stats.completed}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest mb-1">Total Produced</p><p className="text-2xl font-black text-primary-600">{stats.totalProduced.toLocaleString()}</p></div>
             </div>
 
-            <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-3xl border border-slate-200/60 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead className="bg-slate-50"><tr>
@@ -160,7 +160,7 @@ const ProductionDetails = () => {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-secondary-950/60 backdrop-blur-sm" onClick={() => { setShowModal(false); setEditId(null); }}></div>
                     <div className="relative bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden">
-                        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50"><h3 className="text-xl font-black text-secondary-900">{editId ? `Update ${showView?.batchNumber}` : 'New Production Batch'}</h3><button onClick={() => { setShowModal(false); setEditId(null); }} className="p-2 hover:bg-slate-200 rounded-full"><X size={20} /></button></div>
+                        <div className="px-6 py-4 border-b border-slate-200/60 flex items-center justify-between bg-slate-50/50"><h3 className="text-xl font-black text-secondary-900">{editId ? `Update ${showView?.batchNumber}` : 'New Production Batch'}</h3><button onClick={() => { setShowModal(false); setEditId(null); }} className="p-2 hover:bg-slate-200 rounded-full"><X size={20} /></button></div>
                         <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
                             {!editId ? (
                                 <>
@@ -193,7 +193,7 @@ const ProductionDetails = () => {
                                 </>
                             )}
                         </div>
-                        <div className="p-5 bg-white border-t border-slate-100 flex justify-end gap-3">
+                        <div className="p-5 bg-white border-t border-slate-200/60 flex justify-end gap-3">
                             <button onClick={() => { setShowModal(false); setEditId(null); }} className="px-5 py-2.5 bg-slate-100 text-slate-600 rounded-xl font-bold text-sm hover:bg-slate-200">Cancel</button>
                             <button onClick={editId ? handleUpdate : handleCreate} className="px-6 py-2.5 bg-primary-600 text-white rounded-xl font-bold text-sm hover:bg-primary-500 shadow-lg shadow-primary-600/20">{editId ? 'Update' : 'Create'}</button>
                         </div>

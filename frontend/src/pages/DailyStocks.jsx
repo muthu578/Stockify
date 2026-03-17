@@ -61,15 +61,15 @@ const DailyStocks = () => {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Products</p><p className="text-2xl font-black text-secondary-900">{stats.totalItems}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Units</p><p className="text-2xl font-black text-secondary-900">{stats.totalStock.toLocaleString()}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest mb-1">Stock Value</p><p className="text-2xl font-black text-primary-600">₹{stats.totalValue.toLocaleString()}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-amber-400 uppercase tracking-widest mb-1">Low Stock</p><p className="text-2xl font-black text-amber-600">{stats.lowStock}</p></div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-1">Out of Stock</p><p className="text-2xl font-black text-red-600">{stats.outOfStock}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Products</p><p className="text-2xl font-black text-secondary-900">{stats.totalItems}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total Units</p><p className="text-2xl font-black text-secondary-900">{stats.totalStock.toLocaleString()}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest mb-1">Stock Value</p><p className="text-2xl font-black text-primary-600">₹{stats.totalValue.toLocaleString()}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-amber-400 uppercase tracking-widest mb-1">Low Stock</p><p className="text-2xl font-black text-amber-600">{stats.lowStock}</p></div>
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm"><p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-1">Out of Stock</p><p className="text-2xl font-black text-red-600">{stats.outOfStock}</p></div>
             </div>
 
-            <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
-                <div className="px-6 py-4 bg-slate-50/50 border-b border-slate-100"><h3 className="font-bold text-secondary-700 text-sm">Stock Report — {new Date(dateFilter).toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</h3></div>
+            <div className="bg-white rounded-3xl border border-slate-200/60 shadow-sm overflow-hidden">
+                <div className="px-6 py-4 bg-slate-50/50 border-b border-slate-200/60"><h3 className="font-bold text-secondary-700 text-sm">Stock Report — {new Date(dateFilter).toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</h3></div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead className="bg-slate-50"><tr>

@@ -236,7 +236,7 @@ const Inventory = () => {
             </div>
 
             <Card className="mb-12">
-                <CardHeader className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-b border-slate-50 pb-8 mb-8">
+                <CardHeader className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-b border-slate-200/60 pb-8 mb-8">
                      <div className="flex flex-1 gap-4 w-full md:w-auto">
                         <Input 
                             placeholder="Identify by Name, SKU or Barcode..."
@@ -265,7 +265,7 @@ const Inventory = () => {
                 <div className="overflow-x-auto -mx-6 md:-mx-8">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="border-b border-slate-100">
+                            <tr className="border-b border-slate-200/60">
                                 <th className="px-8 pb-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Asset Detail</th>
                                 <th className="px-8 pb-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Lifecycle</th>
                                 <th className="px-8 pb-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Valuation</th>
@@ -287,7 +287,7 @@ const Inventory = () => {
                             ) : items.length === 0 ? (
                                 <tr>
                                     <td colSpan="6" className="px-8 py-20 text-center">
-                                        <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100 italic font-black text-2xl text-slate-200">?</div>
+                                        <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-200/60 italic font-black text-2xl text-slate-200">?</div>
                                         <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">No Assets identified in current scope</p>
                                     </td>
                                 </tr>
@@ -295,7 +295,7 @@ const Inventory = () => {
                                 <tr key={item._id} className="group hover:bg-slate-50/50 transition-colors">
                                     <td className="px-8 py-6">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 bg-white border border-slate-100 rounded-xl flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform">
+                                            <div className="w-12 h-12 bg-white border border-slate-200/60 rounded-xl flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform">
                                                 <Package size={20} className="text-slate-400" />
                                             </div>
                                             <div>
@@ -372,7 +372,7 @@ const Inventory = () => {
                 </div>
 
                 {/* Pagination Controls */}
-                <div className="px-8 py-6 border-t border-slate-50 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="px-8 py-6 border-t border-slate-200/60 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
                         Showing <span className="text-slate-900">{items.length}</span> of <span className="text-slate-900">{totalItems}</span> Assets
                     </p>
@@ -413,7 +413,7 @@ const Inventory = () => {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 sm:p-12">
                      <div className="absolute inset-0 bg-[#090b14]/80 backdrop-blur-md animate-in fade-in duration-500" onClick={() => setShowModal(false)}></div>
                      <Card className="relative w-full max-w-3xl bg-white shadow-2xl border-transparent animate-in zoom-in slide-in-from-bottom-20 duration-500" padding="p-0">
-                         <div className="p-8 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
+                         <div className="p-8 border-b border-slate-200/60 flex items-center justify-between bg-slate-50/50">
                              <div>
                                  <Badge variant="primary" className="mb-2">Ledger Registry</Badge>
                                  <CardTitle>{editingItem ? 'Modify Asset Record' : 'Register New Enterprise Asset'}</CardTitle>
@@ -530,7 +530,7 @@ const Inventory = () => {
                                  />
                              </div>
 
-                             <div className="flex items-center justify-end gap-3 pt-6 border-t border-slate-50">
+                             <div className="flex items-center justify-end gap-3 pt-6 border-t border-slate-200/60">
                                  <Button variant="ghost" onClick={() => setShowModal(false)} type="button">Cancel</Button>
                                  <Button variant="secondary" className="px-12" type="submit">
                                      {editingItem ? 'Authorize Mutation' : 'Confirm Registration'}

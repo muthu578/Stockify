@@ -121,7 +121,7 @@ const Signup = () => {
 
             {/* Right Side - Form */}
             <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white lg:bg-slate-50/30">
-                <div className="w-full max-w-md bg-white p-8 lg:p-10 rounded-[2.5rem] lg:shadow-2xl lg:shadow-emerald-900/5 border border-slate-100 animate-slide-in">
+                <div className="w-full max-w-md bg-white p-8 lg:p-10 rounded-[2.5rem] lg:shadow-2xl lg:shadow-emerald-900/5 border border-slate-200/60 animate-slide-in">
                     <div className="mb-10 text-center lg:text-left">
                         <h2 className="text-4xl font-black text-slate-900 tracking-tight">Create Account</h2>
                         <p className="text-slate-500 mt-3 font-medium">Start your 14-day free trial today</p>
@@ -141,7 +141,7 @@ const Signup = () => {
                                         required
                                         value={formData.fullName}
                                         onChange={handleChange}
-                                        className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-100 rounded-[1.25rem] focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all text-slate-800 font-medium placeholder:text-slate-400"
+                                        className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200/60 rounded-[1.25rem] focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all text-slate-800 font-medium placeholder:text-slate-400"
                                         placeholder="John Doe"
                                     />
                                 </div>
@@ -159,7 +159,7 @@ const Signup = () => {
                                         required
                                         value={formData.email}
                                         onChange={handleChange}
-                                        className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-100 rounded-[1.25rem] focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all text-slate-800 font-medium placeholder:text-slate-400"
+                                        className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200/60 rounded-[1.25rem] focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all text-slate-800 font-medium placeholder:text-slate-400"
                                         placeholder="john@example.com"
                                     />
                                 </div>
@@ -178,7 +178,7 @@ const Signup = () => {
                                             required
                                             value={formData.password}
                                             onChange={handleChange}
-                                            className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-100 rounded-[1.25rem] focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all text-slate-800 font-medium placeholder:text-slate-400"
+                                            className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200/60 rounded-[1.25rem] focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all text-slate-800 font-medium placeholder:text-slate-400"
                                             placeholder="••••••••"
                                         />
                                     </div>
@@ -195,7 +195,7 @@ const Signup = () => {
                                             required
                                             value={formData.confirmPassword}
                                             onChange={handleChange}
-                                            className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-100 rounded-[1.25rem] focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all text-slate-800 font-medium placeholder:text-slate-400"
+                                            className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200/60 rounded-[1.25rem] focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all text-slate-800 font-medium placeholder:text-slate-400"
                                             placeholder="••••••••"
                                         />
                                     </div>
@@ -205,7 +205,7 @@ const Signup = () => {
                             <div>
                                 <label className="block text-sm font-bold text-slate-700 mb-3 ml-1">Identify As</label>
                                 <div className="grid grid-cols-2 gap-3">
-                                    <label className={`cursor-pointer border-2 rounded-2xl p-4 flex flex-col items-center gap-2 transition-all duration-300 ${formData.role === 'Admin' ? 'border-emerald-500 bg-emerald-50/50 text-emerald-700 ring-4 ring-emerald-500/5' : 'border-slate-100 hover:border-slate-200 bg-slate-50/50'}`}>
+                                    <label className={`cursor-pointer border-2 rounded-2xl p-4 flex flex-col items-center gap-2 transition-all duration-300 ${formData.role === 'Admin' ? 'border-emerald-500 bg-emerald-50/50 text-emerald-700 ring-4 ring-emerald-500/5' : 'border-slate-200/60 hover:border-slate-200 bg-slate-50/50'}`}>
                                         <input
                                             type="radio"
                                             name="role"
@@ -217,7 +217,7 @@ const Signup = () => {
                                         <User size={24} className={formData.role === 'Admin' ? 'text-emerald-600' : 'text-slate-400'} />
                                         <span className="font-bold text-sm">Administrator</span>
                                     </label>
-                                    <label className={`cursor-pointer border-2 rounded-2xl p-4 flex flex-col items-center gap-2 transition-all duration-300 ${formData.role === 'Cashier' ? 'border-emerald-500 bg-emerald-50/50 text-emerald-700 ring-4 ring-emerald-500/5' : 'border-slate-100 hover:border-slate-200 bg-slate-50/50'}`}>
+                                    <label className={`cursor-pointer border-2 rounded-2xl p-4 flex flex-col items-center gap-2 transition-all duration-300 ${formData.role === 'Cashier' ? 'border-emerald-500 bg-emerald-50/50 text-emerald-700 ring-4 ring-emerald-500/5' : 'border-slate-200/60 hover:border-slate-200 bg-slate-50/50'}`}>
                                         <input
                                             type="radio"
                                             name="role"

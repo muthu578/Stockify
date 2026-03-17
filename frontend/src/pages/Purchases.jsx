@@ -141,7 +141,7 @@ const Purchases = () => {
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="border-b border-slate-50 bg-slate-50/50">
+                            <tr className="border-b border-slate-200/60 bg-slate-50/50">
                                 <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Transaction ID</th>
                                 <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Origin Entity</th>
                                 <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Timestamp</th>
@@ -186,7 +186,7 @@ const Purchases = () => {
                                         </div>
                                     </td>
                                     <td className="px-8 py-6">
-                                        <div className="flex items-center text-slate-500 font-bold text-sm bg-slate-100/50 w-fit px-3 py-1.5 rounded-lg border border-slate-100">
+                                        <div className="flex items-center text-slate-500 font-bold text-sm bg-slate-100/50 w-fit px-3 py-1.5 rounded-lg border border-slate-200/60">
                                             <Calendar size={14} className="mr-2 text-slate-400" />
                                             {new Date(pur.createdAt).toLocaleDateString()}
                                         </div>
@@ -217,7 +217,7 @@ const Purchases = () => {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 sm:p-12">
                     <div className="absolute inset-0 bg-[#090b14]/80 backdrop-blur-md animate-in fade-in duration-500" onClick={() => setShowModal(false)}></div>
                     <Card className="relative w-full max-w-6xl h-[85vh] bg-white shadow-2xl border-transparent animate-in zoom-in slide-in-from-bottom-20 duration-500 overflow-hidden flex flex-col" padding="p-0">
-                        <div className="p-8 border-b border-slate-50 flex items-center justify-between bg-white">
+                        <div className="p-8 border-b border-slate-200/60 flex items-center justify-between bg-white">
                             <div>
                                 <Badge variant="primary" className="mb-2">Procurement Engine</Badge>
                                 <CardTitle>Global Resource Acquisition</CardTitle>
@@ -229,8 +229,8 @@ const Purchases = () => {
 
                         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden bg-slate-50/30">
                             {/* Product Selector */}
-                            <div className="w-full lg:w-1/3 border-r border-slate-100 bg-white flex flex-col">
-                                <div className="p-6 border-b border-slate-50">
+                            <div className="w-full lg:w-1/3 border-r border-slate-200/60 bg-white flex flex-col">
+                                <div className="p-6 border-b border-slate-200/60">
                                     <Input 
                                         placeholder="Identify Logistics SKU..." 
                                         icon={Search}
@@ -257,7 +257,7 @@ const Purchases = () => {
                                                      <p className="text-[10px] font-black text-emerald-600">₹{item.buyPrice?.toLocaleString()}</p>
                                                 </div>
                                             </div>
-                                            <div className="w-8 h-8 rounded-full bg-white border border-slate-100 flex items-center justify-center text-slate-300 group-hover:border-emerald-500 group-hover:text-emerald-500 group-hover:rotate-90 transition-all">
+                                            <div className="w-8 h-8 rounded-full bg-white border border-slate-200/60 flex items-center justify-center text-slate-300 group-hover:border-emerald-500 group-hover:text-emerald-500 group-hover:rotate-90 transition-all">
                                                 <Plus size={16} />
                                             </div>
                                         </button>
@@ -298,10 +298,10 @@ const Purchases = () => {
                                 </div>
 
                                 <div className="flex-1 p-8 pt-4 overflow-hidden flex flex-col">
-                                    <div className="flex-1 bg-white rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-950/5 flex flex-col overflow-hidden">
+                                    <div className="flex-1 bg-white rounded-[2rem] border border-slate-200/60 shadow-xl shadow-slate-950/5 flex flex-col overflow-hidden">
                                         <div className="flex-1 overflow-y-auto">
                                             <table className="w-full border-collapse">
-                                                <thead className="sticky top-0 bg-white border-b border-slate-50 z-10">
+                                                <thead className="sticky top-0 bg-white border-b border-slate-200/60 z-10">
                                                     <tr>
                                                         <th className="px-8 py-5 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Asset Identified</th>
                                                         <th className="px-8 py-5 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest">Acquisition Cost</th>
@@ -340,7 +340,7 @@ const Purchases = () => {
                                                                 </div>
                                                             </td>
                                                             <td className="px-8 py-5">
-                                                                <div className="flex items-center justify-center gap-4 bg-slate-50 w-fit mx-auto px-3 py-1.5 rounded-xl border border-slate-100">
+                                                                <div className="flex items-center justify-center gap-4 bg-slate-50 w-fit mx-auto px-3 py-1.5 rounded-xl border border-slate-200/60">
                                                                     <button onClick={() => updateCartQty(item.item, Math.max(1, item.quantity - 1))} className="w-8 h-8 flex items-center justify-center hover:bg-white rounded-lg transition-colors font-black text-slate-400">-</button>
                                                                     <span className="font-black text-lg text-slate-900 min-w-[20px] text-center">{item.quantity}</span>
                                                                     <button onClick={() => updateCartQty(item.item, item.quantity + 1)} className="w-8 h-8 flex items-center justify-center hover:bg-white rounded-lg transition-colors font-black text-slate-400">+</button>

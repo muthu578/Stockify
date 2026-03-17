@@ -171,7 +171,7 @@ const Contacts = ({ type }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {loading ? (
                     [1, 2, 3, 4, 5, 6].map(i => (
-                        <div key={i} className="h-[280px] bg-white border border-slate-100 rounded-3xl animate-pulse"></div>
+                        <div key={i} className="h-[280px] bg-white border border-slate-200/60 rounded-3xl animate-pulse"></div>
                     ))
                 ) : contacts.length === 0 ? (
                     <div className="col-span-full py-20 text-center">
@@ -257,7 +257,7 @@ const Contacts = ({ type }) => {
                             </div>
                         </div>
 
-                        <div className="px-8 py-5 bg-slate-50/50 border-t border-slate-50 flex justify-between items-center group-hover:bg-slate-100 transition-colors">
+                        <div className="px-8 py-5 bg-slate-50/50 border-t border-slate-200/60 flex justify-between items-center group-hover:bg-slate-100 transition-colors">
                             <div className="flex flex-col">
                                 <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Current Ledger</span>
                                 <span className={`text-lg font-black tracking-tight ${contact.balance > 0 ? 'text-rose-500' : 'text-emerald-600'}`}>
@@ -272,7 +272,7 @@ const Contacts = ({ type }) => {
 
             {/* Pagination */}
             {totalPages > 1 && (
-                <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-6 rounded-[2rem] border border-slate-50 shadow-sm">
+                <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-6 rounded-[2rem] border border-slate-200/60 shadow-sm">
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
                         Displaying <span className="text-slate-900">{contacts.length}</span> of <span className="text-slate-900">{totalItems}</span> Entities
                     </p>
@@ -312,7 +312,7 @@ const Contacts = ({ type }) => {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
                     <div className="absolute inset-0 bg-[#090b14]/80 backdrop-blur-md animate-in fade-in duration-500" onClick={() => setShowModal(false)}></div>
                     <Card className="relative w-full max-w-xl bg-white shadow-2xl border-transparent animate-in zoom-in slide-in-from-bottom-20 duration-500" padding="p-0">
-                        <div className="p-8 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
+                        <div className="p-8 border-b border-slate-200/60 flex items-center justify-between bg-slate-50/50">
                             <div>
                                 <Badge variant="primary" className="mb-2">{type} Ledger</Badge>
                                 <CardTitle>{editingContact ? `Modify ${type} Profile` : `Register New ${type} Entity`}</CardTitle>
@@ -371,7 +371,7 @@ const Contacts = ({ type }) => {
                                 </div>
                             </div>
 
-                            <div className="flex items-center justify-end gap-3 pt-6 border-t border-slate-50">
+                            <div className="flex items-center justify-end gap-3 pt-6 border-t border-slate-200/60">
                                 <Button variant="ghost" onClick={() => setShowModal(false)} type="button">Cancel</Button>
                                 <Button variant="secondary" className="px-12" type="submit">
                                     {editingContact ? 'Authorize Mutation' : 'Confirm Registration'}

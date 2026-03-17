@@ -340,30 +340,30 @@ const POGeneration = () => {
 
             {/* Stats Cards */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
                     <p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total POs</p>
                     <p className="text-2xl font-black text-secondary-900">{stats.total}</p>
                 </div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Drafts</p>
                     <p className="text-2xl font-black text-slate-600">{stats.draft}</p>
                 </div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
                     <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1">Sent</p>
                     <p className="text-2xl font-black text-blue-600">{stats.sent}</p>
                 </div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
                     <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Completed</p>
                     <p className="text-2xl font-black text-emerald-600">{stats.completed}</p>
                 </div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm col-span-2 md:col-span-1">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm col-span-2 md:col-span-1">
                     <p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest mb-1">Total Value</p>
                     <p className="text-2xl font-black text-primary-600">₹{stats.totalValue.toLocaleString()}</p>
                 </div>
             </div>
 
             {/* PO Table */}
-            <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-3xl border border-slate-200/60 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead className="bg-slate-50">
@@ -481,7 +481,7 @@ const POGeneration = () => {
 
                 {/* Pagination */}
                 {totalPages > 1 && (
-                    <div className="px-6 py-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="px-6 py-4 border-t border-slate-200/60 flex flex-col sm:flex-row items-center justify-between gap-4">
                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
                             Showing <span className="text-slate-900">{orders.length}</span> of <span className="text-slate-900">{totalItems}</span> POs
                         </p>
@@ -522,7 +522,7 @@ const POGeneration = () => {
                     <div className="absolute inset-0 bg-secondary-950/60 backdrop-blur-sm" onClick={handleCloseModal}></div>
                     <div className="relative bg-white w-full max-w-6xl h-[92vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col">
                         {/* Modal Header */}
-                        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                        <div className="px-6 py-4 border-b border-slate-200/60 flex items-center justify-between bg-slate-50/50">
                             <div>
                                 <h3 className="text-xl font-black text-secondary-900">
                                     {editingPO ? `Edit ${editingPO.poNumber}` : 'Create Purchase Order'}
@@ -538,8 +538,8 @@ const POGeneration = () => {
 
                         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
                             {/* Left: Item picker */}
-                            <div className="w-full lg:w-[280px] flex flex-col border-r border-slate-100 bg-white">
-                                <div className="p-4 border-b border-slate-100">
+                            <div className="w-full lg:w-[280px] flex flex-col border-r border-slate-200/60 bg-white">
+                                <div className="p-4 border-b border-slate-200/60">
                                     <div className="relative">
                                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary-400" size={14} />
                                         <input
@@ -580,7 +580,7 @@ const POGeneration = () => {
                             {/* Right: PO Details */}
                             <div className="flex-1 flex flex-col overflow-hidden bg-slate-50/30">
                                 {/* Supplier & meta fields */}
-                                <div className="p-5 border-b border-slate-100 bg-white">
+                                <div className="p-5 border-b border-slate-200/60 bg-white">
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                         <div>
                                             <label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Supplier *</label>
@@ -628,7 +628,7 @@ const POGeneration = () => {
                                             <p className="text-xs text-secondary-300 mt-1">Click products from the left panel to add them</p>
                                         </div>
                                     ) : (
-                                        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+                                        <div className="bg-white rounded-2xl border border-slate-200/60 shadow-sm overflow-hidden">
                                             <table className="w-full">
                                                 <thead className="bg-slate-50/50">
                                                     <tr>
@@ -707,7 +707,7 @@ const POGeneration = () => {
                                 </div>
 
                                 {/* Footer Totals & Submit */}
-                                <div className="p-5 bg-white border-t border-slate-100">
+                                <div className="p-5 bg-white border-t border-slate-200/60">
                                     <div className="flex flex-wrap items-end justify-between gap-4">
                                         <div className="flex gap-8">
                                             <div>
@@ -754,7 +754,7 @@ const POGeneration = () => {
                     <div className="absolute inset-0 bg-secondary-950/60 backdrop-blur-sm" onClick={() => setShowViewModal(false)}></div>
                     <div className="relative bg-white w-full max-w-3xl max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col">
                         {/* View Header */}
-                        <div className="px-6 py-5 border-b border-slate-100 flex items-start justify-between bg-slate-50/50">
+                        <div className="px-6 py-5 border-b border-slate-200/60 flex items-start justify-between bg-slate-50/50">
                             <div>
                                 <div className="flex items-center gap-3 mb-1">
                                     <h3 className="text-xl font-black text-secondary-900">{viewPO.poNumber}</h3>
@@ -773,7 +773,7 @@ const POGeneration = () => {
 
                         <div className="flex-1 overflow-y-auto">
                             {/* Supplier & Meta */}
-                            <div className="p-6 grid grid-cols-2 md:grid-cols-3 gap-6 border-b border-slate-100">
+                            <div className="p-6 grid grid-cols-2 md:grid-cols-3 gap-6 border-b border-slate-200/60">
                                 <div>
                                     <p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Supplier</p>
                                     <p className="font-bold text-secondary-900">{viewPO.supplier?.name}</p>
@@ -798,10 +798,10 @@ const POGeneration = () => {
                             {/* Items Table */}
                             <div className="p-6">
                                 <h4 className="text-xs font-bold text-secondary-400 uppercase tracking-widest mb-3">Order Items</h4>
-                                <div className="bg-slate-50/50 rounded-2xl border border-slate-100 overflow-hidden">
+                                <div className="bg-slate-50/50 rounded-2xl border border-slate-200/60 overflow-hidden">
                                     <table className="w-full">
                                         <thead>
-                                            <tr className="border-b border-slate-100">
+                                            <tr className="border-b border-slate-200/60">
                                                 <th className="px-4 py-3 text-left text-[10px] font-bold text-secondary-400 uppercase tracking-widest">#</th>
                                                 <th className="px-4 py-3 text-left text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Item</th>
                                                 <th className="px-4 py-3 text-center text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Qty</th>

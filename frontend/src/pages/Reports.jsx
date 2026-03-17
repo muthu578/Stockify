@@ -301,7 +301,7 @@ const Reports = () => {
                     <div
                         key={kpi.id}
                         onClick={() => kpi.title === 'Low Stock Alerts' && setActiveTable('lowstock')}
-                        className={`bg-white p-6 rounded-[2.5rem] border ${kpi.alert ? 'border-rose-100 bg-rose-50/20' : 'border-slate-100'} shadow-sm hover:shadow-xl transition-all duration-300 animate-slide-in ${kpi.title === 'Low Stock Alerts' ? 'cursor-pointer' : ''}`}
+                        className={`bg-white p-6 rounded-[2.5rem] border ${kpi.alert ? 'border-rose-100 bg-rose-50/20' : 'border-slate-200/60'} shadow-sm hover:shadow-xl transition-all duration-300 animate-slide-in ${kpi.title === 'Low Stock Alerts' ? 'cursor-pointer' : ''}`}
                         style={{ animationDelay: `${idx * 100}ms` }}
                     >
                         <div className="flex justify-between items-start mb-4">
@@ -323,7 +323,7 @@ const Reports = () => {
 
             {/* Charts Row 1 */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
-                <div className="lg:col-span-2 bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                <div className="lg:col-span-2 bg-white p-8 rounded-[2.5rem] border border-slate-200/60 shadow-sm">
                     <div className="flex justify-between items-center mb-8">
                         <div>
                             <h3 className="text-xl font-black text-secondary-900">Sales Velocity</h3>
@@ -336,7 +336,7 @@ const Reports = () => {
                     </div>
                 </div>
 
-                <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200/60 shadow-sm">
                     <h3 className="text-xl font-black text-secondary-900 mb-2">Category Stock</h3>
                     <p className="text-xs text-secondary-400 font-bold uppercase tracking-widest mb-8">Raw units by department</p>
                     <div className="h-[300px]">
@@ -347,7 +347,7 @@ const Reports = () => {
 
             {/* Charts Row 2 */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
-                <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200/60 shadow-sm">
                     <div className="flex justify-between items-center mb-8">
                         <div>
                             <h3 className="text-xl font-black text-secondary-900">Batch Expiry Timeline</h3>
@@ -360,7 +360,7 @@ const Reports = () => {
                     </div>
                 </div>
 
-                <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200/60 shadow-sm">
                     <div className="flex justify-between items-center mb-8">
                         <div>
                             <h3 className="text-xl font-black text-secondary-900">Supplier Order Volume</h3>
@@ -375,8 +375,8 @@ const Reports = () => {
             </div>
 
             {/* Tables Section */}
-            <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden mb-10">
-                <div className="flex flex-wrap items-center bg-slate-50/50 border-b border-slate-100 p-2">
+            <div className="bg-white rounded-[2.5rem] border border-slate-200/60 shadow-sm overflow-hidden mb-10">
+                <div className="flex flex-wrap items-center bg-slate-50/50 border-b border-slate-200/60 p-2">
                     <button onClick={() => setActiveTable('transactions')} className={`px-6 py-3 text-sm font-black rounded-2xl transition-all ${activeTable === 'transactions' ? 'bg-white text-primary-600 shadow-sm' : 'text-secondary-400 hover:text-secondary-600'}`}>Transactions</button>
                     <button onClick={() => setActiveTable('lowstock')} className={`px-6 py-3 text-sm font-black rounded-2xl transition-all ${activeTable === 'lowstock' ? 'bg-white text-rose-600 shadow-sm' : 'text-secondary-400 hover:text-secondary-600'}`}>Low Stock</button>
                     <button onClick={() => setActiveTable('transfers')} className={`px-6 py-3 text-sm font-black rounded-2xl transition-all ${activeTable === 'transfers' ? 'bg-white text-primary-600 shadow-sm' : 'text-secondary-400 hover:text-secondary-600'}`}>Stock Transfers</button>

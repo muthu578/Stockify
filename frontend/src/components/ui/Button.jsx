@@ -14,7 +14,7 @@ const Button = ({
     const variants = {
         primary: "bg-emerald-600 text-white shadow-lg shadow-emerald-500/20 hover:bg-emerald-500 hover:-translate-y-0.5",
         secondary: "bg-slate-900 text-white shadow-lg shadow-slate-900/20 hover:bg-slate-800 hover:-translate-y-0.5",
-        outline: "bg-white border-2 border-slate-100 text-slate-700 hover:border-emerald-500 hover:text-emerald-500 hover:shadow-xl hover:shadow-emerald-500/5",
+        outline: "bg-white border-2 border-slate-200/60 text-slate-700 hover:border-emerald-500 hover:text-emerald-500 hover:shadow-xl hover:shadow-emerald-500/5",
         ghost: "bg-transparent text-slate-500 hover:bg-slate-50 hover:text-slate-900",
         danger: "bg-rose-500 text-white shadow-lg shadow-rose-500/20 hover:bg-rose-400 hover:-translate-y-0.5",
     };

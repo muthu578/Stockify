@@ -39,7 +39,7 @@ const Profile = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="md:col-span-2 space-y-8">
-                        <div className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-xl shadow-slate-900/5">
+                        <div className="bg-white rounded-[2.5rem] p-10 border border-slate-200/60 shadow-xl shadow-slate-900/5">
                             <div className="flex items-center justify-between mb-8">
                                 <h3 className="text-xl font-black text-slate-900 tracking-tight">Personal Credentials</h3>
                                 <button className="flex items-center gap-2 text-emerald-600 font-black text-sm hover:translate-x-1 transition-all">
@@ -78,11 +78,11 @@ const Profile = () => {
                             </div>
                         </div>
 
-                        <div className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-xl shadow-slate-900/5">
+                        <div className="bg-white rounded-[2.5rem] p-10 border border-slate-200/60 shadow-xl shadow-slate-900/5">
                             <h3 className="text-xl font-black text-slate-900 tracking-tight mb-8">System Access Logs</h3>
                             <div className="space-y-6">
                                 {[1, 2, 3].map(i => (
-                                    <div key={i} className="flex items-center justify-between py-4 border-b border-slate-50 last:border-0">
+                                    <div key={i} className="flex items-center justify-between py-4 border-b border-slate-200/60 last:border-0">
                                         <div className="flex items-center gap-4">
                                             <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400">
                                                 <Calendar size={18} />
@@ -116,7 +116,7 @@ const Profile = () => {
                            </div>
                         </div>
 
-                        <div className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-xl shadow-slate-900/5">
+                        <div className="bg-white rounded-[2.5rem] p-8 border border-slate-200/60 shadow-xl shadow-slate-900/5">
                              <h4 className="text-sm font-black text-slate-900 uppercase tracking-widest mb-6 flex items-center gap-2">
                                  <LayoutIcon size={16} className="text-emerald-500" /> System Preferences
                              </h4>

@@ -234,26 +234,26 @@ const GRNEntry = () => {
 
             {/* Stats Cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
                     <p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Total GRNs</p>
                     <p className="text-2xl font-black text-secondary-900">{stats.total}</p>
                 </div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
                     <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Completed</p>
                     <p className="text-2xl font-black text-emerald-600">{stats.completed}</p>
                 </div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
                     <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1">Pending POs</p>
                     <p className="text-2xl font-black text-blue-600">{stats.pendingPOCount}</p>
                 </div>
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
                     <p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest mb-1">Total Received Value</p>
                     <p className="text-2xl font-black text-primary-600">₹{stats.totalReceived.toLocaleString()}</p>
                 </div>
             </div>
 
             {/* GRN Table */}
-            <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-3xl border border-slate-200/60 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead className="bg-slate-50">
@@ -335,7 +335,7 @@ const GRNEntry = () => {
                     <div className="absolute inset-0 bg-secondary-950/60 backdrop-blur-sm" onClick={() => setShowCreateModal(false)}></div>
                     <div className="relative bg-white w-full max-w-5xl h-[92vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col">
                         {/* Modal Header */}
-                        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 shrink-0">
+                        <div className="px-6 py-4 border-b border-slate-200/60 flex items-center justify-between bg-slate-50/50 shrink-0">
                             <div>
                                 <h3 className="text-xl font-black text-secondary-900">
                                     {step === 1 ? 'Select Purchase Order' : `Receive Against ${selectedPO?.poNumber}`}
@@ -372,7 +372,7 @@ const GRNEntry = () => {
                                             <button
                                                 key={po._id}
                                                 onClick={() => handleSelectPO(po)}
-                                                className="w-full text-left p-5 rounded-2xl border border-slate-100 hover:border-primary-200 hover:bg-primary-50/20 transition-all group"
+                                                className="w-full text-left p-5 rounded-2xl border border-slate-200/60 hover:border-primary-200 hover:bg-primary-50/20 transition-all group"
                                             >
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-4">
@@ -416,7 +416,7 @@ const GRNEntry = () => {
                         {step === 2 && selectedPO && (
                             <div className="flex-1 flex flex-col overflow-hidden">
                                 {/* Invoice Details */}
-                                <div className="p-5 border-b border-slate-100 bg-white shrink-0">
+                                <div className="p-5 border-b border-slate-200/60 bg-white shrink-0">
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                         <div>
                                             <label className="block text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1.5">Invoice Number</label>
@@ -451,7 +451,7 @@ const GRNEntry = () => {
 
                                 {/* Items Table */}
                                 <div className="flex-1 overflow-y-auto p-5">
-                                    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+                                    <div className="bg-white rounded-2xl border border-slate-200/60 shadow-sm overflow-hidden">
                                         <table className="w-full">
                                             <thead className="bg-slate-50/50">
                                                 <tr>
@@ -538,7 +538,7 @@ const GRNEntry = () => {
                                 </div>
 
                                 {/* Footer */}
-                                <div className="p-5 bg-white border-t border-slate-100 shrink-0">
+                                <div className="p-5 bg-white border-t border-slate-200/60 shrink-0">
                                     <div className="flex flex-wrap items-end justify-between gap-4">
                                         <div className="flex gap-6">
                                             <div>
@@ -587,7 +587,7 @@ const GRNEntry = () => {
                     <div className="absolute inset-0 bg-secondary-950/60 backdrop-blur-sm" onClick={() => setShowViewModal(false)}></div>
                     <div className="relative bg-white w-full max-w-3xl max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col">
                         {/* Header */}
-                        <div className="px-6 py-5 border-b border-slate-100 flex items-start justify-between bg-slate-50/50 shrink-0">
+                        <div className="px-6 py-5 border-b border-slate-200/60 flex items-start justify-between bg-slate-50/50 shrink-0">
                             <div>
                                 <div className="flex items-center gap-3 mb-1">
                                     <h3 className="text-xl font-black text-secondary-900">{viewGRN.grnNumber}</h3>
@@ -606,7 +606,7 @@ const GRNEntry = () => {
 
                         <div className="flex-1 overflow-y-auto">
                             {/* Meta info */}
-                            <div className="p-6 grid grid-cols-2 md:grid-cols-4 gap-4 border-b border-slate-100">
+                            <div className="p-6 grid grid-cols-2 md:grid-cols-4 gap-4 border-b border-slate-200/60">
                                 <div>
                                     <p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest mb-1">Supplier</p>
                                     <p className="font-bold text-secondary-900 text-sm">{viewGRN.supplier?.name}</p>
@@ -630,10 +630,10 @@ const GRNEntry = () => {
                             {/* Items */}
                             <div className="p-6">
                                 <h4 className="text-xs font-bold text-secondary-400 uppercase tracking-widest mb-3">Received Items</h4>
-                                <div className="bg-slate-50/50 rounded-2xl border border-slate-100 overflow-hidden">
+                                <div className="bg-slate-50/50 rounded-2xl border border-slate-200/60 overflow-hidden">
                                     <table className="w-full">
                                         <thead>
-                                            <tr className="border-b border-slate-100">
+                                            <tr className="border-b border-slate-200/60">
                                                 <th className="px-4 py-3 text-left text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Item</th>
                                                 <th className="px-3 py-3 text-center text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Ordered</th>
                                                 <th className="px-3 py-3 text-center text-[10px] font-bold text-secondary-400 uppercase tracking-widest">Received</th>

@@ -158,7 +158,7 @@ const MasterManagement = ({ type }) => {
                 {loading ? (
                     [1, 2, 3].map(i => <div key={i} className="h-40 bg-slate-100 animate-pulse rounded-3xl"></div>)
                 ) : filteredItems.map(item => (
-                    <div key={item._id} className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
+                    <div key={item._id} className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
                             <button onClick={() => handleOpenModal(item)} className="p-2 bg-slate-100 hover:bg-white text-secondary-400 hover:text-primary-600 rounded-xl shadow-sm">
                                 <Edit2 size={16} />

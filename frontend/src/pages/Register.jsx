@@ -150,7 +150,7 @@ const Register = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <Card padding="p-0">
-                    <CardHeader className="p-8 border-b border-slate-50 flex items-center justify-between">
+                    <CardHeader className="p-8 border-b border-slate-200/60 flex items-center justify-between">
                          <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-emerald-600">
                                 <History size={20} />
@@ -164,7 +164,7 @@ const Register = () => {
                     </CardHeader>
                     <div className="p-8 space-y-4">
                         {[1, 2, 3, 4].map(i => (
-                            <div key={i} className="flex items-center justify-between p-5 bg-slate-50/50 hover:bg-slate-50 rounded-2xl border border-slate-100 transition-colors group">
+                            <div key={i} className="flex items-center justify-between p-5 bg-slate-50/50 hover:bg-slate-50 rounded-2xl border border-slate-200/60 transition-colors group">
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-slate-400 group-hover:text-slate-900 transition-colors">
                                         <Calendar size={20} />
@@ -186,7 +186,7 @@ const Register = () => {
                 </Card>
 
                 <Card className="flex flex-col justify-center items-center text-center p-12 bg-slate-50/30 border-dashed border-2 border-slate-200" animate={false} hover={false}>
-                    <div className="w-24 h-24 bg-white text-slate-950 rounded-[2.5rem] flex items-center justify-center mb-8 shadow-2xl shadow-slate-950/10 border border-slate-100">
+                    <div className="w-24 h-24 bg-white text-slate-950 rounded-[2.5rem] flex items-center justify-center mb-8 shadow-2xl shadow-slate-950/10 border border-slate-200/60">
                         <ShieldCheck size={48} />
                     </div>
                     <CardTitle className="text-3xl mb-4">Integrity Protocol</CardTitle>

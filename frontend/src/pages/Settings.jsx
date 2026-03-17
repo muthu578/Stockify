@@ -154,9 +154,9 @@ const Settings = () => {
                                         />
                                     </div>
 
-                                    <div className="bg-slate-50 border border-slate-100 rounded-[2rem] p-8 flex flex-col md:flex-row items-center justify-between group">
+                                    <div className="bg-slate-50 border border-slate-200/60 rounded-[2rem] p-8 flex flex-col md:flex-row items-center justify-between group">
                                         <div className="flex items-center gap-6 mb-6 md:mb-0">
-                                            <div className="w-16 h-16 bg-white rounded-2xl shadow-xl shadow-slate-900/5 flex items-center justify-center text-emerald-600 border border-slate-100 group-hover:scale-110 transition-transform">
+                                            <div className="w-16 h-16 bg-white rounded-2xl shadow-xl shadow-slate-900/5 flex items-center justify-center text-emerald-600 border border-slate-200/60 group-hover:scale-110 transition-transform">
                                                 <Cloud size={32} />
                                             </div>
                                             <div>
@@ -191,9 +191,9 @@ const Settings = () => {
 
                                     <div className="space-y-4">
                                         {config.gstns.map(gstn => (
-                                            <div key={gstn.id} className="p-8 border-2 border-slate-50 bg-slate-50/20 rounded-[2rem] flex items-center justify-between group hover:border-emerald-500/20 hover:bg-emerald-50/10 transition-all duration-300">
+                                            <div key={gstn.id} className="p-8 border-2 border-slate-200/60 bg-slate-50/20 rounded-[2rem] flex items-center justify-between group hover:border-emerald-500/20 hover:bg-emerald-50/10 transition-all duration-300">
                                                 <div className="flex items-center gap-6">
-                                                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all ${gstn.isDefault ? 'bg-slate-900 text-white shadow-xl shadow-slate-900/20' : 'bg-white text-slate-300 shadow-sm border border-slate-100'}`}>
+                                                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all ${gstn.isDefault ? 'bg-slate-900 text-white shadow-xl shadow-slate-900/20' : 'bg-white text-slate-300 shadow-sm border border-slate-200/60'}`}>
                                                         <CheckCircle2 size={24} />
                                                     </div>
                                                     <div>
@@ -232,7 +232,7 @@ const Settings = () => {
                                                 onClick={() => setConfig({ ...config, selectedTemplate: tmp.name })}
                                                 className={`p-8 rounded-[2.5rem] border-4 transition-all text-left group ${config.selectedTemplate === tmp.name
                                                         ? 'border-emerald-600 bg-emerald-50 shadow-2xl shadow-emerald-500/10 scale-[1.05]'
-                                                        : 'border-slate-50 hover:border-slate-100'
+                                                        : 'border-slate-200/60 hover:border-slate-200/60'
                                                     }`}
                                             >
                                                 <div className={`w-full aspect-[4/5] ${tmp.color} rounded-3xl mb-6 shadow-xl shadow-slate-900/5 flex items-center justify-center group-hover:-rotate-3 transition-transform duration-500`}>
