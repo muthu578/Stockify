@@ -19,7 +19,7 @@ const Alerts = () => {
     const fetchAlerts = async () => {
         try {
             setLoading(true);
-            const { data } = await api.get('/api/alerts');
+            const { data } = await api.get('/alerts');
             setAlerts(data);
         } catch (error) {
             addNotification('Error loading alerts', 'error');
@@ -30,7 +30,7 @@ const Alerts = () => {
 
     const markAsRead = async (id) => {
         try {
-            await api.patch(`/api/alerts/${id}/read`);
+            await api.patch(`/alerts/${id}/read`);
             setAlerts(alerts.map(a => a._id === id ? { ...a, isRead: true } : a));
         } catch (error) {
             addNotification('Error updating alert', 'error');
@@ -39,7 +39,7 @@ const Alerts = () => {
 
     const deleteAlert = async (id) => {
         try {
-            await api.delete(`/api/alerts/${id}`);
+            await api.delete(`/alerts/${id}`);
             setAlerts(alerts.filter(a => a._id !== id));
             addNotification('Alert dismissed', 'success');
         } catch (error) {

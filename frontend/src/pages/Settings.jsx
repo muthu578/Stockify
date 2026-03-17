@@ -17,7 +17,8 @@ import {
     User,
     AppWindow,
     Database,
-    Palette
+    Palette,
+    IndianRupee
 } from 'lucide-react';
 import Layout from '../components/Layout';
 import { useNotification } from '../context/NotificationContext';

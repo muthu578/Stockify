@@ -21,7 +21,8 @@ import {
     BarChart3,
     Layers,
     ChevronDown,
-    Filter
+    Filter,
+    Cloud
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -78,7 +79,6 @@ const Dashboard = () => {
     });
     const [loading, setLoading] = useState(true);
     const [timeRange, setTimeRange] = useState('7D');
-    const [activeFilter, setActiveFilter] = useState('All');
 
     useEffect(() => {
         fetchDashboardData();
@@ -143,317 +143,346 @@ const Dashboard = () => {
         } catch (error) {
             console.error('Dashboard Fetch Error:', error);
         } finally {
-            setLoading(false);
+            setTimeout(() => setLoading(false), 800);
         }
     };
 
-    useEffect(() => {
-        // Regenerate revenue when timeRange changes (mocking historical data fetch)
-        setStats(prev => ({
-            ...prev,
-            revenue: (timeRange === '7D' ? [...Array(7)] : [...Array(30)]).map(() => Math.floor(Math.random() * 5000) + 1000)
-        }));
-    }, [timeRange]);
-
-    const lineChartData = {
-        labels: timeRange === '7D' ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] : [...Array(30)].map((_, i) => `${i+1}`),
-        datasets: [
-            {
-                label: lang === 'en' ? 'Actual Revenue' : 'Revenu Actuel',
-                data: stats.revenue,
-                borderColor: '#10b981',
-                backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                fill: true,
-                tension: 0.4,
-                pointRadius: timeRange === '7D' ? 4 : 2,
-                pointBackgroundColor: '#10b981',
-                pointBorderColor: '#fff',
-                pointBorderWidth: 2,
+    const lineChartOptions = {
+        maintainAspectRatio: false,
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                backgroundColor: '#1e293b',
+                titleFont: { size: 12, weight: '800' },
+                bodyFont: { size: 12 },
+                padding: 12,
+                cornerRadius: 12,
+                displayColors: false,
             }
-        ]
+        },
+        scales: {
+            y: {
+                grid: { display: true, color: 'rgba(226, 232, 240, 0.4)', drawBorder: false },
+                border: { display: false },
+                ticks: { color: '#94a3b8', font: { size: 10, weight: '700' }, callback: (v) => '₹' + v }
+            },
+            x: {
+                grid: { display: false },
+                border: { display: false },
+                ticks: { color: '#94a3b8', font: { size: 10, weight: '700' } }
+            }
+        },
+        elements: {
+            line: { tension: 0.4 },
+            point: { radius: 0, hoverRadius: 6, backgroundColor: '#10b981', borderWidth: 3, borderColor: '#fff' }
+        }
     };
 
-    const doughnutData = {
-        labels: [t('inventory'), t('billing'), t('procurement'), t('manufacturing')],
+    const lineChartData = {
+        labels: timeRange === '7D' ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] : [...Array(30)].map((_, i) => `${i + 1}`),
         datasets: [{
-            data: [stats.stockCount, stats.orderCount, stats.purchaseCount, stats.activeProductions],
-            backgroundColor: ['#10b981', '#f59e0b', '#0f172a', '#f43f5e'],
-            borderWidth: 0,
-            hoverOffset: 20
+            data: stats.revenue,
+            borderColor: '#10b981',
+            borderWidth: 4,
+            fill: true,
+            backgroundColor: (context) => {
+                const ctx = context.chart.ctx;
+                const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                gradient.addColorStop(0, 'rgba(16, 185, 129, 0.2)');
+                gradient.addColorStop(1, 'rgba(16, 185, 129, 0)');
+                return gradient;
+            },
         }]
     };
 
-    const QuickAction = ({ icon: Icon, label, path, color }) => (
-        <motion.button 
-            whileHover={{ scale: 1.05, y: -5 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => window.location.href = path}
-            className={`flex flex-col items-center gap-3 p-6 rounded-[2.5rem] bg-white border border-slate-100 shadow-xl shadow-slate-900/5 transition-all group`}
-        >
-            <div className={`w-14 h-14 rounded-2xl ${color} flex items-center justify-center text-white shadow-lg shadow-current/20 group-hover:rotate-12 transition-transform`}>
-                <Icon size={24} />
-            </div>
-            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{label}</span>
-        </motion.button>
-    );
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.1 }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100 } }
+    };
+
+    if (loading) {
+        return (
+            <Layout>
+                <div className="h-[80vh] flex flex-col items-center justify-center gap-6">
+                    <div className="relative">
+                        <div className="w-24 h-24 border-4 border-emerald-500/10 border-t-emerald-500 rounded-full animate-spin"></div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <Zap className="text-emerald-500 animate-pulse" size={32} />
+                        </div>
+                    </div>
+                    <p className="text-slate-400 font-black uppercase tracking-[0.3em] text-xs animate-pulse">Synchronizing Core Assets</p>
+                </div>
+            </Layout>
+        );
+    }
 
     return (
         <Layout>
-            {/* Premium Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-16 relative">
-                <div className="absolute -top-32 -left-32 w-96 h-96 bg-emerald-500/10 blur-[120px] rounded-full -z-10"></div>
-                <div className="absolute -top-32 -right-32 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full -z-10"></div>
-                
-                <div>
-                    <div className="flex items-center gap-3 mb-4">
-                        <Badge variant="primary" dot className="bg-emerald-500/10 text-emerald-600 border-none px-4 py-1.5 font-black uppercase tracking-widest text-[10px]">
-                            {t('welcome')}
-                        </Badge>
-                        <div className="h-4 w-[1px] bg-slate-200"></div>
-                        <div className="flex items-center gap-2 text-slate-400 font-bold text-[10px] uppercase tracking-wider">
-                            <Clock size={12} />
-                            {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </div>
-                    </div>
-                    <h1 className="text-6xl font-black text-slate-900 tracking-tight leading-none mb-4">
-                        Hello, <span className="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">{user?.name?.split(' ')[0]}</span>
-                    </h1>
-                    <p className="text-slate-500 font-medium text-lg max-w-lg">
-                        System health is <span className="text-emerald-500 font-black">OPTIMAL</span>. All enterprise nodes are synchronized.
-                    </p>
-                </div>
-
-                <div className="flex items-center gap-4 bg-white/50 backdrop-blur-md p-2 rounded-[2rem] border border-white shadow-2xl shadow-slate-900/5">
-                    <QuickAction icon={ShoppingCart} label={t('pos')} path="/billing" color="bg-emerald-500" />
-                    <QuickAction icon={Plus} label="Add Item" path="/inventory/product-master" color="bg-indigo-500" />
-                    <QuickAction icon={Zap} label="Alerts" path="/alerts" color="bg-amber-500" />
-                </div>
-            </div>
-
-            {loading ? (
-                <div className="p-20 text-center animate-pulse text-slate-300 font-black tracking-widest uppercase">Initializing Core Dashboard...</div>
-            ) : (
-                <div className="space-y-10">
-                    {/* Top KPI Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {[
-                            { title: t('totalSales'), value: `₹${stats.totalSales.toLocaleString()}`, icon: IndianRupee, color: 'text-emerald-500', bg: 'bg-emerald-50', trend: '+12.5%' },
-                            { title: 'Operational Costs', value: `₹${stats.totalExpenses.toLocaleString()}`, icon: TrendingDown, color: 'text-rose-500', bg: 'bg-rose-50', trend: '+4.2%' },
-                            { title: 'Net Settlement', value: `₹${(stats.totalSales - stats.totalExpenses).toLocaleString()}`, icon: TrendingUp, color: 'text-indigo-500', bg: 'bg-indigo-50' },
-                            { title: t('lowStock'), value: `${stats.lowStock}`, icon: Activity, color: 'text-amber-500', bg: 'bg-amber-50', trend: '-2.1%' }
-                        ].map((kpi, i) => (
-                            <motion.div 
-                                key={i}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: i * 0.1 }}
-                                className="bg-white/80 backdrop-blur-md rounded-[2.5rem] p-8 border border-white shadow-2xl shadow-slate-900/5 relative overflow-hidden group"
-                            >
-                                <div className="flex justify-between items-start mb-6">
-                                    <div className={`p-4 rounded-2xl ${kpi.bg} ${kpi.color} group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
-                                        <kpi.icon size={24} />
+            <motion.div 
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="space-y-8 pb-12"
+            >
+                {/* Hero / Welcome Strip */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                    <motion.div 
+                        variants={itemVariants}
+                        className="lg:col-span-8 relative overflow-hidden bg-slate-900 rounded-[3rem] p-10 text-white shadow-2xl shadow-slate-900/20"
+                    >
+                        {/* Abstract Background Shapes */}
+                        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/20 rounded-full blur-[100px] -mr-32 -mt-32"></div>
+                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500/20 rounded-full blur-[80px] -ml-24 -mb-24"></div>
+                        
+                        <div className="relative z-10 flex flex-col md:flex-row justify-between h-full">
+                            <div className="max-w-md">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full border border-white/10">
+                                        <p className="text-[10px] font-black uppercase tracking-widest text-emerald-400">Node Cluster Alpha</p>
                                     </div>
-                                    {kpi.trend && (
-                                        <span className={`text-[10px] font-black px-2 py-1 rounded-lg ${kpi.trend.startsWith('+') ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'}`}>
-                                            {kpi.trend}
-                                        </span>
-                                    )}
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                                        <p className="text-[10px] font-bold text-slate-400 uppercase">System Hot</p>
+                                    </div>
                                 </div>
-                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">{kpi.title}</p>
-                                <h3 className="text-3xl font-black text-slate-900 tracking-tight">{kpi.value}</h3>
-                                <div className="absolute top-0 right-0 w-24 h-24 bg-current/5 rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform duration-700"></div>
-                            </motion.div>
+                                <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-4 leading-none">
+                                    Welcome back, <br />
+                                    <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">{user?.name?.split(' ')[0]}</span>
+                                </h1>
+                                <p className="text-slate-400 font-medium text-lg leading-relaxed">
+                                    Your enterprise is performing <span className="text-emerald-400 font-bold">12.5% better</span> than last week. All systems are operational.
+                                </p>
+                            </div>
+                            
+                            <div className="mt-10 md:mt-0 flex flex-col justify-end">
+                                <div className="p-6 bg-white/5 backdrop-blur-3xl rounded-[2rem] border border-white/5 space-y-4 min-w-[240px]">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-xs font-bold text-slate-500 uppercase">Uptime</span>
+                                        <span className="text-xs font-black text-emerald-400">99.9%</span>
+                                    </div>
+                                    <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                                        <motion.div 
+                                            initial={{ width: 0 }}
+                                            animate={{ width: '99.9%' }}
+                                            transition={{ duration: 1, delay: 0.5 }}
+                                            className="h-full bg-emerald-500"
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4 pt-2">
+                                        <div>
+                                            <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">Total Sales</p>
+                                            <p className="text-xl font-black tracking-tight">₹{stats.totalSales.toLocaleString()}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">Orders</p>
+                                            <p className="text-xl font-black tracking-tight">{stats.orderCount}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    <motion.div 
+                        variants={itemVariants}
+                        className="lg:col-span-4 grid grid-cols-2 gap-4"
+                    >
+                        {[
+                            { icon: ShoppingCart, label: 'Billing', path: '/billing', color: 'bg-emerald-500', bg: 'bg-emerald-50' },
+                            { icon: Package, label: 'Inventory', path: '/inventory', color: 'bg-indigo-500', bg: 'bg-indigo-50' },
+                            { icon: Truck, label: 'Purchase', path: '/purchase-orders', color: 'bg-amber-500', bg: 'bg-amber-50' },
+                            { icon: Factory, label: 'Production', path: '/production', color: 'bg-rose-500', bg: 'bg-rose-50' }
+                        ].map((action, i) => (
+                            <button
+                                key={i}
+                                onClick={() => window.location.href = action.path}
+                                className="group relative flex flex-col items-center justify-center gap-4 bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-900/5 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 overflow-hidden"
+                            >
+                                <div className={`w-14 h-14 rounded-2xl ${action.bg} ${action.color.replace('bg-', 'text-')} flex items-center justify-center transition-transform group-hover:scale-110 group-hover:rotate-6`}>
+                                    <action.icon size={28} />
+                                </div>
+                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-slate-900">{action.label}</span>
+                                <div className={`absolute bottom-0 inset-x-0 h-1 ${action.color} scale-x-0 group-hover:scale-x-100 transition-transform origin-left`} />
+                            </button>
                         ))}
-                    </div>
+                    </motion.div>
+                </div>
 
-                    {/* Charts Row */}
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <Card className="lg:col-span-2 bg-white/80 backdrop-blur-md rounded-[3rem] border-white shadow-2xl shadow-slate-900/5 p-10">
-                            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
-                                <div>
-                                    <h3 className="text-2xl font-black text-slate-900 tracking-tight">{lang === 'en' ? 'Revenue Trajectory' : 'Trajectoire des Revenus'}</h3>
-                                    <p className="text-slate-500 font-medium text-sm">Real-time fiscal monitoring vs historical benchmarks.</p>
-                                </div>
-                                <div className="flex bg-slate-100 p-1.5 rounded-[1.2rem]">
-                                    {['7D', '30D'].map(range => (
-                                        <button 
-                                            key={range}
-                                            onClick={() => setTimeRange(range)}
-                                            className={`px-6 py-2 rounded-xl text-xs font-black transition-all ${timeRange === range ? 'bg-white text-slate-900 shadow-xl' : 'text-slate-400 hover:text-slate-600'}`}
-                                        >
-                                            {range}
-                                        </button>
-                                    ))}
-                                </div>
+                {/* Main Bento Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    {/* Revenue Card */}
+                    <motion.div 
+                        variants={itemVariants}
+                        className="lg:col-span-8 bg-white rounded-[3rem] p-10 border border-slate-100 shadow-2xl shadow-slate-900/5"
+                    >
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
+                            <div>
+                                <h3 className="text-2xl font-black text-slate-900 tracking-tight">Revenue Matrix</h3>
+                                <p className="text-slate-500 font-medium text-sm">Real-time fiscal monitoring vs historical benchmarks.</p>
                             </div>
-                            <div className="h-[400px]">
-                                <Line 
-                                    data={lineChartData} 
-                                    options={{ 
-                                        maintainAspectRatio: false,
-                                        plugins: { legend: { display: false } },
-                                        scales: {
-                                            y: { grid: { display: true, color: '#f8fafc' }, border: { display: false }, ticks: { font: { size: 10, weight: '700' } } },
-                                            x: { grid: { display: false }, ticks: { font: { size: 10, weight: '700' } } }
-                                        }
-                                    }} 
-                                />
+                            <div className="flex bg-slate-50 p-1.5 rounded-[1.2rem] border border-slate-100">
+                                {['7D', '30D'].map(range => (
+                                    <button 
+                                        key={range}
+                                        onClick={() => setTimeRange(range)}
+                                        className={`px-6 py-2 rounded-xl text-xs font-black transition-all ${timeRange === range ? 'bg-white text-slate-900 shadow-xl' : 'text-slate-400 hover:text-slate-600'}`}
+                                    >
+                                        {range}
+                                    </button>
+                                ))}
                             </div>
-                        </Card>
+                        </div>
+                        <div className="h-[400px]">
+                            <Line data={lineChartData} options={lineChartOptions} />
+                        </div>
+                    </motion.div>
 
-                        <div className="space-y-8">
-                            <Card className="bg-[#0f172a] text-white rounded-[3rem] p-10 relative overflow-hidden group border-none shadow-2xl shadow-slate-950/20">
+                    {/* Side Column */}
+                    <div className="lg:col-span-4 space-y-8">
+                        {/* Distribution Card */}
+                        <motion.div 
+                            variants={itemVariants}
+                            className="bg-slate-900 text-white rounded-[3rem] p-8 shadow-2xl shadow-slate-900/20 relative overflow-hidden"
+                        >
+                            <div className="relative z-10">
                                 <h3 className="text-xl font-black mb-1">Asset Distribution</h3>
                                 <p className="text-slate-400 text-xs font-medium mb-8">Resource allocation breakdown.</p>
-                                <div className="h-[200px] mb-8 relative">
+                                <div className="h-[180px] mb-8 relative">
                                     <Doughnut 
-                                        data={doughnutData} 
+                                        data={{
+                                            labels: ['Inventory', 'Orders', 'Purchase', 'Production'],
+                                            datasets: [{
+                                                data: [stats.stockCount, stats.orderCount, stats.purchaseCount, stats.activeProductions],
+                                                backgroundColor: ['#10b981', '#6366f1', '#f59e0b', '#f43f5e'],
+                                                borderWidth: 0,
+                                                cutout: '82%',
+                                                hoverOffset: 10
+                                            }]
+                                        }} 
                                         options={{ 
                                             maintainAspectRatio: false, 
-                                            plugins: { legend: { display: false } },
-                                            cutout: '80%'
+                                            plugins: { legend: { display: false } }
                                         }} 
                                     />
                                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                                        <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Total</p>
-                                        <p className="text-2xl font-black uppercase">{stats.stockCount + stats.orderCount}</p>
+                                        <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Aggregate</p>
+                                        <p className="text-3xl font-black tracking-tighter">{(stats.stockCount + stats.orderCount + stats.purchaseCount + stats.activeProductions).toLocaleString()}</p>
                                     </div>
                                 </div>
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-2 gap-3">
                                     {[
-                                        { label: t('inventory'), val: stats.stockCount, color: 'bg-emerald-500' },
-                                        { label: t('billing'), val: stats.orderCount, color: 'bg-amber-500' }
+                                        { label: 'Stock', val: stats.stockCount, color: 'bg-emerald-500' },
+                                        { label: 'Orders', val: stats.orderCount, color: 'bg-indigo-500' }
                                     ].map((item, i) => (
                                         <div key={i} className="p-4 bg-white/5 rounded-2xl border border-white/5">
                                             <div className="flex items-center gap-2 mb-1">
-                                                <div className={`w-2 h-2 rounded-full ${item.color}`}></div>
-                                                <p className="text-[10px] font-black text-slate-400 uppercase truncate">{item.label}</p>
+                                                <div className={`w-1.5 h-1.5 rounded-full ${item.color}`}></div>
+                                                <p className="text-[9px] font-black text-slate-400 uppercase">{item.label}</p>
                                             </div>
-                                            <p className="text-xl font-black">{item.val}</p>
+                                            <p className="text-lg font-black">{item.val}</p>
                                         </div>
                                     ))}
                                 </div>
-                            </Card>
+                            </div>
+                        </motion.div>
 
-                            <Card className="bg-emerald-600 rounded-[3rem] p-10 text-white shadow-2xl shadow-emerald-600/20 overflow-hidden relative">
-                                <div className="relative z-10">
-                                    <div className="flex items-center gap-4 mb-6">
-                                        <div className="p-3 bg-white/20 rounded-2xl backdrop-blur-md">
-                                            <Zap size={24} />
-                                        </div>
-                                        <h3 className="text-2xl font-black tracking-tight">AI Insights</h3>
+                        {/* Status Card */}
+                        <motion.div 
+                            variants={itemVariants}
+                            className="bg-emerald-500 rounded-[3rem] p-8 text-white shadow-2xl shadow-emerald-500/20 relative group overflow-hidden"
+                        >
+                            <div className="absolute top-0 right-0 p-8 text-white/10 group-hover:scale-125 transition-transform duration-700">
+                                <Zap size={120} />
+                            </div>
+                            <div className="relative z-10">
+                                <div className="flex items-center gap-4 mb-4">
+                                    <div className="p-2 bg-white/20 rounded-xl backdrop-blur-md">
+                                        <Activity size={20} />
                                     </div>
-                                    <p className="text-emerald-50/80 font-medium text-sm leading-relaxed mb-6">
-                                        Based on last 7 days, your <span className="text-white font-black underline underline-offset-4 decoration-emerald-300">Produce</span> category has shown <span className="font-black text-white">+18% growth</span>. Consider restocking.
-                                    </p>
-                                    <button className="w-full py-4 bg-white text-emerald-600 rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl hover:translate-y-[-2px] transition-all">
-                                        Run Simulation
-                                    </button>
+                                    <h3 className="text-xl font-black tracking-tight">AI Optimizer</h3>
                                 </div>
-                                <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
-                            </Card>
-                        </div>
-                    </div>
-
-                    {/* Bottom Operational Hub */}
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        {/* Transaction Table */}
-                        <Card className="lg:col-span-2 bg-white/80 backdrop-blur-md rounded-[3rem] border-white shadow-2xl shadow-slate-900/5 p-10">
-                            <div className="flex items-center justify-between mb-10">
-                                <div>
-                                    <h3 className="text-2xl font-black text-slate-900 tracking-tight">Recent Ledger</h3>
-                                    <p className="text-slate-500 font-medium text-sm">Synchronized POS transactions from all terminals.</p>
-                                </div>
-                                <div className="relative">
-                                    <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
-                                    <select 
-                                        className="pl-9 pr-4 py-2 bg-slate-50 border border-slate-100 rounded-xl text-xs font-black outline-none appearance-none cursor-pointer"
-                                        value={activeFilter}
-                                        onChange={(e) => setActiveFilter(e.target.value)}
-                                    >
-                                        <option value="All">All Status</option>
-                                        <option value="Completed">Completed</option>
-                                        <option value="Pending">Pending</option>
-                                    </select>
-                                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
-                                </div>
+                                <p className="text-emerald-50 font-medium text-sm leading-relaxed mb-6">
+                                    Predictive models suggest a <span className="font-black underline decoration-emerald-300">18% surge</span> in requirements next week.
+                                </p>
+                                <button className="w-full py-4 bg-white text-emerald-600 rounded-[1.5rem] font-black text-[10px] uppercase tracking-[0.2em] shadow-xl hover:translate-y-[-2px] transition-all">
+                                    Analyze Flux
+                                </button>
                             </div>
-                            <div className="overflow-x-auto">
-                                <table className="w-full text-left">
-                                    <thead>
-                                        <tr className="border-b border-slate-50">
-                                            <th className="pb-4 text-[10px] font-black text-slate-300 uppercase tracking-widest">Descriptor</th>
-                                            <th className="pb-4 text-[10px] font-black text-slate-300 uppercase tracking-widest">Protocol</th>
-                                            <th className="pb-4 text-[10px] font-black text-slate-300 uppercase tracking-widest text-right">Value</th>
-                                            <th className="pb-4 text-[10px] font-black text-slate-300 uppercase tracking-widest text-center">Health</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-slate-50">
-                                        {stats.recentSales.map(sale => (
-                                            <tr key={sale._id} className="group hover:bg-slate-50/50 transition-all">
-                                                <td className="py-5">
-                                                    <div className="flex items-center gap-3">
-                                                        <div className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-emerald-50 group-hover:text-emerald-500 transition-colors">
-                                                            <Activity size={16} />
-                                                        </div>
-                                                        <span className="text-sm font-bold text-slate-900">{sale.billId}</span>
-                                                    </div>
-                                                </td>
-                                                <td className="py-5">
-                                                    <Badge variant="secondary" className="bg-slate-50 text-slate-500 border-none font-bold">{sale.paymentMethod}</Badge>
-                                                </td>
-                                                <td className="py-5 text-right font-black text-slate-900">₹{sale.finalAmount.toLocaleString()}</td>
-                                                <td className="py-5">
-                                                    <div className="flex items-center justify-center gap-2">
-                                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                                                        <span className="text-[10px] font-black text-emerald-600 uppercase">Synced</span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </Card>
-
-                        {/* Secondary KPIs */}
-                        <div className="grid grid-cols-1 gap-8">
-                            <Card className="bg-white/80 backdrop-blur-md rounded-[3rem] border-white shadow-2xl shadow-slate-900/5 p-8 flex items-center gap-6">
-                                <div className="w-16 h-16 bg-blue-50 text-blue-500 rounded-3xl flex items-center justify-center flex-shrink-0 animate-bounce-subtle">
-                                    <Truck size={28} />
-                                </div>
-                                <div className="flex-1">
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Procurement Chain</p>
-                                    <h4 className="text-3xl font-black text-slate-900">{stats.pendingPOs} <span className="text-xs text-slate-400 font-bold ml-1">Pending BCs</span></h4>
-                                </div>
-                                <ArrowRight className="text-slate-300" size={20} />
-                            </Card>
-
-                            <Card className="bg-white/80 backdrop-blur-md rounded-[3rem] border-white shadow-2xl shadow-slate-900/5 p-8 flex items-center gap-6">
-                                <div className="w-16 h-16 bg-purple-50 text-purple-500 rounded-3xl flex items-center justify-center flex-shrink-0">
-                                    <Users size={28} />
-                                </div>
-                                <div className="flex-1">
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">User Network</p>
-                                    <h4 className="text-3xl font-black text-slate-900">{stats.customerCount} <span className="text-xs text-slate-400 font-bold ml-1">Nodes Active</span></h4>
-                                </div>
-                                <ArrowRight className="text-slate-300" size={20} />
-                            </Card>
-
-                             <Card className="bg-white/80 backdrop-blur-md rounded-[3rem] border-white shadow-2xl shadow-slate-900/5 p-8 flex items-center gap-6">
-                                <div className="w-16 h-16 bg-rose-50 text-rose-500 rounded-3xl flex items-center justify-center flex-shrink-0">
-                                    <Layers size={28} />
-                                </div>
-                                <div className="flex-1">
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Production Queue</p>
-                                    <h4 className="text-3xl font-black text-slate-900">{stats.activeProductions} <span className="text-xs text-slate-400 font-bold ml-1">Lines Hot</span></h4>
-                                </div>
-                                <ArrowRight className="text-slate-300" size={20} />
-                            </Card>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
-            )}
+
+                {/* Bottom Hub */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    {/* Recent Ledger */}
+                    <motion.div 
+                        variants={itemVariants}
+                        className="lg:col-span-8 bg-white rounded-[3rem] p-10 border border-slate-100 shadow-2xl shadow-slate-900/5"
+                    >
+                        <div className="flex items-center justify-between mb-10">
+                            <div>
+                                <h3 className="text-2xl font-black text-slate-900 tracking-tight">Operational Ledger</h3>
+                                <p className="text-slate-500 font-medium text-sm">Real-time terminal synchronization.</p>
+                            </div>
+                            <Button variant="ghost" size="sm" icon={ArrowUpRight} className="text-emerald-600 font-black">Full Audit</Button>
+                        </div>
+                        <div className="space-y-4">
+                            {stats.recentSales.map((sale, i) => (
+                                <div key={sale._id} className="flex items-center justify-between p-4 bg-slate-50 hover:bg-white rounded-[1.5rem] border border-transparent hover:border-slate-100 hover:shadow-xl hover:shadow-slate-900/5 transition-all group">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center text-slate-400 group-hover:text-emerald-500 transition-colors">
+                                            {sale.paymentMethod === 'Cash' ? <IndianRupee size={20} /> : <Zap size={20} />}
+                                        </div>
+                                        <div>
+                                            <p className="font-black text-slate-900 leading-none mb-1">{sale.billId}</p>
+                                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{sale.paymentMethod} Protocol</p>
+                                        </div>
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="font-black text-slate-900 tracking-tight">₹{sale.finalAmount.toLocaleString()}</p>
+                                        <div className="flex items-center justify-end gap-1.5 mt-1">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                                            <span className="text-[9px] font-black text-emerald-600 uppercase">Verified</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </motion.div>
+
+                    {/* System Monitoring */}
+                    <motion.div 
+                        variants={itemVariants}
+                        className="lg:col-span-4 grid grid-cols-1 gap-4"
+                    >
+                         {[
+                            { label: 'Active Nodes', val: stats.customerCount, sub: 'Global Terminals', icon: Users, color: 'text-blue-500', bg: 'bg-blue-50' },
+                            { label: 'Cloud Sync', val: 'Synchronized', sub: 'Last: 2m ago', icon: Cloud, color: 'text-indigo-500', bg: 'bg-indigo-50' },
+                            { label: 'Stock Health', val: stats.lowStock, sub: 'Critical Alerts', icon: AlertCircle, color: 'text-amber-500', bg: 'bg-amber-50' }
+                        ].map((stat, i) => (
+                            <div key={i} className="bg-white rounded-[2.5rem] p-6 border border-slate-100 shadow-xl shadow-slate-900/5 flex items-center gap-6 group hover:border-slate-200 transition-colors">
+                                <div className={`w-16 h-16 rounded-[1.5rem] ${stat.bg} ${stat.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                                    <stat.icon size={28} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-0.5">{stat.label}</p>
+                                    <p className="text-xl font-black text-slate-900 truncate leading-none mb-1">{stat.val}</p>
+                                    <p className="text-[10px] font-bold text-slate-500 uppercase">{stat.sub}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </motion.div>
+                </div>
+            </motion.div>
         </Layout>
     );
 };
