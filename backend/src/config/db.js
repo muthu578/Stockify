@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 // Conditional require for memory DB to save lambda space
 let MongoMemoryServer;
-if (process.env.NODE_ENV !== 'production') {
-    MongoMemoryServer = require('mongodb-memory-server').MongoMemoryServer;
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+    try {
+        MongoMemoryServer = require('mongodb-memory-server').MongoMemoryServer;
+    } catch (e) {
+        console.warn('MongoMemoryServer not available');
+    }
 }
 const User = require('../models/User');
 
