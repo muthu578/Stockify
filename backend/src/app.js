@@ -22,9 +22,20 @@ const express = require('express');
     dotenv.config();
 
     const connectDB = require('./config/db');
-    connectDB().catch(console.error); // Ensure DB is connected, don't crash lambda on start
 
     const app = express();
+
+    // In Serverless environments, we MUST await the DB connection before processing routes
+    // otherwise Mongoose routes will buffer their queries and time out after 10s.
+    app.use(async (req, res, next) => {
+        try {
+            await connectDB();
+            next();
+        } catch (error) {
+            console.error('Database Connection Error in Middleware:', error);
+            res.status(500).json({ error: 'Database Connection Failed', details: error.message });
+        }
+    });
 
     app.use(cors());
     app.use(express.json());
