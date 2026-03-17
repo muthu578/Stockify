@@ -167,7 +167,7 @@ const connectDB = async () => {
         console.error(`❌ Error Message: ${error.message}`);
         console.error('Stack:', error.stack);
 
-        if (process.env.NODE_ENV !== 'production' && error.message.includes('ECONNREFUSED')) {
+        if (process.env.USE_MEMORY_DB === 'true' && error.message.includes('ECONNREFUSED')) {
             console.log('⚠️ Local MongoDB not found. Auto-starting In-Memory DB...');
             try {
                 const mongoServer = await MongoMemoryServer.create();
@@ -180,8 +180,8 @@ const connectDB = async () => {
             return;
         }
 
-        // Do not process.exit in serverless environments
-        if (process.env.NODE_ENV !== 'production') {
+        // Do not process.exit in serverless environments (Vercel sets VERCEL=1)
+        if (!process.env.VERCEL && process.env.NODE_ENV !== 'production') {
             process.exit(1);
         }
     }
