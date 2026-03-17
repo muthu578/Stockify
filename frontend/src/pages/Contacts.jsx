@@ -28,6 +28,9 @@ import Input from '../components/ui/Input';
 
 const Contacts = ({ type }) => {
     const [contacts, setContacts] = useState([]);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalItems, setTotalItems] = useState(0);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [showModal, setShowModal] = useState(false);
@@ -43,15 +46,31 @@ const Contacts = ({ type }) => {
     const { addNotification } = useNotification();
 
     useEffect(() => {
+        const delayDebounceFn = setTimeout(() => {
+            setPage(1);
+        }, 500);
+        return () => clearTimeout(delayDebounceFn);
+    }, [searchTerm]);
+
+    useEffect(() => {
         fetchContacts();
         setFormData(prev => ({ ...prev, type: type }));
-    }, [type]);
+    }, [type, page, searchTerm]);
 
     const fetchContacts = async () => {
         try {
             setLoading(true);
-            const { data } = await api.get(`/contacts?type=${type}`);
-            setContacts(data);
+            const { data } = await api.get(`/contacts`, {
+                params: {
+                    type,
+                    page,
+                    limit: 9,
+                    search: searchTerm
+                }
+            });
+            setContacts(data.contacts || []);
+            setTotalPages(data.pages || 1);
+            setTotalItems(data.total || 0);
         } catch (error) {
             console.error(error);
         } finally {
@@ -112,10 +131,6 @@ const Contacts = ({ type }) => {
         setShowModal(true);
     };
 
-    const filteredContacts = contacts.filter(c =>
-        c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        c.phone.includes(searchTerm)
-    );
 
     return (
         <Layout>
@@ -126,7 +141,7 @@ const Contacts = ({ type }) => {
                         <span className="text-slate-300">•</span>
                         <div className="flex items-center gap-1.5 text-slate-400 font-bold text-[10px] uppercase tracking-wider">
                             <Users size={12} />
-                            {contacts.length} Entities Registered
+                            {totalItems} Entities Registered
                         </div>
                     </div>
                     <h1 className="text-5xl font-black text-slate-900 tracking-tight leading-none">Global Network</h1>
@@ -158,7 +173,7 @@ const Contacts = ({ type }) => {
                     [1, 2, 3, 4, 5, 6].map(i => (
                         <div key={i} className="h-[280px] bg-white border border-slate-100 rounded-3xl animate-pulse"></div>
                     ))
-                ) : filteredContacts.length === 0 ? (
+                ) : contacts.length === 0 ? (
                     <div className="col-span-full py-20 text-center">
                          <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
                             <SearchX className="text-slate-200" size={32} />
@@ -166,7 +181,7 @@ const Contacts = ({ type }) => {
                          <h3 className="text-xl font-black text-slate-900">No Entities Identified</h3>
                          <p className="text-slate-500 mt-2">Try adjusting your search parameters.</p>
                     </div>
-                ) : filteredContacts.map(contact => (
+                ) : contacts.map(contact => (
                     <Card key={contact._id} className="group relative overflow-hidden" padding="p-0">
                         <div className="p-8">
                             <div className="flex justify-between items-start mb-6">
@@ -254,6 +269,44 @@ const Contacts = ({ type }) => {
                     </Card>
                 ))}
             </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+                <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-6 rounded-[2rem] border border-slate-50 shadow-sm">
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                        Displaying <span className="text-slate-900">{contacts.length}</span> of <span className="text-slate-900">{totalItems}</span> Entities
+                    </p>
+                    <div className="flex items-center gap-2">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            disabled={page === 1}
+                            onClick={() => setPage(p => Math.max(1, p - 1))}
+                        >
+                            Previous
+                        </Button>
+                        <div className="flex items-center gap-1 mx-2">
+                            {[...Array(totalPages)].map((_, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => setPage(i + 1)}
+                                    className={`w-8 h-8 rounded-lg text-xs font-black transition-all ${page === i + 1 ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-900'}`}
+                                >
+                                    {i + 1}
+                                </button>
+                            ))}
+                        </div>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            disabled={page === totalPages}
+                            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                        >
+                            Next
+                        </Button>
+                    </div>
+                </div>
+            )}
 
             {showModal && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">

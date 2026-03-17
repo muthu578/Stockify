@@ -17,12 +17,15 @@ import {
     Database,
     Factory,
     ChevronDown,
-    ChevronRight
+    ChevronRight,
+    Layout as LayoutIcon
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 
 const Sidebar = () => {
     const { user, logout } = useAuth();
+    const { t } = useLanguage();
     const location = useLocation();
     const [expandedMenus, setExpandedMenus] = useState({});
 
@@ -59,21 +62,21 @@ const Sidebar = () => {
             group: 'Core Operations',
             items: [
                 {
-                    name: 'Business Dashboard',
+                    name: t('dashboard'),
                     icon: LayoutDashboard,
                     path: '/dashboard',
                     roles: ['Admin', 'Manager', 'Cashier']
                 },
                 {
-                    name: 'Revenue & Billing',
+                    name: t('billing'),
                     icon: ShoppingCart,
                     roles: ['Admin', 'Manager', 'Cashier'],
                     subItems: [
-                        { name: 'POS (Billing)', path: '/billing', roles: ['Admin', 'Manager', 'Cashier'] },
-                        { name: 'Performa Invoice', path: '/sales/performa-invoice', roles: ['Admin', 'Manager', 'Cashier'] },
-                        { name: 'Delivery Challan', path: '/sales/delivery-challan', roles: ['Admin', 'Manager', 'Cashier'] },
-                        { name: 'Credit/Debit Notes', path: '/sales/notes', roles: ['Admin', 'Manager'] },
-                        { name: 'Sales Insights', path: '/sales-analytics', roles: ['Admin', 'Manager'] },
+                        { name: t('pos'), path: '/billing', roles: ['Admin', 'Manager', 'Cashier'] },
+                        { name: t('performa'), path: '/sales/performa-invoice', roles: ['Admin', 'Manager', 'Cashier'] },
+                        { name: t('challan'), path: '/sales/delivery-challan', roles: ['Admin', 'Manager', 'Cashier'] },
+                        { name: t('notes'), path: '/sales/notes', roles: ['Admin', 'Manager'] },
+                        { name: t('insights'), path: '/sales-analytics', roles: ['Admin', 'Manager'] },
                     ]
                 },
             ]
@@ -82,31 +85,31 @@ const Sidebar = () => {
             group: 'Supply Chain',
             items: [
                 {
-                    name: 'Procurement',
+                    name: t('procurement'),
                     icon: Download,
                     roles: ['Admin', 'Manager'],
                     subItems: [
-                        { name: 'PO Generation', path: '/purchases/po', roles: ['Admin', 'Manager'] },
-                        { name: 'GRN Entry', path: '/purchases/grn', roles: ['Admin', 'Manager'] },
+                        { name: t('po_gen'), path: '/purchases/po', roles: ['Admin', 'Manager'] },
+                        { name: t('grn'), path: '/purchases/grn', roles: ['Admin', 'Manager'] },
                     ]
                 },
                 {
-                    name: 'Stock Control',
+                    name: t('inventory'),
                     icon: Package,
                     roles: ['Admin', 'Manager', 'Cashier'],
                     subItems: [
-                        { name: 'Product Master', path: '/inventory/product-master', roles: ['Admin', 'Manager', 'Cashier'] },
-                        { name: 'Live Inventory', path: '/inventory/report', roles: ['Admin', 'Manager', 'Cashier'] },
-                        { name: 'Stock Transfer', path: '/inventory/stock-transfer', roles: ['Admin', 'Manager', 'Cashier'] },
+                        { name: t('product_master'), path: '/inventory/product-master', roles: ['Admin', 'Manager', 'Cashier'] },
+                        { name: t('live_inventory'), path: '/inventory/report', roles: ['Admin', 'Manager', 'Cashier'] },
+                        { name: t('transfer'), path: '/inventory/stock-transfer', roles: ['Admin', 'Manager', 'Cashier'] },
                     ]
                 },
                 {
-                    name: 'Manufacturing',
+                    name: t('manufacturing'),
                     icon: Factory,
                     roles: ['Admin', 'Manager'],
                     subItems: [
-                        { name: 'Machine Registry', path: '/production/machine-master', roles: ['Admin', 'Manager'] },
-                        { name: 'Production Flow', path: '/production/details', roles: ['Admin', 'Manager'] },
+                        { name: t('machines'), path: '/production/machine-master', roles: ['Admin', 'Manager'] },
+                        { name: t('production_flow'), path: '/production/details', roles: ['Admin', 'Manager'] },
                     ]
                 },
             ]
@@ -115,14 +118,14 @@ const Sidebar = () => {
             group: 'Reporting & Analytics',
             items: [
                 {
-                    name: 'Analytics',
+                    name: t('reports'),
                     icon: BarChart3,
                     roles: ['Admin', 'Manager'],
                     subItems: [
-                        { name: 'Executive Report', path: '/reports', roles: ['Admin', 'Manager'] },
-                        { name: 'Daily Stock Snap', path: '/reporting/daily-stocks', roles: ['Admin', 'Manager'] },
-                        { name: 'Valuation Report', path: '/reporting/total-stock', roles: ['Admin', 'Manager'] },
-                        { name: 'Batch Tracking', path: '/reporting/batch-wise', roles: ['Admin', 'Manager'] },
+                        { name: t('exec_report'), path: '/reports', roles: ['Admin', 'Manager'] },
+                        { name: t('daily_snap'), path: '/reporting/daily-stocks', roles: ['Admin', 'Manager'] },
+                        { name: t('valuation'), path: '/reporting/total-stock', roles: ['Admin', 'Manager'] },
+                        { name: t('batch_track'), path: '/reporting/batch-wise', roles: ['Admin', 'Manager'] },
                     ]
                 },
             ]
@@ -131,20 +134,20 @@ const Sidebar = () => {
             group: 'Enterprise',
             items: [
                 {
-                    name: 'Administration',
+                    name: t('administration'),
                     icon: Database,
                     roles: ['Admin', 'Manager', 'Cashier'],
                     subItems: [
-                        { name: 'Storage Units', path: '/masters/storage-location', roles: ['Admin', 'Manager'] },
-                        { name: 'Categories', path: '/masters/product-category', roles: ['Admin', 'Manager'] },
-                        { name: 'User Directory', path: '/masters/users', roles: ['Admin'] },
-                        { name: 'Customer Hub', path: '/masters/customers', roles: ['Admin', 'Manager', 'Cashier'] },
-                        { name: 'Vendor Hub', path: '/masters/suppliers', roles: ['Admin', 'Manager'] },
-                        { name: 'App Settings', path: '/masters/settings', roles: ['Admin'] },
+                        { name: t('storage'), path: '/masters/storage-location', roles: ['Admin', 'Manager'] },
+                        { name: t('categories'), path: '/masters/product-category', roles: ['Admin', 'Manager'] },
+                        { name: t('users'), path: '/masters/users', roles: ['Admin'] },
+                        { name: t('customers'), path: '/masters/customers', roles: ['Admin', 'Manager', 'Cashier'] },
+                        { name: t('vendors'), path: '/masters/suppliers', roles: ['Admin', 'Manager'] },
+                        { name: t('app_settings'), path: '/masters/settings', roles: ['Admin'] },
                     ]
                 },
-                { name: 'HR & Payroll', icon: Briefcase, path: '/hr', roles: ['Admin', 'Manager'] },
-                { name: 'Financials', icon: Landmark, path: '/accounts', roles: ['Admin', 'Manager'] },
+                { name: t('hr_payroll'), icon: Briefcase, path: '/hr', roles: ['Admin', 'Manager'] },
+                { name: t('financials'), icon: Landmark, path: '/accounts', roles: ['Admin', 'Manager'] },
             ]
         }
     ];

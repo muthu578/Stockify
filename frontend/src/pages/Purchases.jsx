@@ -46,12 +46,12 @@ const Purchases = () => {
             setLoading(true);
             const [purRes, itemRes, supRes] = await Promise.all([
                 api.get('/purchases'),
-                api.get('/items'),
+                api.get('/items', { params: { limit: 1000 } }),
                 api.get('/contacts?type=Supplier')
             ]);
-            setPurchases(purRes.data);
-            setItems(itemRes.data);
-            setSuppliers(supRes.data);
+            setPurchases(purRes.data.purchases || purRes.data);
+            setItems(itemRes.data.items || itemRes.data);
+            setSuppliers(supRes.data.contacts || supRes.data);
         } catch (error) {
             console.error(error);
         } finally {

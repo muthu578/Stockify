@@ -31,10 +31,19 @@ const StockTransfer = () => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const [tRes, iRes, lRes] = await Promise.all([api.get('/stock-transfers'), api.get('/items'), api.get('/masters/storage-locations')]);
-            setTransfers(tRes.data); setItems(iRes.data); setLocations(lRes.data);
-        } catch (e) { addNotification('Error loading data', 'error'); }
-        finally { setLoading(false); }
+            const [tRes, iRes, lRes] = await Promise.all([
+                api.get('/stock-transfers'),
+                api.get('/items', { params: { limit: 1000 } }),
+                api.get('/masters/storage-locations')
+            ]);
+            setTransfers(tRes.data.transfers || tRes.data);
+            setItems(iRes.data.items || iRes.data);
+            setLocations(lRes.data.locations || lRes.data);
+        } catch (e) {
+            addNotification('Error loading data', 'error');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const filteredTransfers = useMemo(() => transfers.filter(t =>

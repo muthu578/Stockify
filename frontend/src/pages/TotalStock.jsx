@@ -15,9 +15,15 @@ const TotalStock = () => {
     useEffect(() => { fetchData(); }, []);
 
     const fetchData = async () => {
-        try { setLoading(true); const { data } = await api.get('/items'); setItems(data); }
-        catch (e) { addNotification('Error loading stock data', 'error'); }
-        finally { setLoading(false); }
+        try {
+            setLoading(true);
+            const { data } = await api.get('/items', { params: { limit: 1000 } });
+            setItems(data.items || data);
+        } catch (e) {
+            addNotification('Error loading stock data', 'error');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const categories = useMemo(() => ['All', ...new Set(items.map(i => i.category))], [items]);

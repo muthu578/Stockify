@@ -18,6 +18,7 @@ const express = require('express');
     const productionRoutes = require('./routes/productionRoutes');
     const proformaInvoiceRoutes = require('./routes/proformaInvoiceRoutes');
     const deliveryChallanRoutes = require('./routes/deliveryChallanRoutes');
+    const alertRoutes = require('./routes/alertRoutes');
 
     dotenv.config();
 
@@ -57,6 +58,7 @@ const express = require('express');
     app.use('/api/productions', productionRoutes);
     app.use('/api/proforma-invoices', proformaInvoiceRoutes);
     app.use('/api/delivery-challans', deliveryChallanRoutes);
+    app.use('/api/alerts', alertRoutes);
 
     // Route Aliases to match requested spec
     app.use('/api/customers', contactRoutes); // handled by controller logic or filter

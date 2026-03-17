@@ -18,9 +18,10 @@ const AIAssistant = () => {
 
     const fetchInsights = async () => {
         try {
-            const { data } = await api.get('/items');
-            const low = data.filter(i => i.stock < 10).length;
-            setStats({ lowStock: low, totalItems: data.length });
+            const { data } = await api.get('/items', { params: { limit: 1000 } });
+            const items = data.items || data;
+            const low = items.filter(i => i.stock < 10).length;
+            setStats({ lowStock: low, totalItems: data.total || items.length });
         } catch (error) {
             console.error(error);
         }

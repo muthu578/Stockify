@@ -5,7 +5,10 @@ const Item = require('../models/Item');
 // @access  Private
 const getItems = async (req, res) => {
     try {
-        const { category, lowStock } = req.query;
+        const pageSize = Math.max(1, parseInt(req.query.limit) || 12);
+        const page = Math.max(1, parseInt(req.query.page) || 1);
+        const { category, lowStock, search } = req.query;
+        
         let query = {};
 
         if (category && category !== 'All') {
@@ -16,8 +19,26 @@ const getItems = async (req, res) => {
             query.stock = { $lt: 10 };
         }
 
-        const items = await Item.find(query).sort({ createdAt: -1 });
-        res.json(items);
+        if (search) {
+            query.$or = [
+                { name: { $regex: search, $options: 'i' } },
+                { barcode: { $regex: search, $options: 'i' } },
+                { brand: { $regex: search, $options: 'i' } }
+            ];
+        }
+
+        const count = await Item.countDocuments(query);
+        const items = await Item.find(query)
+            .sort({ createdAt: -1 })
+            .limit(pageSize)
+            .skip(pageSize * (page - 1));
+
+        res.json({
+            items,
+            page,
+            pages: Math.ceil(count / pageSize),
+            total: count
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

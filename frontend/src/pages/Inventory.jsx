@@ -32,6 +32,9 @@ import * as XLSX from 'xlsx';
 
 const Inventory = () => {
     const [items, setItems] = useState([]);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalItems, setTotalItems] = useState(0);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [categoryFilter, setCategoryFilter] = useState('All');
@@ -55,14 +58,30 @@ const Inventory = () => {
     const { addNotification } = useNotification();
 
     useEffect(() => {
+        const delayDebounceFn = setTimeout(() => {
+            setPage(1); // Reset to page 1 on search
+        }, 500);
+        return () => clearTimeout(delayDebounceFn);
+    }, [searchTerm]);
+
+    useEffect(() => {
         fetchItems();
-    }, [categoryFilter]);
+    }, [categoryFilter, page, searchTerm]);
 
     const fetchItems = async () => {
         try {
             setLoading(true);
-            const { data } = await api.get(`/items?category=${categoryFilter}`);
-            setItems(data);
+            const { data } = await api.get(`/items`, {
+                params: {
+                    category: categoryFilter,
+                    page,
+                    search: searchTerm,
+                    limit: 12
+                }
+            });
+            setItems(data.items || []);
+            setTotalPages(data.pages || 1);
+            setTotalItems(data.total || 0);
         } catch (error) {
             console.error(error);
         } finally {
@@ -170,11 +189,6 @@ const Inventory = () => {
         }
     };
 
-    const filteredItems = items.filter(item =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (item.barcode && item.barcode.includes(searchTerm))
-    );
-
     const categoriesList = ['All', 'Grocery', 'Beverages', 'Snacks', 'Dairy', 'Personal Care'];
 
     return (
@@ -186,7 +200,7 @@ const Inventory = () => {
                         <span className="text-slate-300">•</span>
                         <div className="flex items-center gap-1.5 text-slate-400 font-bold text-[10px] uppercase tracking-wider">
                             <Activity size={12} />
-                            {items.length} Registered Assets
+                            {totalItems} Registered Assets
                         </div>
                     </div>
                     <h1 className="text-5xl font-black text-slate-900 tracking-tight leading-none">Global Ledger</h1>
@@ -270,14 +284,14 @@ const Inventory = () => {
                                         </div>
                                     </td>
                                 </tr>
-                            ) : filteredItems.length === 0 ? (
+                            ) : items.length === 0 ? (
                                 <tr>
                                     <td colSpan="6" className="px-8 py-20 text-center">
                                         <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100 italic font-black text-2xl text-slate-200">?</div>
                                         <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">No Assets identified in current scope</p>
                                     </td>
                                 </tr>
-                            ) : filteredItems.map((item) => (
+                            ) : items.map((item) => (
                                 <tr key={item._id} className="group hover:bg-slate-50/50 transition-colors">
                                     <td className="px-8 py-6">
                                         <div className="flex items-center gap-4">
@@ -355,6 +369,42 @@ const Inventory = () => {
                             ))}
                         </tbody>
                     </table>
+                </div>
+
+                {/* Pagination Controls */}
+                <div className="px-8 py-6 border-t border-slate-50 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                        Showing <span className="text-slate-900">{items.length}</span> of <span className="text-slate-900">{totalItems}</span> Assets
+                    </p>
+                    <div className="flex items-center gap-2">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            disabled={page === 1}
+                            onClick={() => setPage(p => Math.max(1, p - 1))}
+                        >
+                            Previous
+                        </Button>
+                        <div className="flex items-center gap-1 mx-2">
+                            {[...Array(totalPages)].map((_, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => setPage(i + 1)}
+                                    className={`w-8 h-8 rounded-lg text-xs font-black transition-all ${page === i + 1 ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-900'}`}
+                                >
+                                    {i + 1}
+                                </button>
+                            ))}
+                        </div>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            disabled={page === totalPages}
+                            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                        >
+                            Next
+                        </Button>
+                    </div>
                 </div>
             </Card>
 

@@ -37,10 +37,19 @@ const DeliveryChallan = () => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const [dRes, cRes, iRes] = await Promise.all([api.get('/delivery-challans'), api.get('/contacts?type=Customer'), api.get('/items')]);
-            setChallans(dRes.data); setCustomers(cRes.data); setItems(iRes.data);
-        } catch (e) { addNotification('Error loading data', 'error'); }
-        finally { setLoading(false); }
+            const [dRes, cRes, iRes] = await Promise.all([
+                api.get('/delivery-challans'),
+                api.get('/contacts?type=Customer'),
+                api.get('/items', { params: { limit: 1000 } })
+            ]);
+            setChallans(dRes.data.challans || dRes.data);
+            setCustomers(cRes.data.contacts || cRes.data);
+            setItems(iRes.data.items || iRes.data);
+        } catch (e) {
+            addNotification('Error loading data', 'error');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const filtered = useMemo(() => challans.filter(c => {

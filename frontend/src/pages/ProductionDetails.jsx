@@ -30,10 +30,19 @@ const ProductionDetails = () => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const [pRes, mRes, iRes] = await Promise.all([api.get('/productions'), api.get('/machines'), api.get('/items')]);
-            setProductions(pRes.data); setMachines(mRes.data.filter(m => m.status === 'Active')); setItems(iRes.data);
-        } catch (e) { addNotification('Error loading data', 'error'); }
-        finally { setLoading(false); }
+            const [pRes, mRes, iRes] = await Promise.all([
+                api.get('/productions'),
+                api.get('/machines'),
+                api.get('/items', { params: { limit: 1000 } })
+            ]);
+            setProductions(pRes.data.productions || pRes.data);
+            setMachines(mRes.data);
+            setItems(iRes.data.items || iRes.data);
+        } catch (e) {
+            addNotification('Error loading data', 'error');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const filtered = useMemo(() => productions.filter(p => {

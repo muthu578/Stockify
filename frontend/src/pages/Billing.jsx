@@ -58,9 +58,10 @@ const POS = () => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const { data } = await api.get('/items');
-            if (Array.isArray(data)) {
-                setItems(data);
+            const { data } = await api.get('/items', { params: { limit: 1000 } });
+            const itemsList = data.items || data;
+            if (Array.isArray(itemsList)) {
+                setItems(itemsList);
             } else {
                 setItems([]);
                 console.error('Invalid items data format', data);

@@ -36,10 +36,19 @@ const ProformaInvoice = () => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const [iRes, cRes, pRes] = await Promise.all([api.get('/proforma-invoices'), api.get('/contacts?type=Customer'), api.get('/items')]);
-            setInvoices(iRes.data); setCustomers(cRes.data); setItems(pRes.data);
-        } catch (e) { addNotification('Error loading data', 'error'); }
-        finally { setLoading(false); }
+            const [iRes, cRes, pRes] = await Promise.all([
+                api.get('/proforma-invoices'),
+                api.get('/contacts?type=Customer'),
+                api.get('/items', { params: { limit: 1000 } })
+            ]);
+            setInvoices(iRes.data);
+            setCustomers(cRes.data.contacts || cRes.data);
+            setItems(pRes.data.items || pRes.data);
+        } catch (e) {
+            addNotification('Error loading data', 'error');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const filtered = useMemo(() => invoices.filter(i => {

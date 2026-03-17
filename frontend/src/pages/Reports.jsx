@@ -79,7 +79,7 @@ const Reports = () => {
             setLoading(true);
             const [billsRes, itemsRes, poRes, transferRes, topItemsRes, salesHistRes] = await Promise.all([
                 api.get('/billing'),
-                api.get('/items'),
+                api.get('/items', { params: { limit: 1000 } }),
                 api.get('/purchase-orders'),
                 api.get('/stock-transfers'),
                 api.get('/reports/top-items'),
@@ -87,10 +87,10 @@ const Reports = () => {
             ]);
 
             setData({
-                bills: billsRes.data || [],
-                items: itemsRes.data || [],
-                pos: poRes.data || [],
-                transfers: transferRes.data || [],
+                bills: billsRes.data.bills || billsRes.data || [],
+                items: itemsRes.data.items || itemsRes.data || [],
+                pos: poRes.data.orders || poRes.data || [],
+                transfers: transferRes.data.transfers || transferRes.data || [],
                 topItems: topItemsRes.data || [],
                 salesHistory: salesHistRes.data?.sales || []
             });

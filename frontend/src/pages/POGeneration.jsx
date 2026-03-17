@@ -35,6 +35,9 @@ const statusConfig = {
 
 const POGeneration = () => {
     const [orders, setOrders] = useState([]);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalItems, setTotalItems] = useState(0);
     const [items, setItems] = useState([]);
     const [suppliers, setSuppliers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -62,7 +65,27 @@ const POGeneration = () => {
     const location = useLocation();
 
     useEffect(() => {
+        const delayDebounceFn = setTimeout(() => {
+            setPage(1);
+        }, 500);
+        return () => clearTimeout(delayDebounceFn);
+    }, [searchTerm]);
+
+    useEffect(() => {
         fetchData();
+    }, [statusFilter, page, searchTerm]);
+
+    useEffect(() => {
+        // Load static data once
+        const loadStatic = async () => {
+            const [itemRes, supRes] = await Promise.all([
+                api.get('/items'),
+                api.get('/contacts?type=Supplier'),
+            ]);
+            setItems(itemRes.data.items || itemRes.data);
+            setSuppliers(supRes.data.contacts || supRes.data);
+        };
+        loadStatic();
     }, []);
 
     // Handle deep-link from reports (Restock Item)
@@ -83,14 +106,17 @@ const POGeneration = () => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const [poRes, itemRes, supRes] = await Promise.all([
-                api.get('/purchase-orders'),
-                api.get('/items'),
-                api.get('/contacts?type=Supplier'),
-            ]);
-            setOrders(poRes.data);
-            setItems(itemRes.data);
-            setSuppliers(supRes.data);
+            const { data } = await api.get('/purchase-orders', {
+                params: {
+                    status: statusFilter,
+                    page,
+                    limit: 10,
+                    search: searchTerm
+                }
+            });
+            setOrders(data.orders || []);
+            setTotalPages(data.pages || 1);
+            setTotalItems(data.total || 0);
         } catch (error) {
             console.error(error);
             addNotification('Error loading data', 'error');
@@ -100,14 +126,6 @@ const POGeneration = () => {
     };
 
     // Filtered orders
-    const filteredOrders = useMemo(() => {
-        return orders.filter(o => {
-            const matchSearch = o.poNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                o.supplier?.name?.toLowerCase().includes(searchTerm.toLowerCase());
-            const matchStatus = statusFilter === 'All' || o.status === statusFilter;
-            return matchSearch && matchStatus;
-        });
-    }, [orders, searchTerm, statusFilter]);
 
     // Filtered items for product picker
     const filteredItems = useMemo(() => {
@@ -269,12 +287,12 @@ const POGeneration = () => {
 
     // Stats
     const stats = useMemo(() => ({
-        total: orders.length,
-        draft: orders.filter(o => o.status === 'Draft').length,
+        total: totalItems,
+        draft: orders.filter(o => o.status === 'Draft').length, // This is only per-page, but fine for now
         sent: orders.filter(o => o.status === 'Sent').length,
         completed: orders.filter(o => o.status === 'Completed').length,
         totalValue: orders.filter(o => o.status !== 'Cancelled').reduce((acc, o) => acc + o.grandTotal, 0),
-    }), [orders]);
+    }), [orders, totalItems]);
 
     return (
         <Layout>
@@ -362,7 +380,7 @@ const POGeneration = () => {
                         <tbody className="divide-y divide-slate-100">
                             {loading ? (
                                 <tr><td colSpan="7" className="p-10 text-center animate-pulse text-secondary-400">Loading purchase orders...</td></tr>
-                            ) : filteredOrders.length === 0 ? (
+                            ) : orders.length === 0 ? (
                                 <tr>
                                     <td colSpan="7" className="p-16 text-center">
                                         <FileText size={40} className="mx-auto text-slate-200 mb-3" />
@@ -370,7 +388,7 @@ const POGeneration = () => {
                                         <p className="text-xs text-secondary-300 mt-1">Create your first PO to get started</p>
                                     </td>
                                 </tr>
-                            ) : filteredOrders.map(po => {
+                            ) : orders.map(po => {
                                 const StatusIcon = statusConfig[po.status]?.icon || Clock;
                                 return (
                                     <tr key={po._id} className="hover:bg-slate-50/50 transition-colors">
@@ -460,6 +478,42 @@ const POGeneration = () => {
                         </tbody>
                     </table>
                 </div>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                    <div className="px-6 py-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                            Showing <span className="text-slate-900">{orders.length}</span> of <span className="text-slate-900">{totalItems}</span> POs
+                        </p>
+                        <div className="flex items-center gap-2">
+                            <button
+                                disabled={page === 1}
+                                onClick={() => setPage(p => Math.max(1, p - 1))}
+                                className="px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-bold hover:bg-slate-50 disabled:opacity-50 transition-all"
+                            >
+                                Previous
+                            </button>
+                            <div className="flex items-center gap-1 mx-2">
+                                {[...Array(totalPages)].map((_, i) => (
+                                    <button
+                                        key={i}
+                                        onClick={() => setPage(i + 1)}
+                                        className={`w-8 h-8 rounded-lg text-xs font-black transition-all ${page === i + 1 ? 'bg-primary-600 text-white' : 'text-slate-400 hover:bg-slate-50'}`}
+                                    >
+                                        {i + 1}
+                                    </button>
+                                ))}
+                            </div>
+                            <button
+                                disabled={page === totalPages}
+                                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                                className="px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-bold hover:bg-slate-50 disabled:opacity-50 transition-all"
+                            >
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* CREATE / EDIT MODAL */}

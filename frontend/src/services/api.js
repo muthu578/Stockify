@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { loadingBridge } from './loadingBridge';
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL || '/api',
@@ -7,6 +8,7 @@ const api = axios.create({
 // Add a request interceptor to add the auth token to headers
 api.interceptors.request.use(
     (config) => {
+        loadingBridge.start();
         const userInfo = localStorage.getItem('userInfo')
             ? JSON.parse(localStorage.getItem('userInfo'))
             : null;
@@ -17,6 +19,7 @@ api.interceptors.request.use(
         return config;
     },
     (error) => {
+        loadingBridge.stop();
         return Promise.reject(error);
     }
 );
@@ -24,9 +27,11 @@ api.interceptors.request.use(
 // Add a response interceptor to handle 401 errors
 api.interceptors.response.use(
     (response) => {
+        loadingBridge.stop();
         return response;
     },
     (error) => {
+        loadingBridge.stop();
         if (error.response && error.response.status === 401) {
             // Token expired or invalid user (e.g. after DB reset)
             localStorage.removeItem('userInfo');

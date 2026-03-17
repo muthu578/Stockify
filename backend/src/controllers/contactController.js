@@ -5,11 +5,33 @@ const Contact = require('../models/Contact');
 // @access  Private
 const getContacts = async (req, res) => {
     try {
-        const { type } = req.query;
+        const pageSize = Math.max(1, parseInt(req.query.limit) || 10);
+        const page = Math.max(1, parseInt(req.query.page) || 1);
+        const { type, search } = req.query;
+        
         let query = {};
         if (type) query.type = type;
-        const contacts = await Contact.find(query);
-        res.json(contacts);
+
+        if (search) {
+            query.$or = [
+                { name: { $regex: search, $options: 'i' } },
+                { email: { $regex: search, $options: 'i' } },
+                { phone: { $regex: search, $options: 'i' } }
+            ];
+        }
+
+        const count = await Contact.countDocuments(query);
+        const contacts = await Contact.find(query)
+            .sort({ name: 1 })
+            .limit(pageSize)
+            .skip(pageSize * (page - 1));
+
+        res.json({
+            contacts,
+            page,
+            pages: Math.ceil(count / pageSize),
+            total: count
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

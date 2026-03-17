@@ -18,17 +18,36 @@ const generatePONumber = async () => {
 // @route   GET /api/purchase-orders
 const getPurchaseOrders = async (req, res) => {
     try {
-        const { status } = req.query;
-        const filter = {};
+        const pageSize = Math.max(1, parseInt(req.query.limit) || 10);
+        const page = Math.max(1, parseInt(req.query.page) || 1);
+        const { status, search } = req.query;
+        
+        let filter = {};
         if (status && status !== 'All') filter.status = status;
 
+        if (search) {
+            filter.$or = [
+                { poNumber: { $regex: search, $options: 'i' } }
+            ];
+            // If search is for supplier name, we'd need to populate or use a different approach
+            // For now, let's keep it to PO Number. Complex searches can be added later.
+        }
+
+        const count = await PurchaseOrder.countDocuments(filter);
         const orders = await PurchaseOrder.find(filter)
             .populate('supplier', 'name phone email')
             .populate('createdBy', 'name')
             .populate('items.item', 'name barcode category')
-            .sort({ createdAt: -1 });
+            .sort({ createdAt: -1 })
+            .limit(pageSize)
+            .skip(pageSize * (page - 1));
 
-        res.json(orders);
+        res.json({
+            orders,
+            page,
+            pages: Math.ceil(count / pageSize),
+            total: count
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
