@@ -1,3 +1,5 @@
+let app;
+try {
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -24,7 +26,7 @@ dotenv.config();
 const connectDB = require('./config/db');
 connectDB().catch(console.error); // Ensure DB is connected, don't crash lambda on start
 
-const app = express();
+app = express();
 
 app.use(cors());
 app.use(express.json());
@@ -84,5 +86,16 @@ app.use((err, req, res, next) => {
         stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack,
     });
 });
+} catch (error) {
+    const express = require('express');
+    app = express();
+    app.all('*', (req, res) => {
+        res.status(500).json({
+            error: 'Server Startup Failed',
+            message: error.message,
+            stack: error.stack
+        });
+    });
+}
 
 module.exports = app;
