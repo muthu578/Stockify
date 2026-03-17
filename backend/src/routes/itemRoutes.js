@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const os = require('os');
+const uploadTarget = process.env.VERCEL ? os.tmpdir() : 'uploads/';
+const upload = multer({ dest: uploadTarget });
 const { getItems, getItemById, createItem, updateItem, deleteItem, bulkUploadItems } = require('../controllers/itemController');
 const { protect, admin } = require('../middleware/authMiddleware');
 
